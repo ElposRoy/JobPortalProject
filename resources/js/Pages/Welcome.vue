@@ -19,35 +19,94 @@ defineProps({
 });
 </script>
 
+<script>
+export default{
+  data(){
+    return ({
+      baseurl: location.origin
+    })
+  },
+}
+
+</script>
+
+
 <template>
     <Head title="Welcome" />
 
-    <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
-    >
+    <!-- First Page to Visit for Job Portal (Welcome Page) -->
+    <nav class="flex items-center justify-between flex-wrap bg-slate-200 p-6">
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+           <img class="fill-current h-8 w-8 mr-2" :src="baseurl+'/images/Logo.png'">
+
+          <span class="font-semibold text-xl tracking-tight text-red-600">RESTORE</span>
+        </div>
+        <div class="block lg:hidden">
+          <button class="flex items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+          </button>
+        </div>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+          <div class="text-sm lg:flex-grow">
+
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+             Home
+            </a>
+
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+            Announcements
+            </a>
+
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+            Jobs
+              </a>
+
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+             Companies
+            </a>
+
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400">
+              About us
+            </a>
+        
+           
+          </div>
+         
+
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
             <Link
                 v-if="$page.props.auth.user"
                 :href="route('dashboard')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                class="font-semibold text-white-600 hover:text-white-900 dark:text-white-400 "
                 >Dashboard</Link
             >
 
             <template v-else>
                 <Link
                     :href="route('login')"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                    class="font-semibold text-white-600 hover:text-white-900 dark:text-white-400 "
                     >Log in</Link
                 >
 
                 <Link
                     v-if="canRegister"
                     :href="route('register')"
-                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                    class="ml-4 font-semibold text-white-600 hover:text-white-900 dark:text-white-400"
                     >Register</Link
                 >
             </template>
         </div>
+
+
+        </div>
+      </nav>
+
+
+    <div
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
+    >
+
+    
 
         <div class="max-w-7xl mx-auto p-6 lg:p-8">
             <div class="flex justify-center">
