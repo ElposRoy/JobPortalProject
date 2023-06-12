@@ -53,12 +53,12 @@ export default{
     <Head title="Welcome" />
 
     <!-- First Page to Visit for Job Portal (Welcome Page) -->
-    <nav class="flex items-center justify-between flex-wrap bg-slate-200 p-6 border-b-2 border-red-400">
+    <nav class="flex items-center justify-between flex-wrap bg-slate-100 p-6 border-b-2 border-red-400">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
             
            <img class="fill-current h-8 w-8 mr-2" :src="baseurl+'/images/Logo.png'">
 
-          <span class="font-semibold text-xl tracking-tight text-red-600">RESTORE</span>
+          <span class="font-semibold text-2xl tracking-tight text-red-600">MOIXIE</span>
         </div>
         <div class="block lg:hidden">
           <button class="flex items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white">
@@ -122,13 +122,11 @@ export default{
 
 
     <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-500 selection:bg-red-500 selection:text-white"
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-lighter bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-800 selection:bg-blue-700 selection:text-white"
     >
 
-    
-
       <!-- max-auto removed here -->
-        <div class="max-w-8xl  p-6 lg:p-8">
+        <div class="max-w-8xl p-6 lg:p-8">
             <div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32 rounded-md">
                 <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center" />
                 <div class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl" aria-hidden="true">
@@ -180,13 +178,13 @@ export default{
     </div>
 
     <!-- Search Magnifying Button -->
-    <button type="submit" class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>Search
-    </button>
+
+
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px- rounded-full text-1xl">
+        SEARCH
+      </button>
     <!-- Search Magnifying Button -->
     
-
-
     <!-- <div v-for="stat in stats" :key="stat.name" class="flex flex-col-reverse">
         <dt class="text-base leading-7 text-gray-300">{{ stat.name }}</dt>
         <dd class="text-2xl font-bold leading-9 tracking-tight text-white">{{ stat.value }}</dd>
@@ -200,11 +198,7 @@ export default{
 
                 
               </div>
-
-
-          
-
-
+    <!-- Second Container -->
             <div class="mt-14">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                    
@@ -215,131 +209,130 @@ export default{
                     >
                         <div>
                         
-                            <p class="mt-4 text-gray-500 dark:text-gray-200 text-sm leading-relaxed">
-                                Laravel's robust library of first-party tools and libraries, such as
-                                <a
-                                    href="https://forge.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Forge</a
-                                >,
-                                <a
-                                    href="https://vapor.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Vapor</a
-                                >,
-                                <a
-                                    href="https://nova.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Nova</a
-                                >, and
-                                <a
-                                    href="https://envoyer.io"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Envoyer</a
-                                >
-                                help you take your projects to the next level. Pair them with powerful open source
-                                libraries like
-                                <a
-                                    href="https://laravel.com/docs/billing"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Cashier</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/dusk"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Dusk</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/broadcasting"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Echo</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/horizon"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Horizon</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/sanctum"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Sanctum</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/telescope"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Telescope</a
-                                >, and more.
-                            </p>
+                            <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">REGISTER</h2>
+                            <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Discover a world of opportunities and take your career to new heights by registering as a job seeker on our innovative and user-friendly job portal website.</p>
+                            
+                            <button class="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                Register as Jobseeker
+                              </button>
                         </div>
                         
                     </div>
-                    
-                    
                     <div
-                        class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                    class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+                    dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                >
+                    <div>
+                    
+                        <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">EMPLOYER REGISTER</h2>
+                        <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Unlock the power to find the perfect candidates for your organization's success by registering as an employer on our cutting-edge job portal website. 
+                            Streamline your hiring process and connect with top talent like never before.</p>
+                        
+                        <button class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded">
+                            Register as Employer
+                          </button>
+                    </div>
+                    
+                </div>
+                
+                </div>
+            </div>
+    <!-- Second Container -->
+
+    <!-- Third Container -->
+            <div class="mt-14">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                   
+
+                    <div
+                        class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+                        dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
                     >
                         <div>
                         
-                            <p class="mt-4 text-gray-500 dark:text-gray-200 text-sm leading-relaxed">
-                                Laravel's robust library of first-party tools and libraries, such as
-                                <a
-                                    href="https://forge.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Forge</a
-                                >,
-                                <a
-                                    href="https://vapor.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Vapor</a
-                                >,
-                                <a
-                                    href="https://nova.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Nova</a
-                                >, and
-                                <a
-                                    href="https://envoyer.io"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Envoyer</a
-                                >
-                                help you take your projects to the next level. Pair them with powerful open source
-                                libraries like
-                                <a
-                                    href="https://laravel.com/docs/billing"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Cashier</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/dusk"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Dusk</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/broadcasting"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Echo</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/horizon"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Horizon</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/sanctum"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Sanctum</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/telescope"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Telescope</a
-                                >, and more.
-                            </p>
+                            <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">NEWS FROM (MOIXIE)</h2>
+                            <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed"> Stay informed with industry news, hiring trends, job market analysis, expert advice, and more. Empower your success as an employer or job seeker with our comprehensive coverage.</p>
+                            
+                           
+                        <nav aria-label="  Page navigation example">
+                            <ul class=" mt-5 inline-flex -space-x-px">
+                            <li>
+                                <a href="#" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            </li>
+                            <li>
+                                <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-current="page" class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                            </li>
+                            <li>
+                                <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                            </li>
+                            <li>
+                                <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                            </li>
+                            </ul>
+                        </nav>
+  
+                    <!-- News Modal use v-for-->
+                        <div
+                        class="mt-7 scale-100 p-6 bg-white dark:bg-sky-500/30 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+                        dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                    >
+                        <div>
+                        
+                         
+                            <div class="flex flex-col divide-y divide-y">
+                          
+                                <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">HEADLINE</h2>
+                         
+                                <div>
+                                    <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Discover a world of opportunities and take your career to new heights by registering as a job seeker on our innovative and user-friendly job portal website.</p>
+                                </div>
+                               
+                                <button class="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                    Register as Jobseeker
+                                  </button>
+                              </div>
+                         
                         </div>
                         
                     </div>
+                    <!-- News Modal --> 
+
+
+                        </div>
+                        
+                    </div>
+
+                    <div
+                    class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+                    dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                >
+                    <div>
+                    
+                        <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">EMPLOYER REGISTER</h2>
+                        <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Unlock the power to find the perfect candidates for your organization's success by registering as an employer on our cutting-edge job portal website. 
+                            Streamline your hiring process and connect with top talent like never before.</p>
+                        
+                        <button class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded">
+                            Register as Employer
+                          </button>
+                    </div>
+                    
+                </div>
+                
                 </div>
             </div>
+    <!-- Third Container -->
+
+
 
         <!-- Footer -->
             <div class="flex justify-center mt-16 px-6 sm:items-center sm:justify-between">
@@ -362,7 +355,7 @@ export default{
                                     d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                                 />
                             </svg>
-                            Sponsor
+                            Elpos Roy (Moixie)
                         </a>
                     </div>
                 </div>
@@ -371,8 +364,11 @@ export default{
                     Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
                 </div>
             </div>
-        </div>
+        <!-- Footer -->
 
+
+        </div>
+        <!-- Main End -->
         
     </div>
 </template>
