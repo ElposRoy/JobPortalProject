@@ -126,7 +126,7 @@ export default{
     >
 
       <!-- max-auto removed here -->
-        <div class="max-w-8xl p-6 lg:p-8">
+        <div class="max-w-8xl p-6 lg:p-5">
             <div class="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32 rounded-md">
                 <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center" />
                 <div class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl" aria-hidden="true">
@@ -138,10 +138,39 @@ export default{
                 <!-- max-auto removed here -->
                 <div class=" max-w-7xl px-6 lg:px-8">
                       <!-- max-auto removed here -->
-                  <div class=" max-w-2xl lg:mx-0">
+                  <div class=" max-w-1xl lg:mx-0">
                     <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Work with us</h2>
-                    <p class="mt-6 text-lg leading-8 text-gray-300 justify-normal">Unlock Your Dream Job Today! With our vast selection of opportunities, we connect talented individuals like you with incredible career paths. Find the perfect job that aligns with your aspirations and takes your professional journey to new heights.</p>
+                    <p class="mt-3 text-lg leading-8 text-gray-300 justify-normal">Unlock Your Dream Job Today! With our vast selection of opportunities, we connect talented individuals like you with incredible career paths. Find the perfect job that aligns with your aspirations and takes your professional journey to new heights.</p>
                   </div>
+
+
+                  <!-- How it Work Part -->
+                 <div>
+                    <dl class="grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-4 lg:grid-cols-4">
+                    
+                        <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">CREATE ACCOUNT</h5>
+                            <p class="font-normal text-red-700 dark:text-red-400 ">REGISTER IN OUR JOB PORTAL</p>
+                        </a>
+
+                        <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">BUILD PROFILE</h5>
+                            <p class="font-normal text-red-700 dark:text-red-400 ">Create or Upload your Resume</p>
+                        </a>
+                        
+                        <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">FIND YOUR JOB</h5>
+                            <p class="font-normal text-red-700 dark:text-red-400 ">Browse for your dream job</p>
+                        </a>
+
+                        <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">SAVE AND APPLY</h5>
+                            <p class="font-normal text-red-700 dark:text-red-400 ">REGISTER IN OUR JOB PORTAL</p>
+                        </a>
+                        
+                     </dl>
+                 </div>
+                    <!-- How it work -->
 
 
                   <div class="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
@@ -149,8 +178,9 @@ export default{
                     <!-- <div class="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
                       <a v-for="link in links" :key="link.name" :href="link.href">{{ link.name }} <span aria-hidden="true">&rarr;</span></a>
                     </div> -->
-
-                    <dl class="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-4 lg:grid-cols-4">
+                    <h2 class="text-2xl font-bold tracking-tight text-white sm:text-2xl">SEARCH POSTED JOBS</h2>
+                    
+                    <dl class="mt-2 grid grid-cols-1 gap-8 sm:mt-2 sm:grid-cols-4 lg:grid-cols-4">
                        
                 <label for="simple-search" class="sr-only">Job Position</label>
                 <div class="relative w-full">
@@ -243,7 +273,7 @@ export default{
             <div class="mt-14">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                    
-
+                    <!-- NEWS -->
                     <div
                         class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
                         dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
@@ -310,24 +340,48 @@ export default{
                         </div>
                         
                     </div>
+                    <!-- NEWS -->
 
+
+                    <!-- LATEST JOBS POSTED -->
                     <div
                     class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
                     dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
                 >
                     <div>
                     
-                        <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">EMPLOYER REGISTER</h2>
-                        <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Unlock the power to find the perfect candidates for your organization's success by registering as an employer on our cutting-edge job portal website. 
-                            Streamline your hiring process and connect with top talent like never before.</p>
+                        <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">5 LATEST JOBS POSTED</h2>
+                        <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Discover the latest job opportunities on our portal. Connect with leading companies seeking professionals like you. 
+                            Explore diverse careers with our new postings.</p>
                         
-                        <button class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded">
-                            Register as Employer
-                          </button>
+                            <div
+                            class="mt-7 scale-100 p-6 bg-white dark:bg-violet-400/30 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+                            dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                        >
+                            <div>
+                            
+                             
+                                <div class="flex flex-col divide-y divide-y">
+                              
+                                    <h2 class="text-4xl font-bold tracking-tight text-white sm:text-3xl">HEADLINE</h2>
+                             
+                                    <div>
+                                        <p class="mt-4 text-gray-200 dark:text-gray-200 text-md leading-relaxed">Discover a world of opportunities and take your career to new heights by registering as a job seeker on our innovative and user-friendly job portal website.</p>
+                                    </div>
+                                   
+                                    <button class="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                        Register as Jobseeker
+                                      </button>
+                                  </div>
+                             
+                            </div>
+                            
+                        </div>
+                       
                     </div>
                     
                 </div>
-                
+                <!-- LATEST JOBS POSTED -->
                 </div>
             </div>
     <!-- Third Container -->
