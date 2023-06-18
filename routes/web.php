@@ -15,6 +15,8 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 // DASHBOARD  ↓
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -33,33 +35,54 @@ Route::get('/', function () {
 
 // Announcement ↓
 Route::get('/announcement', function () {
-    return Inertia::render('Announcement/Index');
+    return Inertia::render('Announcement/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('announcement');
 
 // JOBS SEARCH ↓
 Route::get('/jobs', function () {
-    return Inertia::render('Job/Index');
+    return Inertia::render('Job/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('job');
 
 
 // COMPANIES ↓
 Route::get('/company', function () {
-    return Inertia::render('Company/Index');
+    return Inertia::render('Company/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('company');
 
 
 // ABOUT US ↓
 Route::get('/about-us', function () {
-    return Inertia::render('AboutUs/Index');
+    return Inertia::render('AboutUs/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 })->name('about-us');
+
+
+
 
 
 
 // Route::resource('announcements', ProductController::class) //Product ROUTE
 //     ->only(['index','create', 'store', 'update', 'destroy'])
 //     ->middleware(['auth', 'verified']);
-
-
 
 
 Route::middleware('auth')->group(function () {
