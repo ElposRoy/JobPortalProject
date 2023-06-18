@@ -1,23 +1,13 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+
+import { router } from '@inertiajs/vue3'
+import { useForm, Head } from '@inertiajs/vue3';
+
+
+// Components
 import HomeNav from '@/Layouts/HomeNav.vue';
 import Footer from '@/Layouts/Footer.vue';
-const links = [
 
-
-  { name: 'Open roles', href: '#' },
-  { name: 'Internship program', href: '#' },
-  { name: 'Our values', href: '#' },
-  { name: 'Meet our leadership', href: '#' },
-]
-const stats = [
-
-
-  { name: 'Offices worldwide', value: '12' },
-  { name: 'Full-time colleagues', value: '300+' },
-  { name: 'Hours per week', value: '40' },
-  { name: 'Paid time off', value: 'Unlimited' },
-]
 
 defineProps({
     canLogin: {
@@ -36,15 +26,12 @@ defineProps({
     },
 });
 
-
 </script>
 
 
 <template>
-    <Head title="Welcome" />
-
-    <!-- First Page to Visit for Job Portal (Welcome Page) -->
-   
+    <Head title="Job" />
+  
     <HomeNav
     :can-login="canLogin" 
     :can-register="canRegister" 
@@ -330,17 +317,13 @@ defineProps({
     
 </div>
 </HomeNav>
-
-  
+    
+    
 </template>
-
 <style>
-.bg-dots-darker {
-    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
-}
-@media (prefers-color-scheme: dark) {
-    .dark\:bg-dots-lighter {
-        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-    }
-}
+  .input-background-color input {
+    border-radius: 10%;
+    background-color: rgb(236, 236, 236);
+    color: rgb(0, 0, 0);
+  }
 </style>
