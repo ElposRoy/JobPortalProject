@@ -140,7 +140,7 @@ export default {
                     <div>
                     
                         <div
-                        class="mt-2 scale-100 p-6 bg-white dark:bg-white-400/30 dark:bg-gradient-to-bl from-gray-400/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+                        class="w-full mt-2 scale-100 p-6 bg-white dark:bg-white-400/30 dark:bg-gradient-to-bl from-gray-400/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
                         dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
                     >
                         <div>
@@ -175,30 +175,194 @@ export default {
              class="col-span-2 scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
              dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
          >
-             <div>
-             
-                 <!-- <h2 class="text-4xl font-bold tracking-tight text-white sm:text-2xl">JOB DETAILS</h2> -->
-             
-                 <div class="mt-2 scale-100 p-6 bg-white dark:bg-violet-400/30 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                    <div>
-                      <div class="flex flex-col divide-y divide-y">
-                        <div class="flex">
-                            <img class="w-24 h-26" :src="baseurl+'/images/Logo.png'" alt="image description">
-                          <div>
-                            <h4 class="text-2xl font-bold tracking-tight text-white sm:text-2xl">HEADLINE</h4>
-                            <p>asd</p>
-                          </div>
-                        </div>
-                        <div>
-                          <p class="mt-4 dark:text-gray-200 text-md leading-relaxed">Discover a world of opportunities and take your career to new heights by registering as a job seeker on our innovative and user-friendly job portal website.</p>
-                        </div>
-                        <button class="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-                          Register as Jobseeker
-                        </button>
-                      </div>
-                    </div>
+             <div class="h-full w-full">
+              <div class="flex flex-col divide-y divide-y">
+                <div class="flex">
+                    <img class="w-24 h-26" :src="baseurl+'/images/Logo.png'" alt="image description">
+                  <div class="ms-3">
+                    <!-- Company Name -->
+                    <h4 class="text-2xl font-bold tracking-tight text-white sm:text-2xl">HEADLINE</h4>
+                    <!-- Address -->
+                    <p class="text-green-400/100" >Seabreeze Homes Cabid-an Sorsogon City</p> 
+                    <!-- Phone Number -->
+                    <p class="text-sky-400/100">09917320776</p>
+                    <p class="text-gray-200/100">Hiring:</p>
                   </div>
+                  
+                </div>
+                
+                <!-- TABLE -->
+                <div >
+                  <h2 class="mt-2 text-lg text-white">JOB DETAILS</h2>
+                  
+                
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                  Contacts and Information
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  :
+              </th>
+              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                  DETAILS
+              </th>
+            
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Employer Contact No.
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  09064573029
+              </td>
+             
+          </tr>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Email
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                youremail@gmail.com
+              </td>
+              
+          </tr>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Hiring
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  3
+              </td>
+            
+          </tr>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                Job Type
+            </th>
+            <td class="px-6 py-4">
+                :
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                3
+            </td>
+          
+        </tr>
+        <tr class="border-b border-gray-200 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+              Job Location
+          </th>
+          <td class="px-6 py-4">
+              :
+          </td>
+          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+              3
+          </td>
+        
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Gender
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  3
+              </td>
+            
+          </tr>
 
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Experience
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  3
+              </td>
+            
+          </tr>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                Applications Received
+            </th>
+            <td class="px-6 py-4">
+                :
+            </td>
+            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                3
+            </td>
+          
+        </tr>
+        <tr class="border-b border-gray-200 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+              Hired
+          </th>
+          <td class="px-6 py-4">
+              :
+          </td>
+          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+              3
+          </td>
+
+        </tr>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Posted
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  Phone
+              </td>
+             
+          </tr>
+          <tr>
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Application End
+              </th>
+              <td class="px-6 py-4">
+                  :
+              </td>
+              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  Wearables
+              </td>
+            
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+
+
+                </div>
+                <!-- TABLE -->
+
+    
+                <div>
+                  <h2 class="mt-5 text-lg text-white">ABOUT (COMPANY)</h2>
+
+                </div>
+
+
+              </div>
                 
                 
              </div>
