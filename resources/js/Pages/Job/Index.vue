@@ -127,61 +127,296 @@ export default {
 
           </div>
 
-<!-- Second Container -->
-        <div class="mt-14 grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 ">
+<!-- Job Container -->
+        <div class="mt-14 grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-2 container ">
 
          
             <!-- Left Grid Col -->
-            <div>
-                <div
-                    class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
-                    dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                >
-                    <div>
-                    
-                        <div
-                        class="w-full mt-2 scale-100 p-6 bg-white dark:bg-white-400/30 dark:bg-gradient-to-bl from-gray-400/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
-                        dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                    >
-                        <div>
-                        
-                         
-                            <div class="flex flex-col divide-y divide-y">
-                       
-                               
-                                    <h4 class="text-2xl font-bold tracking-tight sm:text-2xl">HEADLINE | Detail </h4>
+            <div class="col-span-1 ms-12">
+               
+                    <!-- JOB CARD BUTTONS -->
+              <div class="mb-3 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Company Name</h5>
+                </a>
+             
+                <div>
 
-                                   
-                            
-                        
-                                 <div>
-                                     <p class="mt-4  text-md leading-relaxed">Discover a world of opportunities and take your career to new heights by registering as a job seeker on our innovative and user-friendly job portal website.</p>
-                                 </div>
-                                
-                              
-                               </div>
+                  <div class="shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                   
+                        <tbody>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Job location
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    Silver
+                                </td>
                            
-                        </div>
-                        
-                    </div>
-                    </div>
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Positions
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    White
+                                </td>
+                            
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Job Types
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    Black
+                                </td>
+                             
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Posted on
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                  January 1, 2022
+                                </td>
+                              
+                            </tr>
+                            <tr>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Expires on
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    January 4, 2022
+                                </td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+
+                </div>
+
+
+
+
+                <a href="#" class="mt-5 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    View Job
+                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+              </div>
+                  <!-- JOB CARD BUTTONS -->
+                  
+                <!-- JOB CARD BUTTONS -->
+              <div class="mb-3 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Company Name</h5>
+                </a>
+             
+                <div>
+
+                  <div class="shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                   
+                        <tbody>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Job location
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    Silver
+                                </td>
+                           
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Positions
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    White
+                                </td>
+                            
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Job Types
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    Black
+                                </td>
+                             
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Posted on
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                  January 1, 2022
+                                </td>
+                              
+                            </tr>
+                            <tr>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Expires on
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    January 4, 2022
+                                </td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+
+                </div>
+
+
+
+
+                <a href="#" class="mt-5 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    View Job
+                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+              </div>
+                  <!-- JOB CARD BUTTONS -->
                     
-                </div> 
+               <!-- JOB CARD BUTTONS -->
+               <div class="mb-3 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Company Name</h5>
+                </a>
+             
+                <div>
+
+                  <div class="shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                   
+                        <tbody>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Job location
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    Silver
+                                </td>
+                           
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Positions
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    White
+                                </td>
+                            
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Job Types
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    Black
+                                </td>
+                             
+                            </tr>
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Posted on
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                  January 1, 2022
+                                </td>
+                              
+                            </tr>
+                            <tr>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    Expires on
+                                </th>
+                                <td class="px-6 py-4">
+                                  :
+                              </td>
+                                <td class="px-6 py-4">
+                                    January 4, 2022
+                                </td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+
+                </div>
+
+
+
+
+                <a href="#" class="mt-5 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    View Job
+                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+              </div>
+                  <!-- JOB CARD BUTTONS -->
+
+                
             </div>
                 <!-- Left Grid Col -->
             
              <!-- LATEST JOBS POSTED (col-span-2)-->
              <div
-             class="col-span-2 scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
+             class="col-span-2  scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 
              dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
          >
-             <div class="h-full w-full">
+             <div class=" w-full">
               <div class="flex flex-col divide-y divide-y">
                 <div class="flex">
                     <img class="w-24 h-26" :src="baseurl+'/images/Logo.png'" alt="image description">
                   <div class="ms-3">
                     <!-- Company Name -->
-                    <h4 class="text-2xl font-bold tracking-tight text-white sm:text-2xl">HEADLINE</h4>
+                    <h4 class="text-2xl font-bold tracking-tight text-white sm:text-2xl">COMPANY NAME</h4>
                     <!-- Address -->
                     <p class="text-green-400/100" >Seabreeze Homes Cabid-an Sorsogon City</p> 
                     <!-- Phone Number -->
@@ -191,175 +426,248 @@ export default {
                   
                 </div>
                 
-                <!-- TABLE -->
-                <div >
-                  <h2 class="mt-2 text-lg text-white">JOB DETAILS</h2>
+                <!-- OVERFLOW HERE (h-screen) -->
+              <div class="overflow-y-auto " style="height: 120vh;">
                   
+                  <!-- TABLE -->
+                  <div >
+                    <h2 class="mt-2 text-lg text-white">JOB DETAILS</h2>
+                    
+                  
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                <tr>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    Contacts and Information
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    ■
+                </th>
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                    DETAILS
+                </th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Employer Contact No.
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                    09064573029
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Email
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  youremail@gmail.com
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Hiring
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                    3
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Job Type
+                </th>
+                <td class="px-6 py-4">
+                  :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  3
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                Job Location
+                </th>
+                <td class="px-6 py-4">
+                :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                3
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Gender
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                    3
+                </td>
+
+                </tr>
+
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Experience
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                    3
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                  Applications Received
+                </th>
+                <td class="px-6 py-4">
+                  :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                  3
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                Hired
+                </th>
+                <td class="px-6 py-4">
+                :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                3
+                </td>
+
+                </tr>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Posted
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                    Phone
+                </td>
+
+                </tr>
+                <tr>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                    Application End
+                </th>
+                <td class="px-6 py-4">
+                    :
+                </td>
+                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                    Wearables
+                </td>
+
+                </tr>
+                </tbody>
+                </table>
+                </div>
+
+
+                <div class="text-white me-8 text-justify">
+                    <div class="About-Company">
+                        <h2 class="mt-5 text-lg text-white mb-2">ABOUT (COMPANY)</h2>
+                        <p class="text-base">The Department is the primary government agency responsible for conservation, management, 
+                            development and proper use of the country's environment and natural resources, specifically 
+                            forest and grazing lands, mineral resources, including those in reservation and watershed areas, 
+                            and lands of public domain. as well as the licensing and regulation of all natural resources as
+                             may be provided for by law in order to ensure equitable sharing of the benefits derived therefrom 
+                             for the welfare of the present and future generations of Filipinos. </p>
+                             
+                    </div>
+
+                    <div class="Job Description">
+                        <h2 class="mt-5 text-lg text-white mb-2">Full Job Description</h2>
+                        <p class="text-base">1. Provide administrative support in the planning, formulating and implementing a records management 
+                            and archival administration program for the efficient creation, utilization, maintenance, retention, storage, 
+                            preservation, conservation and disposal of public records including the adoption of security measures and vital 
+                            records protection program for the Agency; </p>
+
+                        <p class="text-base">
+                            2. Provide administrative support for knowledge management activities 
+                        which includes coordination with other units within the organization for capturing knowledge of employees that 
+                        should be shared and retained within the organization; 
+                        </p>
+
+                        <p class="text-base">
+                            3. Assist in preparing documents for meetings and presentations
+                            during knowledge sharing sessions and related activities; 
+                        </p>
+                        <p class="text-base">
+                            4. Assist in the development and maintenance of an efficient 
+                            records system; and 
+                        </p>
+                        <p class="text-base">
+                            5. Perform other duties of a regular or special nature as may be assigned from time to time. 
+                        </p>
+                    </div>
+                  
+                 
+                    <div class="Responsibilities">
+
+                        <div class="About-Company">
+                            <h2 class="mt-5 text-lg text-white mb-2">Responsibilities</h2>
+                            <p class="text-base">The Department is the primary government agency responsible for conservation, management, 
+                                development and proper use of the country's environment and natural resources, specifically 
+                                forest and grazing lands, mineral resources, including those in reservation and watershed areas, 
+                                and lands of public domain. as well as the licensing and regulation of all natural resources as
+                                 may be provided for by law in order to ensure equitable sharing of the benefits derived therefrom 
+                                 for the welfare of the present and future generations of Filipinos. </p>
+
+                                
+                        </div>
+                    </div>
                 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
-          <tr>
-              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                  Contacts and Information
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  :
-              </th>
-              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                  DETAILS
-              </th>
-            
-          </tr>
-      </thead>
-      <tbody>
-          <tr class="border-b border-gray-200 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Employer Contact No.
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  09064573029
-              </td>
-             
-          </tr>
-          <tr class="border-b border-gray-200 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Email
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                youremail@gmail.com
-              </td>
-              
-          </tr>
-          <tr class="border-b border-gray-200 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Hiring
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  3
-              </td>
-            
-          </tr>
-          <tr class="border-b border-gray-200 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                Job Type
-            </th>
-            <td class="px-6 py-4">
-                :
-            </td>
-            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                3
-            </td>
-          
-        </tr>
-        <tr class="border-b border-gray-200 dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-              Job Location
-          </th>
-          <td class="px-6 py-4">
-              :
-          </td>
-          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-              3
-          </td>
-        
-            </tr>
-            <tr class="border-b border-gray-200 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Gender
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  3
-              </td>
-            
-          </tr>
 
-            <tr class="border-b border-gray-200 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Experience
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  3
-              </td>
-            
-          </tr>
-          <tr class="border-b border-gray-200 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                Applications Received
-            </th>
-            <td class="px-6 py-4">
-                :
-            </td>
-            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                3
-            </td>
-          
-        </tr>
-        <tr class="border-b border-gray-200 dark:border-gray-700">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-              Hired
-          </th>
-          <td class="px-6 py-4">
-              :
-          </td>
-          <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-              3
-          </td>
-
-        </tr>
-          <tr class="border-b border-gray-200 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Posted
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  Phone
-              </td>
-             
-          </tr>
-          <tr>
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                  Application End
-              </th>
-              <td class="px-6 py-4">
-                  :
-              </td>
-              <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  Wearables
-              </td>
-            
-          </tr>
-      </tbody>
-  </table>
-</div>
-
-
-
+                    <div class="Skills">
+                        <h2 class="mt-5 text-lg text-white mb-2">Skills</h2>
+                        <p class="text-base">1. Provide administrative support in the planning, formulating and implementing a records management 
+                            and archival administration program for the efficient creation, utilization, maintenance, retention, storage, 
+                            preservation, conservation and disposal of public records including the adoption of security measures and vital 
+                            records protection program for the Agency; </p>
+                            <p class="text-base">2. Provide administrative support in the planning, formulating and implementing a records management 
+                                and archival administration program for the efficient creation, utilization, maintenance, retention, storage, 
+                                preservation, conservation and disposal of public records including the adoption of security measures and vital 
+                                records protection program for the Agency; </p>
+                    </div>
+                 
+                  <h2 class="mt-5 text-lg text-white">Qualifications</h2>
+                  <h2 class="mt-5 text-lg text-white">Education</h2>
+                  <h2 class="mt-5 text-lg text-white">Benefit and Others</h2>
                 </div>
-                <!-- TABLE -->
 
-    
-                <div>
-                  <h2 class="mt-5 text-lg text-white">ABOUT (COMPANY)</h2>
 
-                </div>
+                  </div>
+                  <!-- TABLE -->
+
+
+                
+              </div>   <!-- OVERFLOW HERE -->
 
 
               </div>
@@ -371,11 +679,7 @@ export default {
          <!-- LATEST JOBS POSTED -->
             
         </div>
-<!-- Second Container -->
-
-
-
-
+<!-- Job Container -->
 
     <!-- Footer -->
        <Footer>
