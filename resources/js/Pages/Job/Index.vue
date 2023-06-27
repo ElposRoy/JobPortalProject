@@ -139,7 +139,7 @@ export default {
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Company Name</h5>
                 </a>
-             
+                <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
                 <div>
 
                   <div class="shadow-md sm:rounded-lg">
@@ -228,7 +228,7 @@ export default {
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Company Name</h5>
                 </a>
-             
+                <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
                 <div>
 
                   <div class="shadow-md sm:rounded-lg">
@@ -317,7 +317,7 @@ export default {
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Company Name</h5>
                 </a>
-             
+                <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
                 <div>
 
                   <div class="shadow-md sm:rounded-lg">
@@ -421,8 +421,24 @@ export default {
                     <p class="text-green-400/100" >Seabreeze Homes Cabid-an Sorsogon City</p> 
                     <!-- Phone Number -->
                     <p class="text-sky-400/100">09917320776</p>
+                    
+                    <div class="m-2 flex">
                     <p class="text-gray-200/100">Hiring:</p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-2 text-center">
+                        <span class="ms-2 bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 
+                        rounded dark:bg-blue-900 dark:text-blue-300">Web Developer</span>
+                        <span class="ms-2 bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 
+                        rounded dark:bg-blue-900 dark:text-blue-300">System Analyst</span>
+                        <span class="ms-2 bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 
+                        rounded dark:bg-blue-900 dark:text-blue-300">IT Documentation</span>
+                        
+                    </div>
+                   
+                    </div>
+                   
                   </div>
+                  
                   
                 </div>
                 
@@ -431,7 +447,13 @@ export default {
                   
                   <!-- TABLE -->
                   <div >
-                    <h2 class="mt-2 text-lg text-white">JOB DETAILS</h2>
+                    <div class="flex justify-between m-4 m-4">
+                        <h2 class="mt-2 text-lg text-white">JOB DETAILS</h2>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                            APPLY FOR JOB
+                          </button>
+                    </div>
+                   
                     
                   
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -655,10 +677,58 @@ export default {
                                 preservation, conservation and disposal of public records including the adoption of security measures and vital 
                                 records protection program for the Agency; </p>
                     </div>
+
+                    <div class="Qualifications">
+                        <h2 class="mt-5 text-lg text-white mb-2">Qualifications</h2>
+                       
+                        <p class="text-base">
+                            High school diploma or equivalent; associate's degree or relevant certification is preferred.
+                        </p>
+                        <p class="text-base">
+                            Previous experience in a medical administrative role or similar position is highly desirable.
+                        </p>
+                        <p class="text-base">
+                            Hands on experience and proficiency in using Athena Billing Software is a requirement
+                        </p>
+                        <p class="text-base">
+                            Strong computer skills, including proficiency in Microsoft Office Suite and email management.
+                        </p>
+
+                    </div>
                  
-                  <h2 class="mt-5 text-lg text-white">Qualifications</h2>
-                  <h2 class="mt-5 text-lg text-white">Education</h2>
-                  <h2 class="mt-5 text-lg text-white">Benefit and Others</h2>
+                    <div class="Education">
+                        <h2 class="mt-5 text-lg text-white">Education</h2>
+                        <p class="text-base">I.T. Bachelor Degree </p>
+                    </div>
+                 
+                    <div class="Education">
+                        <h2 class="mt-5 text-lg text-white">Benefit and Others</h2>
+                        <p class="text-base">
+                            SSS, Philhealth, Pag-Ibig
+                        </p>
+                        <p class="text-base">
+                            13th Month Pay
+                        </p>
+                        <p class="text-base">
+                            HMO and Life Insurance (AVEGA)
+                        </p>
+                    </div>
+                 
+                </div>
+              
+                <hr class="my-3 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
+
+                <div class="BottomButton">
+
+
+                    <div class="flex justify-around">
+                        <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                            REPORT JOB
+                          </button>
+                          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                            APPLY FOR JOB
+                          </button>
+                    </div>
                 </div>
 
 
