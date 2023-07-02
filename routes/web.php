@@ -18,9 +18,9 @@ use Inertia\Inertia;
 
 
 // DASHBOARD  ↓
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/jobseeker', function () {
+    return Inertia::render('Dashboard/Jobseeker');
+})->middleware(['auth', 'verified'])->name('jobseeker');
 
 
 // HOME ↓
@@ -75,6 +75,16 @@ Route::get('/about-us', function () {
     ]);
 })->name('about-us');
 
+
+// ADMIN ↓
+Route::get('/admin', function () {
+    return Inertia::render('Admin/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('admin');
 
 
 
