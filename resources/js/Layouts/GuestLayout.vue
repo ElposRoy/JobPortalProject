@@ -5,14 +5,6 @@ import { Link } from '@inertiajs/vue3';
 
 <script>
 
- export default{
-  data(){
-    return ({
-      baseurl: location.origin
-    })
-  },
-}
-
 </script>
 
 
