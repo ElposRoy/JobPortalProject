@@ -24,9 +24,30 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
+        <div  class="block max-w-sm p-6 bg-white border
+         border-gray-200 rounded-lg shadow 
+         dark:bg-gray-800 dark:border-gray-700">
+
+
         <form @submit.prevent="submit">
+            
+        <div class="flex justify-center ">
+            <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                   Jobseeker
+                </span>
+              </button>
+              <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    Employer
+                </span>
+              </button>
+        </div>
+
+        <hr class="h-px h-1 my-3 bg-gray-200 border-0 rounded dark:bg-gray-700">
+        
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel class="text-white" for="name" value="Name" />
 
                 <TextInput
                     id="name"
@@ -38,11 +59,11 @@ const submit = () => {
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2 text-white" :message="form.errors.name" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel class="text-white" for="email" value="Email" />
 
                 <TextInput
                     id="email"
@@ -53,11 +74,11 @@ const submit = () => {
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2 text-white" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel class="text-white" for="password" value="Password" />
 
                 <TextInput
                     id="password"
@@ -68,11 +89,11 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError class="mt-2 text-white" :message="form.errors.password" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel class="text-white" for="password_confirmation" value="Confirm Password" />
 
                 <TextInput
                     id="password_confirmation"
@@ -83,7 +104,7 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                <InputError class="mt-2 text-white" :message="form.errors.password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -99,5 +120,6 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+    </div>
     </GuestLayout>
 </template>
