@@ -11,5 +11,5 @@
 </script>
 
 <template>
-    <img class="fill-current h-8 w-8 mr-2" :src="baseurl+'/images/Logo.png'">
+    <img class="fill-current h-25 w-25 mr-2" :src="baseurl+'/images/Logo.png'">
 </template>

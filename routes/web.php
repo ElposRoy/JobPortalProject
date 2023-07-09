@@ -23,69 +23,52 @@ Route::get('/jobseeker', function () {
 })->middleware(['auth', 'verified'])->name('jobseeker');
 
 
-// HOME ↓
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
+
+
+function getInertiaData()
+{
+    return [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('home');
+        'laravelVersion' => app()->version(),
+        'phpVersion' => phpversion(),
+    ];
+}
 
-// Announcement ↓
-Route::get('/announcement', function () {
-    return Inertia::render('Announcement/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('announcement');
+Route::group([], function () {
+    // HOME ↓
+    Route::get('/', function () {
+        return Inertia::render('Welcome', getInertiaData());
+    })->name('home');
 
-// JOBS SEARCH ↓
-Route::get('/jobs', function () {
-    return Inertia::render('Job/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('job');
+    // Announcement ↓
+    Route::get('/announcement', function () {
+        return Inertia::render('Announcement/Index', getInertiaData());
+    })->name('announcement');
 
+    // JOBS SEARCH ↓
+    Route::get('/jobs', function () {
+        return Inertia::render('Job/Index', getInertiaData());
+    })->name('job');
 
-// COMPANIES ↓
-Route::get('/company', function () {
-    return Inertia::render('Company/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('company');
+    // COMPANIES ↓
+    Route::get('/company', function () {
+        return Inertia::render('Company/Index', getInertiaData());
+    })->name('company');
 
+    // ABOUT US ↓
+    Route::get('/about-us', function () {
+        return Inertia::render('AboutUs/Index', getInertiaData());
+    })->name('about-us');
 
-// ABOUT US ↓
-Route::get('/about-us', function () {
-    return Inertia::render('AboutUs/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('about-us');
+    // ADMIN ↓
+    Route::get('/admin', function () {
+        return Inertia::render('Admin/Index', getInertiaData());
+    })->name('admin');
 
+  
 
-// ADMIN ↓
-Route::get('/admin', function () {
-    return Inertia::render('Admin/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('admin');
-
+});
 
 
 

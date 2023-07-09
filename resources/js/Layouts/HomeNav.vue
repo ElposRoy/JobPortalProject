@@ -7,9 +7,6 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
-const showingNavigationDropdown = ref(false);
-
-
 defineProps({
     canLogin: {
         type: Boolean,
@@ -27,18 +24,31 @@ defineProps({
     },
 });
 
+const currentPath = ref(window.location.pathname);
 
+const isActiveLink = (path) => {
+  return currentPath.value === path;
+};
+
+
+// ...
 </script>
 
-<script>
 
- export default{
-  data(){
-    return ({
+<script>
+export default {
+  data() {
+    return {
+      isDropdownHidden: true,
       baseurl: location.origin
-    })
+    };
   },
-}
+  methods: {
+    toggleDropdown() {
+      this.isDropdownHidden = !this.isDropdownHidden;
+    }
+  }
+};
 
 </script>
 
@@ -60,23 +70,28 @@ defineProps({
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div class="text-sm lg:flex-grow">
     
-            <Link :href="route('home')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+            <Link :href="route('home')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4"
+            :class="{ 'font-semibold text-red-500 underline  decoration-red-500': isActiveLink('/') }">
              Home
             </Link>
     
-            <Link :href="route('announcement')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+            <Link :href="route('announcement')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4"
+            :class="{ 'font-semibold text-red-500 underline  decoration-red-500': isActiveLink('/announcement') }">
             Announcements
             </Link>
     
-            <Link  :href="route('job')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+            <Link  :href="route('job')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4"
+            :class="{ 'font-semibold text-red-500 underline  decoration-red-500': isActiveLink('/jobs') }">
             Jobs
               </Link>
     
-            <Link  :href="route('company')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4">
+            <Link  :href="route('company')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400 mr-4"
+            :class="{ 'font-semibold text-red-500 underline  decoration-red-500': isActiveLink('/company') }">
              Companies
             </Link>
     
-            <Link  :href="route('about-us')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400">
+            <Link  :href="route('about-us')" class="block mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-red-400"
+            :class="{ 'font-semibold text-red-500 underline  decoration-red-500': isActiveLink('/about-us') }">
               About us
             </Link>
         
@@ -87,7 +102,7 @@ defineProps({
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
             <Link
                 v-if="$page.props.auth.user"
-                :href="route('dashboard')"
+                :href="route('jobseeker')"
                 class="font-semibold text-white-600 hover:text-white-900 dark:text-white-400 "
                 >Dashboard</Link
             >
@@ -117,3 +132,4 @@ defineProps({
     </main>
 
 </template>
+

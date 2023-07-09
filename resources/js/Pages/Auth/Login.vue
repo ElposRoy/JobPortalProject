@@ -7,13 +7,16 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
+
 defineProps({
+   
     canResetPassword: {
         type: Boolean,
     },
     status: {
         type: String,
     },
+    
 });
 
 const form = useForm({
@@ -30,6 +33,10 @@ const submit = () => {
 </script>
 
 <template>
+    
+
+
+    
     <GuestLayout>
         <Head title="Log in" />
 
@@ -38,7 +45,8 @@ const submit = () => {
                
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        
+                        <h1 class="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
                         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -111,7 +119,8 @@ const submit = () => {
 
 
                             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline hover:text-red-700 dark:text-primary-500">Sign up</a>
+                                Don’t have an account yet? <a href="#" 
+                                class="font-medium text-red-700 hover:underline hover:text-red-700 dark:text-primary-500">Sign up</a>
                             </p>
                         </form>
                     </div>
@@ -178,4 +187,6 @@ const submit = () => {
             </div>
         </form> -->
     </GuestLayout>
+
+      
 </template>
