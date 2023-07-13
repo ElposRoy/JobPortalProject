@@ -119,9 +119,16 @@ const submit = () => {
 
 
                             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don’t have an account yet? <a href="#" 
-                                class="font-medium text-red-700 hover:underline hover:text-red-700 dark:text-primary-500">Sign up</a>
+                                Don’t have an account yet?   
+                                <Link
+                                :href="route('register')"
+                                class="underline text-sm text-red-600 hover:text-red-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Sign up
+                            </Link>
+                            
                             </p>
+                            
                         </form>
                     </div>
                 </div>
