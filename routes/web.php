@@ -56,6 +56,12 @@ Route::group([], function () {
         return Inertia::render('Company/Index', getInertiaData());
     })->name('company');
 
+     // COMPANIES Info ↓
+     Route::get('/company-info', function () {
+        return Inertia::render('Company/Info', getInertiaData());
+    })->name('company-info');
+
+
     // ABOUT US ↓
     Route::get('/about-us', function () {
         return Inertia::render('AboutUs/Index', getInertiaData());
