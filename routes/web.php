@@ -57,9 +57,9 @@ Route::group([], function () {
     })->name('company');
 
      // COMPANIES Info ↓
-     Route::get('/company-info', function () {
+     Route::get('company/company-info', function () {
         return Inertia::render('Company/Info', getInertiaData());
-    })->name('company-info');
+    })->name('company/company-info');
 
 
     // ABOUT US ↓
