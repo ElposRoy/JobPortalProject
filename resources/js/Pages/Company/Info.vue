@@ -40,7 +40,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Announcements" />
+    <Head title="Company-Info" />
   
     <HomeNav
     :can-login="canLogin" 
@@ -292,3 +292,5 @@ defineProps({
         color: rgb(0, 0, 0);
     }
     </style>
+
+    
