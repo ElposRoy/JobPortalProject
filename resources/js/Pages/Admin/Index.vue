@@ -71,12 +71,14 @@ export default {
 >
 
   <!-- max-auto removed here -->
+
+  
         <Carousel 
         :navigation="true" 
-        :pagination="false"
+        :pagination="true"
         :start-auto-play="true"
         :timeout="10000"
-        class="carousel" 
+        class="carousel " 
         v-slot="{currentSlide}"
         >
    
@@ -111,6 +113,8 @@ export default {
       
   </Carousel>
   
+
+
     <!-- Main End -->
     
 </div>
