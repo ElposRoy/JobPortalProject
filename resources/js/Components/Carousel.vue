@@ -103,7 +103,7 @@ export default {
 
         onMounted(() => {
             getSlideCount.value = document.querySelectorAll('.slide').length;
-
+            // console.log(getSlideCount.value)
         })
 
         return {currentSlide, nextSlide, prevSlide, getSlideCount, goToSlide, paginationEnabled, navEnabled};
