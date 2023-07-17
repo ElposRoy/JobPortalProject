@@ -69,8 +69,8 @@ Route::group([], function () {
 
     // ADMIN ↓
     Route::get('/admin', function () {
-        return Inertia::render('Admin/Index', getInertiaData());
-    })->name('admin');
+        return Inertia::render('Dashboard/Admin', getInertiaData());
+    })->middleware(['auth', 'role:admin'])->name('admin');
 
   
 

@@ -49,14 +49,16 @@ const submit = () => {
                         <h1 class="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
-                        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-                            {{ status }}
-                        </div>
+                        
+        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+            {{ status }}
+        </div>
+                      
 
                         <form @submit.prevent="submit" class="space-y-4 md:space-y-6" action="#">
 
                             <div>
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>   <InputError  :message="form.errors.email" />
                                 <input 
                                 type="email"
                                 id="email"
@@ -66,14 +68,14 @@ const submit = () => {
                                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 
                                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                                   dark:focus:border-blue-500"
-                                  required=""
                                   autocomplete="username">
                              
                             </div>
-
+                         
 
                             <div>
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <InputError class="mt-2" :message="form.errors.password" />
                                 <input 
                                 type="password"
                                  name="password"  id="password"
@@ -83,10 +85,10 @@ const submit = () => {
                                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 
                                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                                   dark:focus:border-blue-500"
-                                  required=""
+                             
                                   autocomplete="current-password">
                             </div>
-
+                       
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-start">

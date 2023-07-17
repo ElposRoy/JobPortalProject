@@ -27,12 +27,26 @@ const showingNavigationDropdown = ref(false);
                                 </Link>
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+                              <!-- Navigation Links for Admin -->
+                              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.userRoles.includes('admin')">
                                 <NavLink :href="route('jobseeker')" :active="route().current('jobseeker')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('home')" :active="route().current('home')">
+                                <NavLink :href="route('home')" :active="route().current('home')" >
+                                    Home
+                                </NavLink>
+                               
+                            </div>
+                            <!-- Navigation Links for jobseeker-->
+
+
+                            <!-- Navigation Links for jobseeker-->
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.userRoles.includes('jobseeker')">
+                                <NavLink :href="route('jobseeker')" :active="route().current('jobseeker')">
+                                    Dashboard
+                                </NavLink>
+                                <NavLink :href="route('home')" :active="route().current('home')" >
                                     Home
                                 </NavLink>
                                 <NavLink :href="route('announcement')" :active="route().current('announcement')">
@@ -48,6 +62,10 @@ const showingNavigationDropdown = ref(false);
                                     About us
                                 </NavLink>
                             </div>
+                            <!-- Navigation Links for jobseeker-->
+
+
+
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
