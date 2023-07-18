@@ -23,19 +23,31 @@ class AdminSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             ]
 
-            ) -> assignRole('writer','admin');
+            ) -> assignRole('admin');
 
 
             User::create(
 
                 [
                 'name' => 'John Doe',
-                'email' => 'royelpos.tlc@gmail.com',
+                'email' => 'jobseeker@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 ]
     
-                ) -> assignRole('writer','jobseeker');
+                ) -> assignRole('jobseeker');
     
+
+                
+            User::create(
+
+                [
+                'name' => 'Sope Gope',
+                'email' => 'admin@gmail.com',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                ]
+    
+                ) -> assignRole('admin');
     }
 }
