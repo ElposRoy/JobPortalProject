@@ -17,12 +17,6 @@ use Inertia\Inertia;
 */
 
 
-// DASHBOARD  ↓
-Route::get('/jobseeker', function () {
-    return Inertia::render('Dashboard/Jobseeker');
-})->middleware(['auth', 'verified'])->name('jobseeker');
-
-
 
 
 function getInertiaData()
@@ -71,6 +65,15 @@ Route::group([], function () {
     Route::get('/admin', function () {
         return Inertia::render('Dashboard/Admin', getInertiaData());
     })->middleware(['auth', 'role:admin'])->name('admin');
+
+        
+    // DASHBOARD  ↓
+    Route::get('/jobseeker', function () {
+        return Inertia::render('Dashboard/Jobseeker', getInertiaData());
+    })->middleware(['auth', 'role:jobseeker'])->name('jobseeker');
+
+
+    
 
   
 

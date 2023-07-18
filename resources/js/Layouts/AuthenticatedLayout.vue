@@ -38,10 +38,9 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                                
                             </div>
-                            <!-- Navigation Links for jobseeker-->
+                      
 
-
-                            <!-- Navigation Links for jobseeker-->
+                              <!-- Navigation Links for jobseeker-->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.userRoles.includes('jobseeker')">
                                 <NavLink :href="route('jobseeker')" :active="route().current('jobseeker')">
                                     Dashboard
@@ -62,7 +61,7 @@ const showingNavigationDropdown = ref(false);
                                     About us
                                 </NavLink>
                             </div>
-                            <!-- Navigation Links for jobseeker-->
+                          
 
 
 
