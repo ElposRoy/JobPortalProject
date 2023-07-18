@@ -1,5 +1,5 @@
 <?php
-
+// AuthenticatedSessionController.php
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -14,9 +14,6 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function create(): Response
     {
         return Inertia::render('Auth/Login', [
@@ -25,21 +22,24 @@ class AuthenticatedSessionController extends Controller
         ]);
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+    //Auth::user()->getRoleNames()->first() is a Spatie package methods to retrieve the user's role:
+    //Use this instead to get the user role and navigate them to their page.
+        if (Auth::user()->getRoleNames()->first() === 'jobseeker') {
+            return redirect()->intended(RouteServiceProvider::JOBSEEKER);
+        } elseif (Auth::user()->getRoleNames()->first() === 'admin') {
+            return redirect()->intended(RouteServiceProvider::ADMIN);
+        }
+     
+        return redirect()->intended('/');
+      
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
