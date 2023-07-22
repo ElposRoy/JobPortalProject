@@ -11,6 +11,7 @@ class RouteServiceProvider extends ServiceProvider
 {
     public const JOBSEEKER = '/jobseeker';
     public const ADMIN = '/admin';
+    public const HOME = '/';
 
     public function boot(): void
     {

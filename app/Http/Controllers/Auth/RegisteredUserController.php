@@ -31,17 +31,28 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request -> toArray());
+
         $request->validate([
+            'role' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+            // Get the role input from request
+            $role = $request->input('role');
+
+
+            // if ($role === 'Jobseeker') {
+            //     return response()->json(['message' => 'Creating user with "admin" role is not allowed.'], 403);
+            // }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
+        ])-> assignRole($role);
 
         event(new Registered($user));
 
