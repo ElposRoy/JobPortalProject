@@ -95,14 +95,31 @@ const showingNavigationDropdown = ref(false);
                                         </span>
                                     </template>
 
-                                    <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                        <DropdownLink :href="route('profile.edit')"> Applications </DropdownLink>
-                                        <DropdownLink :href="route('profile.edit')"> Settings </DropdownLink>
-                                        <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
-                                        </DropdownLink>
+                                    
+
+                                    <template #content >
+
+                                        <div v-if="$page.props.auth.userRoles.includes('admin')">
+                                            <DropdownLink :href="route('profile.edit')"> Profile</DropdownLink>
+                                            <DropdownLink :href="route('profile.edit')"> Applications </DropdownLink>
+                                            <DropdownLink :href="route('profile.edit')"> Settings </DropdownLink>
+                                            <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
+                                            <DropdownLink :href="route('logout')" method="post" as="button">
+                                                Log Out
+                                            </DropdownLink>
+                                        </div>
+
+
+                                        <div v-if="$page.props.auth.userRoles.includes('jobseeker')">
+                                            <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                            <DropdownLink :href="route('profile.edit')"> Applications </DropdownLink>
+                                            <DropdownLink :href="route('profile.edit')"> Settings </DropdownLink>
+                                            <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
+                                            <DropdownLink :href="route('logout')" method="post" as="button">
+                                                Log Out
+                                            </DropdownLink>
+                                        </div>
+                                      
                                     </template>
                                 </Dropdown>
                             </div>
