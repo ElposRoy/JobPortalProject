@@ -62,7 +62,7 @@ const selectJobseeker = (role) => {
           
         <div class="flex justify-center ">
            
-            <button @click="selectJobseeker('Jobseeker')" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 
+            <button @click="selectJobseeker('Jobseeker')"  type="button" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 
             overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 
             group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white "
           
@@ -75,14 +75,14 @@ const selectJobseeker = (role) => {
                         Jobseeker
                 </span>
               </button>
-              <button @click="selectJobseeker('Employer')" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+              <button @click="selectJobseeker('Employer')"  type="button" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                 <span class="flex items-center relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                     <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><mask id="ipSUserBusiness0"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><circle cx="24" cy="12" r="8" fill="#fff"/><path d="M42 44c0-9.941-8.059-18-18-18S6 34.059 6 44"/><path fill="#fff" d="m24 44l4-5l-4-13l-4 13l4 5Z"/></g></mask><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSUserBusiness0)"/></svg>
                     Employer
                 </span>
               </button>
         </div>
-       
+        <InputError class="mt-2 text-white text-center" :message="form.errors.role" />
         <div class="text-center text-white text-2xl mt-5 mb-5">
             <h5>{{ roleText }} </h5>
         </div>
