@@ -60,7 +60,7 @@ export default {
             
            <img class="fill-current h-8 w-8 mr-2" :src="baseurl+'/images/Logo.png'">
     
-          <span class="font-semibold text-2xl tracking-tight text-red-600">MOIXIE</span>
+          <span class="font-semibold text-2xl tracking-tight text-red-600">Axolios</span>
         </div>
         <div class="block lg:hidden">
           <button class="flex items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white">
