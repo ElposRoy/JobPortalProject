@@ -39,6 +39,14 @@ Route::group([], function () {
     Route::get('/announcement', function () {
         return Inertia::render('Announcement/Index', getInertiaData());
     })->name('announcement');
+      // Dashboard Announcement ↓
+      Route::get('/dashboard/announcement', function () {
+        return Inertia::render('Dashboard/Jobseeker-Page/Announcement', getInertiaData());
+    })->name('dashboard-announcement');
+
+
+
+
 
     // JOBS SEARCH ↓
     Route::get('/jobs', function () {

@@ -62,12 +62,6 @@ defineProps({
               </div>
 
 
-              <!-- How it Work Part -->
-            
-                <!-- How it work -->
-
-
-
 
             </div>
 
