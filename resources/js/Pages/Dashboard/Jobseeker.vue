@@ -6,6 +6,9 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 
+import Slide from '@/Components/Slide.vue'
+import Carousel from '@/Components/Carousel.vue'
+
 const baseurl = ref('');
 onMounted(() => {
   baseurl.value = location.origin;
@@ -14,7 +17,49 @@ onMounted(() => {
 
 </script>
 
+<script>
 
+
+
+
+    export default {
+  data() {
+    return {
+
+       
+
+      baseurl: location.origin,
+      carouselSlides: [
+        { title: 'Job-Type', key: 'Type' },
+        { title: 'Job-Type', key: 'Type' },
+        { title: 'Job-Type', key: 'Type' },
+        
+      ],
+      carouselCards: [
+        { title: 'Job-Type', key: 'Type' },
+        { position: 'Position', key: 'Job_position' },
+        { posted: 'Posted', key: 'Posted' },
+        
+      ],
+
+    
+    };
+  },
+  computed: {
+    totalCarouselCards() {
+        return Math.ceil(this.carouselCards.length / 3);
+      
+    },
+   
+  },
+
+  mounted() {
+   
+  },
+  
+};
+
+</script>
 
 <template>
     <Head title="Jobseeker Dashboard" />
@@ -131,12 +176,58 @@ onMounted(() => {
                </div>
 
                <!-- 2nd row Recommended jobs -->
-               <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                  <p class="text-2xl text-gray-400 dark:text-gray-500">
-                    
-                     Recommended jobs here in Carousel 
-                  </p>
-               </div>
+              
+               <div class=" mb-4 rounded bg-gray-50 dark:bg-gray-800">    
+               
+                
+                  <div class="flex items-center justify-center  rounded bg-gray-50 dark:bg-gray-800">
+                     <p class="text-3xl text-gray-300 dark:text-gray-200 mt-10">
+                       RECOMMENDED JOBS
+                     </p>
+                  </div>
+                  
+            <Carousel 
+            :navigation="true" 
+            :pagination="true"
+            :start-auto-play="true"
+            :timeout="10000"
+            class="carousel" 
+            v-slot="{currentSlide}"
+            >
+       
+            <!-- Carousel Cards is the numbers of how many slides or paginate  v-for="(job, index) in carouselCards" :key="index"-->
+        <Slide v-for="(slide, index) in carouselSlides" :key="index">
+            <div v-show="currentSlide === index + 1 " class="slide-info ms-10 me-10 mb-10 absolute flex justify-center items-center inset-0">
+            
+        <div class="card-jobs m-5 w-full" v-for="(job, index) in carouselCards" :key="index">
+    
+            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    
+                <h5 class="mb-2 text-1xl font-semibold tracking-tight text-gray-400 ">Full-time</h5>
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Personal Assistant</h5>
+                    <h5 class="mb-2 text-2lg font-semibold tracking-tight text-gray-800 dark:text-white">Pasig, Makati City</h5>
+                    <h5 class="mb-2 text-1xl font-semibold tracking-tight text-gray-400">4 Days ago</h5>
+                </a>
+
+                <div class="flex justify-center mt-5">
+                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 
+                    focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full 
+                    text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 
+                    dark:focus:ring-blue-800">More Info</button>
+                </div>
+                
+            </div>
+    
+        </div>
+             
+    
+            </div>
+          </Slide>
+          
+      </Carousel>
+      
+   </div> 
             <!-- 2nd row Recommended jobs -->
 
             <!-- 4 cards in 3 row -->
@@ -222,3 +313,21 @@ onMounted(() => {
          </div>
     </Sidebar>
 </template>
+
+<style>
+.input-background-color input {
+    border-radius: 10%;
+    background-color: rgb(236, 236, 236);
+    color: rgb(0, 0, 0);
+}
+
+.carousel {
+    position : relative;
+    max-height: 35vh;
+    height: 100vh;
+
+  }
+ 
+
+</style>
+

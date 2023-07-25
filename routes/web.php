@@ -75,10 +75,14 @@ Route::group([], function () {
     })->middleware(['auth', 'role:admin'])->name('admin');
 
         
-    // DASHBOARD  ↓
+    // Jobseeker DASHBOARD  ↓
     Route::get('/jobseeker', function () {
         return Inertia::render('Dashboard/Jobseeker', getInertiaData());
     })->middleware(['auth', 'role:jobseeker'])->name('jobseeker');
+
+    Route::get('/dashboard/resume-profile', function () {
+        return Inertia::render('Dashboard/Jobseeker-Page/Resume-Profile', getInertiaData());
+    })->middleware(['auth', 'role:jobseeker'])->name('resume-profile');
 
 
     
