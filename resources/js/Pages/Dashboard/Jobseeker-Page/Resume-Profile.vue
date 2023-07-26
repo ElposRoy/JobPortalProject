@@ -1,13 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Sidebar from '@/Layouts/Sidebar.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
+
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 
-import Slide from '@/Components/Slide.vue'
-import Carousel from '@/Components/Carousel.vue'
+
+import Dialog from '@/Pages/Dashboard/Components/Dialog.vue';
+import Tertiary from '@/Pages/Dashboard/Components/Tertiary.vue';
 
 const baseurl = ref('');
 onMounted(() => {
@@ -18,29 +18,55 @@ onMounted(() => {
 </script>
 
 <script>
+export default {
+  
+  data: () => ({
 
-
-
-
-    export default {
-  data() {
-    return {
-
-       
-
-      baseurl: location.origin,
+  
+    dialogEducation: false,
  
-    };
-  },
+   
+  
+    // prod:{}
+  }
+  ),
   computed: {
+ 
+},
+
+watch: {
+  dialogEducation (val) {
+    val || this.closeTertiaryDialog()
   },
 
-  mounted() {
+
+},
+
+created () {
+  this.initialize()
+},
+
+methods: {
+
+  initialize () {
+
+  },
+
+  openTertiaryDialog(){
+    
+    this.dialogEducation = true;
+    console.log('asd');
    
   },
-  
-};
 
+  closeTertiaryDialog(){
+    this.dialogEducation = false;
+
+  },
+
+
+},
+}
 </script>
 
 <template>
@@ -129,7 +155,7 @@ onMounted(() => {
    
    
     
-    <div class="grid md:grid-cols-5 md:gap-6">
+    <div class="grid md:grid-cols-4 md:gap-6">
       <div class="relative z-0 w-full mb-6 group">
           <input type="text" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
@@ -147,10 +173,7 @@ onMounted(() => {
         <label for="floating_suffix" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
     </div>
     
-    <div class="relative z-0 w-full mb-6 group">
-      <input type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label for="floating_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
-  </div>
+
 
     </div>
 
@@ -301,12 +324,77 @@ onMounted(() => {
 
 <div class="mb-5">
   
-<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Career Objective</label>
+<label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Career Objective</label>
 <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your career objectives here..."></textarea>
 
 </div>
 
-    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+<hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
+  <div class="Education">
+
+    <div class="flex items-center">
+      <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Education </label>
+      <button type="button" @click="openTertiaryDialog()" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+      focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+      dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Tertiary</button>
+
+      <button type="button" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+      focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+      dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Secondary</button>
+
+      <button type="button" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+      focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+      dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Primary</button>
+      
+
+    </div>
+
+    <div>
+
+      <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
+
+      <Dialog :dialogEducation="dialogEducation">
+        <Tertiary 
+        :dialogEducation="dialogEducation"
+        @closeTertiaryDialog="closeTertiaryDialog">
+        </Tertiary>
+      </Dialog>
+<!-- 
+<div  class="block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  
+  <div class="flex justify-between">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Computer Communication Development Institute</h5>
+    <p class="font-normal text-orange-700 dark:text-orange-300">2020 - 2023</p>
+
+  </div>
+  
+  <p class="font-normal text-green-700 dark:text-green-300">Bachelor of Science in Information Technology</p>
+
+  <p class="font-normal mt-3 text-gray-700 dark:text-gray-400 text-justify ">
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+    when an unknown printer took a galley of type and scrambled it to make a type 
+    specimen book. It has survived not only five centuries, but also the leap into 
+    electronic typesetting, remaining essentially unchanged. It was popularised in 
+    the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and 
+    more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div> -->
+
+
+    </div>
+
+  </div>
+
+
+
+<hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
+
+    <button type="button" 
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+    focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+    dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   
   </div>
   </form>
@@ -314,7 +402,7 @@ onMounted(() => {
                   </div>
            
    </div> 
-            <!-- 2nd row Recommended jobs -->
+          
 
         
 
