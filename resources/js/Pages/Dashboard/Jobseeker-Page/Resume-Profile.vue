@@ -2,8 +2,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Sidebar from '@/Layouts/Sidebar.vue';
 
-import { Head } from '@inertiajs/vue3';
+import { useForm,Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import { router } from '@inertiajs/vue3'
 
 
 import Dialog from '@/Pages/Dashboard/Components/Dialog.vue';
@@ -14,6 +15,33 @@ onMounted(() => {
   baseurl.value = location.origin;
 });
 
+// Function to format the date in a readable format (e.g., "July 6, 2023")
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString(undefined, options);
+}
+
+
+const EducationValuesForm = useForm ({
+  Level: '',
+  StartDate: null,
+  EndDate: null,
+  School: '',
+  Address: '',
+  Degree: '',
+  Description: '',
+
+});
+
+
+const EducationArray= useForm ({
+  EducationCollection: JSON.parse(localStorage.getItem('currentEducation')) || [],
+
+});
+
+
+
 
 </script>
 
@@ -22,7 +50,7 @@ export default {
   
   data: () => ({
 
-  
+    errorMessage: '',
     dialogEducation: false,
  
    
@@ -36,7 +64,7 @@ export default {
 
 watch: {
   dialogEducation (val) {
-    val || this.closeTertiaryDialog()
+    val || this.closeEducationDialog()
   },
 
 
@@ -52,16 +80,64 @@ methods: {
 
   },
 
-  openTertiaryDialog(){
+  openEducationDialog(Form,Level){
     
-    this.dialogEducation = true;
-    console.log('asd');
    
+
+    this.dialogEducation = true;
+    Form.Level = Level
+  
+
+  localStorage.removeItem('currentEducation');
+  
   },
 
-  closeTertiaryDialog(){
+  closeEducationDialog(){
     this.dialogEducation = false;
 
+  },
+
+  handleSubmit(EducationArray,EducationValue) {
+  // Validate the form before emitting the event
+ 
+  if (EducationValue.Level === 'Tertiary' || EducationValue.Level === 'Secondary') {
+    if (!EducationValue.StartDate || !EducationValue.EndDate || !EducationValue.School || !EducationValue.Degree || !EducationValue.Address) {
+      this.errorMessage = "Please fill in all required fields.";
+      return;
+    }
+  } else if (EducationValue.Level === 'Primary') {
+    if (!EducationValue.StartDate || !EducationValue.EndDate || !EducationValue.School || !EducationValue.Address) {
+     
+      this.errorMessage = "Please fill in all required fields.";
+      return;
+    }
+  } else {
+    this.errorMessage = "Invalid education level."; // Show an error message for invalid education level
+    return;
+  }
+
+  // All required fields are filled, reset the error message and run the "addEducation" function
+  this.errorMessage = '';
+  return this.addEducation(EducationArray,EducationValue);
+},
+
+
+  addEducation(EducationArray,formValues){
+ 
+    const newEducation = {}; //New object to be store the values
+
+    newEducation.StartDate = formValues.StartDate ; 
+    newEducation.EndDate = formValues.EndDate ; 
+    newEducation.School = formValues.School ; 
+    newEducation.Address = formValues.Address ; 
+    newEducation.Degree = formValues.Degree ; 
+    newEducation.Description = formValues.Description ; 
+
+    EducationArray.EducationCollection.push(newEducation);
+    
+    localStorage.setItem('currentEducation', JSON.stringify(EducationArray.EducationCollection));
+
+    
   },
 
 
@@ -335,15 +411,15 @@ methods: {
 
     <div class="flex items-center">
       <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Education </label>
-      <button type="button" @click="openTertiaryDialog()" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+      <button type="button" @click="openEducationDialog(EducationValuesForm,'Tertiary')" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
       focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
       dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Tertiary</button>
 
-      <button type="button" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+      <button type="button" @click="openEducationDialog(EducationValuesForm,'Secondary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
       focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
       dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Secondary</button>
 
-      <button type="button" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+      <button type="button" @click="openEducationDialog(EducationValuesForm,'Primary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
       focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
       dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Primary</button>
       
@@ -357,29 +433,34 @@ methods: {
       <Dialog :dialogEducation="dialogEducation">
         <Tertiary 
         :dialogEducation="dialogEducation"
-        @closeTertiaryDialog="closeTertiaryDialog">
+        :errorMessage="errorMessage"
+        :EducationValuesForm="EducationValuesForm"
+        :EducationArray="EducationArray"
+        @closeEducationDialog="closeEducationDialog"
+        @handleSubmit="handleSubmit"
+        @addEducation="addEducation">
         </Tertiary>
       </Dialog>
-<!-- 
-<div  class="block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+  <div  
+  v-for="(educationItem, index) in EducationArray.EducationCollection"
+  :key="index"
+  id="EducationCard" 
+ class="block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
   
   <div class="flex justify-between">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Computer Communication Development Institute</h5>
-    <p class="font-normal text-orange-700 dark:text-orange-300">2020 - 2023</p>
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ educationItem.School }}</h5>
+    <p class="font-normal text-orange-700 dark:text-orange-300"> {{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</p>
 
   </div>
   
-  <p class="font-normal text-green-700 dark:text-green-300">Bachelor of Science in Information Technology</p>
+  <p class="font-normal text-green-700 dark:text-green-300">{{ educationItem.Degree }}</p>
+
+  <p class="font-normal text-gray-700 dark:text-gray-300">{{ educationItem.Address }}</p>
 
   <p class="font-normal mt-3 text-gray-700 dark:text-gray-400 text-justify ">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-    when an unknown printer took a galley of type and scrambled it to make a type 
-    specimen book. It has survived not only five centuries, but also the leap into 
-    electronic typesetting, remaining essentially unchanged. It was popularised in 
-    the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and 
-    more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-</div> -->
+    {{ educationItem.Description }}</p>
+</div> 
 
 
     </div>

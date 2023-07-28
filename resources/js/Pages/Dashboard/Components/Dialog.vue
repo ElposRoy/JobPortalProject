@@ -20,7 +20,7 @@ defineProps(['dialogEducation']);
   role="dialog"
 >
   <div class="modal-overlay"></div> <!-- The modal overlay element -->
-  <div class="relative w-full lg:max-w-3xl max-h-full">
+  <div class="relative w-full lg:max-w-4xl max-h-full">
     <slot/>
   </div>
 </div>
