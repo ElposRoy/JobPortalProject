@@ -47,10 +47,16 @@ const EducationArray= useForm ({
 
 });
 
-const SkillArray= useForm ({
+const SkillArray = useForm ({
   SkillCollection: JSON.parse(localStorage.getItem('currentSkill')) || [],
 
 });
+
+const showSkillAddedd  = useForm ({
+  SkillAddedd: JSON.parse(localStorage.getItem('addeddSkill')) || [],
+
+});
+
 
 
 
@@ -62,6 +68,8 @@ export default {
   data: () => ({
 
     errorMessage: '',
+    getSkillArrayLength: null,
+    AddeddSkillCard: false,
     dialogEducation: false,
     dialogSkill: false,
     dialogEducation: false,
@@ -93,6 +101,9 @@ watch: {
   PrimaryCard (val) {
     val || this.closePrimaryCard()
   },
+  AddeddSkillCard(val){
+    val || this.hideSkillAddeddCard()
+  }
 
 
 },
@@ -106,7 +117,7 @@ methods: {
  
  
   initialize () {
-    // localStorage.removeItem('currentSkill');
+    localStorage.removeItem('currentSkill');
   },
 
   checkEducation(){
@@ -141,10 +152,14 @@ methods: {
   localStorage.removeItem('currentEducation');
   
   },
-  openSkillsDialog(SkillForm){
+  openSkillsDialog(SkillAddedd,length){
 
     this.dialogSkill = true;
-  
+
+    length = SkillAddedd.SkillAddedd.length;
+ if(length > 0){
+      this.AddeddSkillCard=true;
+    }
 
 },
   closeEducationDialog(){
@@ -153,6 +168,11 @@ methods: {
   },
   closeSkillsDialog(){
     this.dialogSkill=false;
+  },
+  clearSkills(skillAddedd){
+    localStorage.removeItem('addeddSkill');
+    skillAddedd.SkillAddedd=[];
+    this.AddeddSkillCard=false;
   },
 
   handleSubmit(EducationArray,EducationValue) {
@@ -207,16 +227,24 @@ methods: {
 
   
   },
-  addSkill(SkillArray,formValues){
- 
 
+  addSkill(SkillAddedd,formValues,length){
+ 
+    length = SkillAddedd.SkillAddedd.length + 1;
+
+    console.log(length)
     const newSkill = {}; //New object to be store the values
     newSkill.Skill = formValues.Skill;
  
-    SkillArray.SkillCollection.push(newSkill);
+    SkillAddedd.SkillAddedd.push(newSkill)
 
-    localStorage.setItem('currentSkill', JSON.stringify(SkillArray.SkillCollection));
-    console.log(SkillArray)
+    localStorage.setItem('addeddSkill', JSON.stringify(SkillAddedd.SkillAddedd));
+
+    if(length > 0){
+      this.AddeddSkillCard=true;
+    }
+    formValues.reset();
+   
 },
 
 // Education Cards
@@ -228,6 +256,9 @@ methods: {
   },
   closePrimaryCard(){
     this.PrimaryCard=false;
+  },
+  hideSkillAddeddCard(){
+    this.AddeddSkillCard=false;
   },
   
 // Education Cards
@@ -713,7 +744,7 @@ methods: {
 
       <div class="flex items-center">
         <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Skills</label>
-        <button type="button"  @click="openSkillsDialog(SkillValuesForm)" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+        <button type="button"  @click="openSkillsDialog(showSkillAddedd,getSkillArrayLength)" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
         focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
         dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Add Skill</button>
 
@@ -726,10 +757,13 @@ methods: {
 
         <Dialog :dialogSkill="dialogSkill">
           <SkillInput
+          :AddeddSkillCard="AddeddSkillCard"
           :SkillValuesForm="SkillValuesForm"
-          :SkillArray="SkillArray"
+          :showSkillAddedd="showSkillAddedd"
+          :getSkillArrayLength="getSkillArrayLength "
           @addSkill="addSkill"
           @closeSkillsDialog="closeSkillsDialog"
+          @clearSkills="clearSkills"
           >
 
           </SkillInput>
