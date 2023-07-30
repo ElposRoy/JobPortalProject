@@ -8,7 +8,10 @@ import { router } from '@inertiajs/vue3'
 
 
 import Dialog from '@/Pages/Dashboard/Components/Dialog.vue';
-import Tertiary from '@/Pages/Dashboard/Components/Tertiary.vue';
+import EducationInput from '@/Pages/Dashboard/Components/EducationInput.vue';
+import SkillInput from '@/Pages/Dashboard/Components/SkillInput.vue';
+
+
 
 const baseurl = ref('');
 onMounted(() => {
@@ -34,12 +37,20 @@ const EducationValuesForm = useForm ({
 
 });
 
+const SkillValuesForm = useForm ({
+  Skill: '',
+
+});
 
 const EducationArray= useForm ({
   EducationCollection: JSON.parse(localStorage.getItem('currentEducation')) || [],
 
 });
 
+const SkillArray= useForm ({
+  SkillCollection: JSON.parse(localStorage.getItem('currentSkill')) || [],
+
+});
 
 
 
@@ -52,7 +63,11 @@ export default {
 
     errorMessage: '',
     dialogEducation: false,
- 
+    dialogSkill: false,
+    dialogEducation: false,
+    TertiaryCard: false,
+    SecondaryCard: false,
+    PrimaryCard: false,
    
   
     // prod:{}
@@ -66,35 +81,78 @@ watch: {
   dialogEducation (val) {
     val || this.closeEducationDialog()
   },
+  dialogSkill (val) {
+    val || this.closeSkillsDialog()
+  },
+  TertiaryCard (val) {
+    val || this.closeTertiaryCard()
+  },
+  SecondaryCard (val) {
+    val || this.closeSecondaryCard()
+  },
+  PrimaryCard (val) {
+    val || this.closePrimaryCard()
+  },
 
 
 },
 
 created () {
   this.initialize()
+  this.checkEducation() //Check if there is an exisitng education addedd then show it 
 },
 
 methods: {
-
+ 
+ 
   initialize () {
-
+    // localStorage.removeItem('currentSkill');
   },
 
-  openEducationDialog(Form,Level){
+  checkEducation(){
+    const CheckEducationCollection = JSON.parse(localStorage.getItem('currentEducation')) || [];
     
-   
+    // Check if there is an item with Level === 'Tertiary'
+    const hasTertiaryLevel = CheckEducationCollection.some((item) =>
+      item.Level.toLowerCase() === 'tertiary'
+    );
+    const hasSecondaryLevel = CheckEducationCollection.some((item) =>
+      item.Level.toLowerCase() === 'secondary'
+    );
+    const hasPrimaryLevel = CheckEducationCollection.some((item) =>
+      item.Level.toLowerCase() === 'primary'
+    );
 
+    if (hasTertiaryLevel) {
+      this.TertiaryCard = true;
+    }
+
+    if (hasSecondaryLevel) {
+      this.SecondaryCard = true;
+    }
+    if (hasPrimaryLevel) {
+      this.PrimaryCard = true;
+    }
+  },
+  
+  openEducationDialog(Form,Level){
     this.dialogEducation = true;
     Form.Level = Level
-  
-
   localStorage.removeItem('currentEducation');
   
   },
+  openSkillsDialog(SkillForm){
 
+    this.dialogSkill = true;
+  
+
+},
   closeEducationDialog(){
     this.dialogEducation = false;
 
+  },
+  closeSkillsDialog(){
+    this.dialogSkill=false;
   },
 
   handleSubmit(EducationArray,EducationValue) {
@@ -124,8 +182,18 @@ methods: {
 
   addEducation(EducationArray,formValues){
  
-    const newEducation = {}; //New object to be store the values
+    if(formValues.Level === 'Tertiary'){
+      this.TertiaryCard = true;
+    }
+    else if(formValues.Level === 'Secondary'){
+      this.SecondaryCard = true;
+    }
+    else if(formValues.Level === 'Primary'){
+      this.PrimaryCard = true;
+    }
 
+    const newEducation = {}; //New object to be store the values
+    newEducation.Level = formValues.Level;
     newEducation.StartDate = formValues.StartDate ; 
     newEducation.EndDate = formValues.EndDate ; 
     newEducation.School = formValues.School ; 
@@ -137,10 +205,32 @@ methods: {
     
     localStorage.setItem('currentEducation', JSON.stringify(EducationArray.EducationCollection));
 
-    
+  
   },
+  addSkill(SkillArray,formValues){
+ 
 
+    const newSkill = {}; //New object to be store the values
+    newSkill.Skill = formValues.Skill;
+ 
+    SkillArray.SkillCollection.push(newSkill);
 
+    localStorage.setItem('currentSkill', JSON.stringify(SkillArray.SkillCollection));
+    console.log(SkillArray)
+},
+
+// Education Cards
+  closeTertiaryCard(){
+    this.TertiaryCard=false;
+  },
+  closeSecondaryCard(){
+    this.SecondaryCard=false;
+  },
+  closePrimaryCard(){
+    this.PrimaryCard=false;
+  },
+  
+// Education Cards
 },
 }
 </script>
@@ -430,8 +520,10 @@ methods: {
 
       <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
 
-      <Dialog :dialogEducation="dialogEducation">
-        <Tertiary 
+      <Dialog 
+      :dialogEducation="dialogEducation"
+      >
+        <EducationInput 
         :dialogEducation="dialogEducation"
         :errorMessage="errorMessage"
         :EducationValuesForm="EducationValuesForm"
@@ -439,28 +531,172 @@ methods: {
         @closeEducationDialog="closeEducationDialog"
         @handleSubmit="handleSubmit"
         @addEducation="addEducation">
-        </Tertiary>
+        </EducationInput>
       </Dialog>
 
-  <div  
-  v-for="(educationItem, index) in EducationArray.EducationCollection"
-  :key="index"
-  id="EducationCard" 
- class="block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-  
-  <div class="flex justify-between">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ educationItem.School }}</h5>
-    <p class="font-normal text-orange-700 dark:text-orange-300"> {{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</p>
+      <div class="grid md:grid-cols-3 md:gap-3">
 
-  </div>
-  
-  <p class="font-normal text-green-700 dark:text-green-300">{{ educationItem.Degree }}</p>
+            <!-- Tertiary Col -->
+            <div  v-show="TertiaryCard"
+            class="w-full max-w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <div class="flex justify-between px-4 pt-4">
+                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white text-center">Tertiary</h5>
+                  <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
+                      <span class="sr-only">Open dropdown</span>
+                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                      </svg>
+                  </button>
+                  <!-- Dropdown menu -->
+                  <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                      <ul class="py-2" aria-labelledby="dropdownButton">
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                      </li>
+                      </ul>
+                  </div>
 
-  <p class="font-normal text-gray-700 dark:text-gray-300">{{ educationItem.Address }}</p>
+                  
 
-  <p class="font-normal mt-3 text-gray-700 dark:text-gray-400 text-justify ">
-    {{ educationItem.Description }}</p>
-</div> 
+
+              </div>
+              <div  
+                    v-for="(educationItem, index) in EducationArray.EducationCollection"
+                    :key="index"
+                    id="EducationCard" 
+                  class="block max-w-full p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    
+                    <div class="flex justify-end">
+                    
+                      <p class="font-normal text-orange-700 dark:text-orange-300"> {{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</p>
+                  
+                    </div>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ educationItem.School }}</h5>
+                    <p class="font-normal text-green-700 dark:text-green-300">{{ educationItem.Degree }}</p>
+                  
+                    <p class="font-normal text-gray-700 dark:text-gray-300">{{ educationItem.Address }}</p>
+                  
+                    <p class="font-normal mt-3 text-gray-700 dark:text-gray-400 text-justify ">
+                      {{ educationItem.Description }}</p>
+                  </div> 
+            </div>
+            <!-- Tertiary Col -->
+                  
+
+            <!-- SEcondary Col -->
+            <div v-show="SecondaryCard"
+            class="w-full max-w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <div class="flex justify-between px-4 pt-4">
+                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white text-center">Secondary</h5>
+                  <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
+                      <span class="sr-only">Open dropdown</span>
+                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                      </svg>
+                  </button>
+                  <!-- Dropdown menu -->
+                  <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                      <ul class="py-2" aria-labelledby="dropdownButton">
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                      </li>
+                      </ul>
+                  </div>
+
+                  
+
+
+              </div>
+              <div  
+                    v-for="(educationItem, index) in EducationArray.EducationCollection"
+                    :key="index"
+                    id="EducationCard" 
+                  class="block max-w-full p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    
+                    <div class="flex justify-end">
+                    
+                      <p class="font-normal text-orange-700 dark:text-orange-300"> {{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</p>
+                  
+                    </div>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ educationItem.School }}</h5>
+                    <p class="font-normal text-green-700 dark:text-green-300">{{ educationItem.Degree }}</p>
+                  
+                    <p class="font-normal text-gray-700 dark:text-gray-300">{{ educationItem.Address }}</p>
+                  
+                    <p class="font-normal mt-3 text-gray-700 dark:text-gray-400 text-justify ">
+                      {{ educationItem.Description }}</p>
+                  </div> 
+            </div>
+            <!-- SEcondary Col -->
+
+            <!-- Primary Col -->
+            <div v-show="PrimaryCard"
+            
+            class="w-full max-w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <div class="flex justify-between px-4 pt-4">
+                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white text-center">Primary</h5>
+                  <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
+                      <span class="sr-only">Open dropdown</span>
+                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                      </svg>
+                  </button>
+                  <!-- Dropdown menu -->
+                  <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                      <ul class="py-2" aria-labelledby="dropdownButton">
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                      </li>
+                      </ul>
+                  </div>
+
+                  
+
+
+              </div>
+              <div  
+                    v-for="(educationItem, index) in EducationArray.EducationCollection"
+                  
+                    :key="index"
+                    id="EducationCard" 
+                  class="block max-w-full p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    
+                    <div class="flex justify-end">
+                    
+                      <p class="font-normal text-orange-700 dark:text-orange-300"> {{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</p>
+                  
+                    </div>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ educationItem.School }}</h5>
+                    <p class="font-normal text-green-700 dark:text-green-300">{{ educationItem.Degree }}</p>
+                  
+                    <p class="font-normal text-gray-700 dark:text-gray-300">{{ educationItem.Address }}</p>
+                  
+                    <p class="font-normal mt-3 text-gray-700 dark:text-gray-400 text-justify ">
+                      {{ educationItem.Description }}</p>
+                  </div> 
+            </div>
+            <!-- Primary Col -->
+            
+        </div>
+
 
 
     </div>
@@ -470,6 +706,51 @@ methods: {
 
 
 <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
+
+    <!-- SKILLS SECTION -->
+    <div class="Skills">
+
+      <div class="flex items-center">
+        <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Skills</label>
+        <button type="button"  @click="openSkillsDialog(SkillValuesForm)" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+        focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+        dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Add Skill</button>
+
+
+      </div>
+
+      <div>
+
+        <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
+
+        <Dialog :dialogSkill="dialogSkill">
+          <SkillInput
+          :SkillValuesForm="SkillValuesForm"
+          :SkillArray="SkillArray"
+          @addSkill="addSkill"
+          @closeSkillsDialog="closeSkillsDialog"
+          >
+
+          </SkillInput>
+        </Dialog>
+
+        <div class="grid md:grid-cols-3 md:gap-3">
+
+        
+
+          </div>
+
+
+
+      </div>
+
+    </div>
+    <!-- SKILLS SECTION -->
+
+<hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
+
 
 
     <button type="button" 
