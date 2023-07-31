@@ -31,8 +31,8 @@ onMounted(() => {
 });
 
 
-defineProps(['SkillValuesForm','showSkillAddedd','errorMessage','getSkillArrayLength','AddeddSkillCard']);
-defineEmits(['closeSkillsDialog','addSkill','clearSkills']);
+defineProps(['SkillValuesForm','showSkillAddedd','errorMessage','getSkillArrayLength','AddeddSkillCard','skillErrorMessage']);
+defineEmits(['closeSkillsDialog','addSkill','clearSkills','removeSkill']);
 
 
 
@@ -67,6 +67,7 @@ defineEmits(['closeSkillsDialog','addSkill','clearSkills']);
       <div class="p-6 space-y-6">
       
 <form>   
+  <InputError class="mt-2 flex justify-end" :message="skillErrorMessage" />
   <label for="default-skill" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Add Skill</label>
   <div class="relative">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -100,7 +101,9 @@ defineEmits(['closeSkillsDialog','addSkill','clearSkills']);
   <span  v-for="(skillItem, index) in showSkillAddedd.SkillAddedd"
   :key="index" id="badge-dismiss-dark" class="inline-flex items-center mb-2 px-2 py-1 mr-2 text-md font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
     {{ skillItem.Skill }}
-    <button type="button" 
+    <button
+    @click="$emit('removeSkill', skillItem.Skill,showSkillAddedd)"
+     type="button" 
     class="inline-flex items-center p-1 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300" data-dismiss-target="#badge-dismiss-dark" aria-label="Remove">
       <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>

@@ -66,7 +66,7 @@ const showSkillAddedd  = useForm ({
 export default {
   
   data: () => ({
-
+    skillErrorMessage: '',
     errorMessage: '',
     getSkillArrayLength: null,
     AddeddSkillCard: false,
@@ -230,24 +230,32 @@ methods: {
 
   addSkill(SkillAddedd,formValues,length){
  
+    if (!formValues.Skill) {
+      this.skillErrorMessage = "Please fill in skill field.";
+      return;
+    }
+    else{
+      this.skillErrorMessage = "";
+    }
+
     length = SkillAddedd.SkillAddedd.length + 1;
 
-    console.log(length)
+  
     const newSkill = {}; //New object to be store the values
     newSkill.Skill = formValues.Skill;
  
-    SkillAddedd.SkillAddedd.push(newSkill)
+    SkillAddedd.SkillAddedd.push(newSkill);
 
     localStorage.setItem('addeddSkill', JSON.stringify(SkillAddedd.SkillAddedd));
 
-    if(length > 0){
-      this.AddeddSkillCard=true;
+    if(length >0 ){
+      this.AddeddSkillCard = true;
     }
     formValues.reset();
    
 },
 
-// Education Cards
+// close/remove/hide/ etc.
   closeTertiaryCard(){
     this.TertiaryCard=false;
   },
@@ -259,6 +267,18 @@ methods: {
   },
   hideSkillAddeddCard(){
     this.AddeddSkillCard=false;
+  },
+  removeSkill(getSkill,SkilllAddedd){
+  
+        // Find the index of the object with the matching id
+        const index = SkilllAddedd.SkillAddedd.findIndex((item) => item.Skill=== getSkill);
+    // If the object exists, remove it from the array
+    if (index !== -1) {
+      SkilllAddedd.SkillAddedd.splice(index, 1);
+      localStorage.setItem('addeddSkill', JSON.stringify(SkilllAddedd.SkillAddedd));
+        //Call the GetTotal Function to Calculate the total
+    }
+
   },
   
 // Education Cards
@@ -761,9 +781,11 @@ methods: {
           :SkillValuesForm="SkillValuesForm"
           :showSkillAddedd="showSkillAddedd"
           :getSkillArrayLength="getSkillArrayLength "
+          :skillErrorMessage="skillErrorMessage"
           @addSkill="addSkill"
           @closeSkillsDialog="closeSkillsDialog"
           @clearSkills="clearSkills"
+          @removeSkill="removeSkill"
           >
 
           </SkillInput>
