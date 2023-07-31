@@ -268,7 +268,7 @@ methods: {
   hideSkillAddeddCard(){
     this.AddeddSkillCard=false;
   },
-  removeSkill(getSkill,SkilllAddedd){
+  removeSkill(getSkill,SkilllAddedd,length){
   
         // Find the index of the object with the matching id
         const index = SkilllAddedd.SkillAddedd.findIndex((item) => item.Skill=== getSkill);
@@ -279,9 +279,18 @@ methods: {
         //Call the GetTotal Function to Calculate the total
     }
 
+    length = SkilllAddedd.SkillAddedd.length ;
+
+    console.log(length)
+    if(length >0 ){
+      this.AddeddSkillCard = true;
+    }
+    else{
+      this.AddeddSkillCard = false;
+    }
+
   },
-  
-// Education Cards
+
 },
 }
 </script>

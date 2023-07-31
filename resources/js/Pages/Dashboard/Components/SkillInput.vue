@@ -102,7 +102,7 @@ defineEmits(['closeSkillsDialog','addSkill','clearSkills','removeSkill']);
   :key="index" id="badge-dismiss-dark" class="inline-flex items-center mb-2 px-2 py-1 mr-2 text-md font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
     {{ skillItem.Skill }}
     <button
-    @click="$emit('removeSkill', skillItem.Skill,showSkillAddedd)"
+    @click="$emit('removeSkill', skillItem.Skill,showSkillAddedd,getSkillArrayLength)"
      type="button" 
     class="inline-flex items-center p-1 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300" data-dismiss-target="#badge-dismiss-dark" aria-label="Remove">
       <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
