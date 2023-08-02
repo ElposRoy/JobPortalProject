@@ -1,34 +1,10 @@
 <script setup>
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+
 import { ref, onMounted } from 'vue';
 import InputError from '@/Components/InputError.vue';
 
 // Function to format the date in a readable format (e.g., "July 6, 2023")
-function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  const date = new Date(dateString);
-  return date.toLocaleDateString(undefined, options);
-}
 
-// Wait for DOM to be ready before accessing the elements
-onMounted(() => {
-  // Get references to the date inputs and the elements to display the readable dates
-  const startDateInput = document.querySelector('input[name="start"]');
-  const endDateInput = document.querySelector('input[name="end"]');
-  const readableStartDateElement = document.getElementById('readableStartDate');
-  const readableEndDateElement = document.getElementById('readableEndDate');
-
-  // Event listener to update the readable dates when the date inputs change
-  startDateInput.addEventListener('change', () => {
-    const startDate = startDateInput.value;
-    readableStartDateElement.textContent = formatDate(startDate);
-  });
-
-  endDateInput.addEventListener('change', () => {
-    const endDate = endDateInput.value;
-    readableEndDateElement.textContent = formatDate(endDate);
-  });
-});
 
 
 defineProps(['SkillValuesForm','showSkillAddedd','errorMessage','getSkillArrayLength','AddeddSkillCard','skillErrorMessage']);
