@@ -1,5 +1,4 @@
 <script setup>
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
 import { ref, onMounted } from 'vue';
 import InputError from '@/Components/InputError.vue';
 
