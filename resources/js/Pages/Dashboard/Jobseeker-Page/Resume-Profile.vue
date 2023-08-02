@@ -10,6 +10,7 @@ import { router } from '@inertiajs/vue3'
 import Dialog from '@/Pages/Dashboard/Components/Dialog.vue';
 import EducationInput from '@/Pages/Dashboard/Components/EducationInput.vue';
 import SkillInput from '@/Pages/Dashboard/Components/SkillInput.vue';
+import ExperienceInput from '@/Pages/Dashboard/Components/ExperienceInput.vue';
 
 
 
@@ -42,13 +43,26 @@ const SkillValuesForm = useForm ({
 
 });
 
+const ExperienceValuesForm = useForm ({
+  JobStarted: '',
+  JobEnded: '',
+  StillEmployed: '',
+  Company: '',
+  Position: '',
+  Location: '',
+  LocationType: '',
+  EmploymentType: '',
+  Description: '',
+});
+
+
 const EducationArray= useForm ({
   EducationCollection: JSON.parse(localStorage.getItem('currentEducation')) || [],
 
 });
 
-const SkillArray = useForm ({
-  SkillCollection: JSON.parse(localStorage.getItem('currentSkill')) || [],
+const ExperienceArray = useForm ({
+  ExperienceCollection: JSON.parse(localStorage.getItem('currentExperience')) || [],
 
 });
 
@@ -66,13 +80,25 @@ const showSkillAddedd  = useForm ({
 export default {
   
   data: () => ({
+    Step1: false,
+    Step2: false,
+    Step3: false,
+    Step4: false,
+    Step5: false,
+    Step6: false,
+
+    hideJobEnded: false,
     skillErrorMessage: '',
+    errorExperienceMessage: '',
     errorMessage: '',
     getSkillArrayLength: null,
     AddeddSkillCard: false,
+
     dialogEducation: false,
     dialogSkill: false,
     dialogEducation: false,
+    dialogExperience: false,
+
     TertiaryCard: false,
     SecondaryCard: false,
     PrimaryCard: false,
@@ -91,6 +117,9 @@ watch: {
   },
   dialogSkill (val) {
     val || this.closeSkillsDialog()
+  },
+  dialogExperience(val){
+    val || this.closeExperienceDialog()
   },
   TertiaryCard (val) {
     val || this.closeTertiaryCard()
@@ -111,13 +140,14 @@ watch: {
 created () {
   this.initialize()
   this.checkEducation() //Check if there is an exisitng education addedd then show it 
+  
 },
 
 methods: {
  
  
   initialize () {
-    localStorage.removeItem('currentSkill');
+    localStorage.removeItem('currentExperience');
   },
 
   checkEducation(){
@@ -152,6 +182,7 @@ methods: {
   localStorage.removeItem('currentEducation');
   
   },
+
   openSkillsDialog(SkillAddedd,length){
 
     this.dialogSkill = true;
@@ -162,6 +193,10 @@ methods: {
     }
 
 },
+
+  openExperienceDialog(){
+  this.dialogExperience = true;
+  },
   closeEducationDialog(){
     this.dialogEducation = false;
 
@@ -173,6 +208,10 @@ methods: {
     localStorage.removeItem('addeddSkill');
     skillAddedd.SkillAddedd=[];
     this.AddeddSkillCard=false;
+  },
+  closeExperienceDialog(){
+ 
+    this.dialogExperience = false;
   },
 
   handleSubmit(EducationArray,EducationValue) {
@@ -252,8 +291,73 @@ methods: {
       this.AddeddSkillCard = true;
     }
     formValues.reset();
-   
+    
+
 },
+
+  addExperience(formValues,ExperienceArray){
+  
+    if (!formValues.JobStarted || !formValues.Company 
+    || !formValues.Position || !formValues.Location || !formValues.LocationType
+    || !formValues.EmploymentType || !formValues.Description) {
+
+ 
+      this.errorExperienceMessage = "Please fill in all required fields.";
+      return;
+    }
+    else if (!formValues.StillEmployed){
+
+      if(!formValues.JobEnded){
+        this.errorExperienceMessage = "Please fill in a date of your job ended or still employed.";
+      return;
+      }
+     
+    }
+    else if (formValues.StillEmployed){
+
+      formValues.JobEnded = '';
+
+      }
+    else{
+    
+      this.errorExperienceMessage = "";
+    }
+
+
+    const newExperience = {}; //New object to be store the values
+    newExperience.JobStarted = formValues.JobStarted;
+    newExperience.JobEnded = formValues.JobEnded; 
+    newExperience.StillEmployed = formValues.StillEmployed;
+    newExperience.Company = formValues.Company; 
+    newExperience.Position = formValues.Position; 
+    newExperience.Location = formValues.Location; 
+    newExperience.LocationType = formValues.LocationType; 
+    newExperience.EmploymentType = formValues.EmploymentType; 
+    newExperience.Description = formValues.Description ; 
+
+    ExperienceArray.ExperienceCollection.push(newExperience);
+ 
+    localStorage.setItem('currentExperience', JSON.stringify(ExperienceArray.ExperienceCollection));
+    formValues.reset();
+    formValues.StillEmployed = false;
+    this.hideJobEnded = false;
+    this.dialogExperience = false;
+  },
+
+  StillEmployed(formValues){
+
+    if(!formValues.StillEmployed){
+      this.hideJobEnded = true;
+    
+      return
+    }
+    else{
+      this.hideJobEnded = false;
+     
+      return
+    }
+  },
+
 
 // close/remove/hide/ etc.
   closeTertiaryCard(){
@@ -265,6 +369,7 @@ methods: {
   closePrimaryCard(){
     this.PrimaryCard=false;
   },
+  
   hideSkillAddeddCard(){
     this.AddeddSkillCard=false;
   },
@@ -281,7 +386,7 @@ methods: {
 
     length = SkilllAddedd.SkillAddedd.length ;
 
-    console.log(length)
+  
     if(length >0 ){
       this.AddeddSkillCard = true;
     }
@@ -291,6 +396,18 @@ methods: {
 
   },
 
+  
+  removeExperience(Experience,company,position) {
+  // Find the index of the object with the matching Company and Position
+  const index = Experience.ExperienceCollection.findIndex((item) => item.Company === company && item.Position=== position);
+
+  // If the object exists, remove it from the array
+  if (index !== -1) {
+
+    Experience.ExperienceCollection.splice(index, 1);
+    localStorage.setItem('currentExperience', JSON.stringify(Experience.ExperienceCollection));
+  }
+},
 },
 }
 </script>
@@ -306,33 +423,7 @@ methods: {
          
             <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
 
-               <!-- Alert when no Resume found for jobseeker -->
-               <!-- <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-                  <div class="flex items-center">
-                    <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                    </svg>
-                    <span class="sr-only">Info</span>
-                    <h3 class="text-lg font-medium">You have not yet created a resume profile</h3>
-                  </div>
-                  <div class="mt-2 mb-4 text-sm">
-                     Creating a resume profile in your it is essential for job seekers because it allows
-                      to present your qualifications, skills, and work experience in a structured and professional manner.</div>
-                  <div class="flex">
-                    <button type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                      <svg class="-ml-0.5 mr-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                        <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                      </svg>
-                      Create Resume
-                    </button>
-                    <button type="button" class="text-blue-800 bg-transparent border border-blue-800 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-400 dark:hover:text-white dark:focus:ring-blue-800" data-dismiss-target="#alert-additional-content-1" aria-label="Close">
-                      Dismiss
-                    </button>
-                  </div>
-                </div> -->
-
-
-               <!-- 2nd row Recommended jobs -->
+          
               
                <div class=" mb-4 p-10 rounded bg-gray-50 dark:bg-gray-800">    
                
@@ -343,13 +434,15 @@ methods: {
   <div class="">
     <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 1</h5>
   
+   <div v-show="!Step1">
     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Formal Picture</label>
     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-5" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-    
-
     <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+   </div>
 
+  
+   <div v-show="!Step2">
     <div class="grid md:grid-cols-4 md:gap-6 mt-5 mb-5 items-center">
 
       <div class="flex ">
@@ -531,7 +624,10 @@ methods: {
     </div>
 
     <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+    </div>
 
+
+    <div v-show="!Step3">
     <div class="relative z-0 w-full mb-6 group">
         <input type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
@@ -556,6 +652,9 @@ methods: {
 </div>
 
 <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+</div>
+
+
 
   <div class="Education">
 
@@ -800,9 +899,31 @@ methods: {
           </SkillInput>
         </Dialog>
 
-        <div class="grid md:grid-cols-3 md:gap-3">
+        <div class="grid md:grid-cols-1 ">
 
         
+<div  v-show="AddeddSkillCard" class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+ 
+ 
+      <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Your Skills</h5>
+ 
+  <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Here are your skills that you want to be shown in your resume.</p>
+
+  <span v-for="(skillItem, index) in showSkillAddedd.SkillAddedd"
+  :key="index" id="badge-dismiss-dark" class="inline-flex items-center mb-2 px-2 py-1 mr-2 text-md font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
+    {{ skillItem.Skill }}
+    <button
+    @click="removeSkill(skillItem.Skill,showSkillAddedd,getSkillArrayLength)"
+     type="button" 
+    class="inline-flex items-center p-1 ml-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300" data-dismiss-target="#badge-dismiss-dark" aria-label="Remove">
+      <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+      <span class="sr-only">Remove Skills</span>
+    </button>
+  </span>
+</div>
+
 
           </div>
 
@@ -814,6 +935,81 @@ methods: {
     <!-- SKILLS SECTION -->
 
 <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
+
+ <!-- Experience SECTION -->
+ <div class="Experience">
+
+  <div class="flex items-center">
+    <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Experiences</label>
+    <button type="button" @click="openExperienceDialog()" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+    dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Add Experience</button>
+
+
+  </div>
+
+  <div>
+
+    <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
+
+    <Dialog :dialogExperience="dialogExperience" >
+   
+      <ExperienceInput
+      :hideJobEnded="hideJobEnded"
+      :ExperienceArray="ExperienceArray"
+      :ExperienceValuesForm="ExperienceValuesForm"
+      :errorExperienceMessage="errorExperienceMessage"
+      @addExperience="addExperience"
+      @StillEmployed="StillEmployed"
+      @closeExperienceDialog="closeExperienceDialog"
+      >
+
+      </ExperienceInput>
+    </Dialog>
+
+    <div class="grid md:grid-cols-2 gap-4">
+
+      <div v-for="(experienceItem, index) in ExperienceArray.ExperienceCollection"
+      :key="index" class="max-w-full mb-5 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex justify-between">
+       <div class="flex">
+        <svg class="w-7 h-7 me-3 text-gray-500 dark:text-gray-400 mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path fill="currentColor" d="M18 15h-2v2h2m0-6h-2v2h2m2 6h-8v-2h2v-2h-2v-2h2v-2h-2V9h8M10 7H8V5h2m0 6H8V9h2m0 6H8v-2h2m0 6H8v-2h2M6 7H4V5h2m0 6H4V9h2m0 6H4v-2h2m0 6H4v-2h2m6-10V3H2v18h20V7H12Z"/></svg>
+        <label for="message" class="block mb-2  text-2xl font-medium text-gray-900 dark:text-white">{{experienceItem.Company}}</label>
+       </div>
+         
+       <button @click="removeExperience(ExperienceArray,experienceItem.Company,experienceItem.Position)" type="button" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+      
+        Remove
+      </button>
+    </div> 
+    <p class="font-normal text-green-700 dark:text-green-300"> {{ formatDate(experienceItem.JobStarted)  }} - 
+       <span v-if="experienceItem.StillEmployed">Still Employed</span>
+      <span v-else>{{ formatDate(experienceItem.JobEnded) }}</span></p>
+
+
+    <p class="mb-1 font-normal text-gray-500 dark:text-gray-200">Position: {{experienceItem.Position}}
+     
+    </p>
+        <p class="mb-1 font-normal text-gray-500 dark:text-gray-200">Location: {{experienceItem.Location}}</p>
+        <p class="mb-1 font-normal text-gray-500 dark:text-gray-200">Location Type: {{experienceItem.LocationType}}</p>
+        <p class="mb-1 font-normal text-gray-500 dark:text-gray-200">Employment Type: {{experienceItem.EmploymentType}}</p>
+        <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
+        <label for="Degree" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Description</label>
+        <div class="max-w-full mb-5 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <p class="text-justify font-normal text-gray-500 dark:text-gray-300">{{experienceItem.Description}}</p>
+        </div>
+    </div>
+    
+
+      </div>
+
+
+
+  </div>
+
+</div>
+<!-- Experience  SECTION -->
 
 
 
