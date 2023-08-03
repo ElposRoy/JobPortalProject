@@ -80,7 +80,7 @@ const showSkillAddedd  = useForm ({
 export default {
   
   data: () => ({
-    Step1: false,
+    Step1: true,
     Step2: false,
     Step3: false,
     Step4: false,
@@ -132,8 +132,7 @@ watch: {
   },
   AddeddSkillCard(val){
     val || this.hideSkillAddeddCard()
-  }
-
+  },
 
 },
 
@@ -395,8 +394,6 @@ methods: {
     }
 
   },
-
-  
   removeExperience(Experience,company,position) {
   // Find the index of the object with the matching Company and Position
   const index = Experience.ExperienceCollection.findIndex((item) => item.Company === company && item.Position=== position);
@@ -407,7 +404,53 @@ methods: {
     Experience.ExperienceCollection.splice(index, 1);
     localStorage.setItem('currentExperience', JSON.stringify(Experience.ExperienceCollection));
   }
-},
+  },
+
+  //NEXT BUTTONS and Back Buttons
+  FirstNextButton(){
+    this.Step1=false;
+    this.Step2=true;
+  },
+  SecondNextButton(){
+    this.Step2=false;
+    this.Step3=true;
+  },
+  SecondBackButton(){
+    this.Step2=false;
+    this.Step1=true;
+  },
+  ThirdNextButton(){
+    this.Step3=false;
+    this.Step4=true;
+  },
+  ThirdBackButton(){
+    this.Step2=true;
+    this.Step3=false;
+  },
+  FourthNextButton(){
+    this.Step4=false;
+    this.Step5=true;
+  },
+  FourthBackButton(){
+    this.Step3=true;
+    this.Step4=false;
+  },
+  FifthNextButton(){
+    this.Step5=false;
+    this.Step6=true;
+  },
+  FifthBackButton(){
+    this.Step4=true;
+    this.Step5=false;
+  },
+  FinalNextButton(){
+   console.log('finish')
+  },
+  FinalBackButton(){
+    this.Step5=true;
+    this.Step6=false;
+  },
+
 },
 }
 </script>
@@ -432,17 +475,42 @@ methods: {
                    
 <form>
   <div class="">
-    <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 1</h5>
   
-   <div v-show="!Step1">
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Formal Picture</label>
-    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
-    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-5" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+  
+   <div v-show="Step1">
+    <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 1</h5>
+    <div class="flex">
+      <img class="rounded w-36 h-36 ring-2 ring-gray-300 dark:ring-gray-500 m-5" :src="baseurl+'/storage/images/Pfp.jpeg'" alt="Extra large avatar">
+   
+      <div class="flex items-center justify-center w-full">
+        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                </svg>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+            </div>
+            <input id="dropzone-file" type="file" class="hidden" />
+        </label>
+      </div> 
+    </div>
+   
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-5" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
     <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+    <div class="flex justify-between">
+
+      <button @click="FirstNextButton()" type="button" 
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+    </div>
+   
    </div>
 
   
-   <div v-show="!Step2">
+   <div v-show="Step2">
+    <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 2</h5>
     <div class="grid md:grid-cols-4 md:gap-6 mt-5 mb-5 items-center">
 
       <div class="flex ">
@@ -624,10 +692,24 @@ methods: {
     </div>
 
     <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+  
+    <div class="flex justify-between">
+
+      <button @click="SecondBackButton()" type="button" 
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
+      <button @click="SecondNextButton()" type="button" 
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+    </div>
+   
     </div>
 
 
-    <div v-show="!Step3">
+    <div v-show="Step3">
+      <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 3</h5>
     <div class="relative z-0 w-full mb-6 group">
         <input type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
@@ -652,12 +734,24 @@ methods: {
 </div>
 
 <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
+<div class="flex justify-between">
+  <button  @click="ThirdBackButton()"  type="button" 
+  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+  focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
+  <button @click="ThirdNextButton()" type="button" 
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+    focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+    dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+</div>
+
 </div>
 
 
 
-  <div class="Education">
-
+  <div  v-show="Step4" class="Education">
+    <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 4</h5>
     <div class="flex items-center">
       <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Education </label>
       <button type="button" @click="openEducationDialog(EducationValuesForm,'Tertiary')" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
@@ -859,17 +953,24 @@ methods: {
 
 
     </div>
+    <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+    <div class="flex justify-between">
+      <button  @click="FourthBackButton()"  type="button" 
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
+      <button  @click="FourthNextButton()"  type="button" 
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+        focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+    </div>
 
   </div>
 
 
-
-<hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
-
-
     <!-- SKILLS SECTION -->
-    <div class="Skills">
-
+    <div  v-show="Step5" class="Skills">
+      <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 5</h5>
       <div class="flex items-center">
         <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Skills</label>
         <button type="button"  @click="openSkillsDialog(showSkillAddedd,getSkillArrayLength)" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
@@ -930,16 +1031,29 @@ methods: {
 
 
       </div>
+      <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
 
+      <div class="flex justify-between">
+        <button  @click="FifthBackButton()"  type="button" 
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+        focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
+        <button   @click="FifthNextButton()"   type="button" 
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+          focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+      </div>
+
+      
     </div>
     <!-- SKILLS SECTION -->
 
-<hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
+
 
 
  <!-- Experience SECTION -->
- <div class="Experience">
-
+ <div v-show="Step6" class="Experience">
+  <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 6</h5>
   <div class="flex items-center">
     <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Experiences</label>
     <button type="button" @click="openExperienceDialog()" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
@@ -1007,17 +1121,21 @@ methods: {
 
 
   </div>
+ <div class="flex justify-between">
+        <button @click="FinalBackButton()"   type="button" 
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+        focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
+        <button   @click="FinalNextButton()"   type="button" 
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+          focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+          dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Done</button>
+      </div>
 
 </div>
 <!-- Experience  SECTION -->
 
 
-
-
-    <button type="button" 
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-    focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-    dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   
   </div>
   </form>
