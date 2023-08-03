@@ -26,6 +26,11 @@ function formatDate(dateString) {
   return date.toLocaleDateString(undefined, options);
 }
 
+const ResumePFP = useForm ({
+  Image: '',
+
+});
+
 
 const EducationValuesForm = useForm ({
   Level: '',
@@ -87,6 +92,7 @@ export default {
     Step5: false,
     Step6: false,
 
+    imageURL: null,
     hideJobEnded: false,
     skillErrorMessage: '',
     errorExperienceMessage: '',
@@ -148,6 +154,11 @@ methods: {
   initialize () {
     localStorage.removeItem('currentExperience');
   },
+
+  Preview_image(Form) {
+        this.imageURL= URL.createObjectURL(Form.Image)
+      
+    },
 
   checkEducation(){
     const CheckEducationCollection = JSON.parse(localStorage.getItem('currentEducation')) || [];
@@ -407,7 +418,8 @@ methods: {
   },
 
   //NEXT BUTTONS and Back Buttons
-  FirstNextButton(){
+  FirstNextButton(Res){
+   
     this.Step1=false;
     this.Step2=true;
   },
@@ -480,8 +492,9 @@ methods: {
    <div v-show="Step1">
     <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 1</h5>
     <div class="flex">
-      <img class="rounded w-36 h-36 ring-2 ring-gray-300 dark:ring-gray-500 m-5" :src="baseurl+'/storage/images/Pfp.jpeg'" alt="Extra large avatar">
-   
+      <div v-show="imageURL" class="p-5">
+        <img :src="imageURL" alt="Selected image" class="w-36 h-36 rounded ring-2 ring-gray-300 dark:ring-gray-500">
+      </div>
       <div class="flex items-center justify-center w-full">
         <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
             <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -491,7 +504,7 @@ methods: {
                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
             </div>
-            <input id="dropzone-file" type="file" class="hidden" />
+            <input   @input="ResumePFP.Image=$event.target.files[0]"   @change="Preview_image(ResumePFP)" id="dropzone-file" type="file" class="hidden" />
         </label>
       </div> 
     </div>
