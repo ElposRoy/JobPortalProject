@@ -934,8 +934,8 @@ methods: {
 </div>
 
 
-<!--  v-show="Step4" -->
-  <div  class="Education">
+<!--   -->
+  <div  v-show="Step4" class="Education">
     <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 4</h5>
     <div class="flex items-center">
       <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Education </label>
