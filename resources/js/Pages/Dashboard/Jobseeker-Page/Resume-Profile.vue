@@ -1,9 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Sidebar from '@/Layouts/Sidebar.vue';
+import InputError from '@/Components/InputError.vue';
 
 import { useForm,Head } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { router } from '@inertiajs/vue3'
 
 
@@ -19,6 +20,19 @@ onMounted(() => {
   baseurl.value = location.origin;
 });
 
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+const validatePhoneNumber = (phoneNumber) => {
+  return String(phoneNumber).match(/^(\+?63|0)9\d{9}$/);
+};
+
+
 // Function to format the date in a readable format (e.g., "July 6, 2023")
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -26,8 +40,56 @@ function formatDate(dateString) {
   return date.toLocaleDateString(undefined, options);
 }
 
+const overallForm = useForm ({
+  Image: '',
+  Gender: '',
+  Citizenship: '',
+  LastName: '',
+  FirstName: '',
+  MiddleName: '',
+  Suffix: '',
+  Age: '',
+  BirthDate: '',
+  BirthPlace: '',
+  BloodType: '',
+  CivilStatus: '',
+  Address: '',
+  PhoneNumber: '',
+  Email: '',
+  CareerObjective: '',
+  Weight: '',
+  Height: '',
+
+
+  Skill: [],
+  Education: [],
+  Experience: [],
+});
+
+
 const ResumePFP = useForm ({
   Image: '',
+
+});
+
+const PersonalInfo = useForm ({
+  Gender: '',
+  Citizenship: '',
+  LastName: '',
+  FirstName: '',
+  MiddleName: '',
+  Suffix: '',
+  Age: '',
+  BirthDate: '',
+  BirthPlace: '',
+  BloodType: '',
+  CivilStatus: '',
+  Address: '',
+  PhoneNumber: '',
+  Email: '',
+  CareerObjective: '',
+  Weight: '',
+  Height: '',
 
 });
 
@@ -74,9 +136,26 @@ const ExperienceArray = useForm ({
 const showSkillAddedd  = useForm ({
   SkillAddedd: JSON.parse(localStorage.getItem('addeddSkill')) || [],
 
+
+  
 });
 
 
+const filteredTertiaryEducation = () => {
+    const educationCollection = EducationArray.EducationCollection || [];
+    return educationCollection.filter((educationItem) => educationItem.Level === 'Tertiary');
+     
+  };
+  const filteredSecondaryEducation = () => {
+    const educationCollection = EducationArray.EducationCollection || [];
+    return educationCollection.filter((educationItem) => educationItem.Level === 'Secondary');
+     
+  };
+  const filteredPrimaryEducation = () => {
+    const educationCollection = EducationArray.EducationCollection || [];
+    return educationCollection.filter((educationItem) => educationItem.Level === 'Primary');
+     
+  };
 
 
 </script>
@@ -95,8 +174,18 @@ export default {
     imageURL: null,
     hideJobEnded: false,
     skillErrorMessage: '',
+
     errorExperienceMessage: '',
     errorMessage: '',
+
+    firstErrorStep: '',
+    secondErrorStep: '',
+    thirdErrorStep: '',
+    fourthErrorStep: '',
+    fifthErrorStep: '',
+    finalErrorStep: '',
+
+
     getSkillArrayLength: null,
     AddeddSkillCard: false,
 
@@ -114,7 +203,7 @@ export default {
   }
   ),
   computed: {
- 
+  
 },
 
 watch: {
@@ -145,14 +234,14 @@ watch: {
 created () {
   this.initialize()
   this.checkEducation() //Check if there is an exisitng education addedd then show it 
-  
+  this.checkSkill()   //Check if a skill was added when refreshing page
 },
 
 methods: {
  
  
   initialize () {
-    localStorage.removeItem('currentExperience');
+    localStorage.removeItem('currentEducation');
   },
 
   Preview_image(Form) {
@@ -185,7 +274,23 @@ methods: {
       this.PrimaryCard = true;
     }
   },
+
+
+
+  checkSkill(){
+    const CheckSkillCollection = JSON.parse(localStorage.getItem('addeddSkill')) || [];
   
+
+    if (CheckSkillCollection.length >0) {
+      this.AddeddSkillCard= true;
+    }
+    else{
+      this.AddeddSkillCard= false;
+    }
+  },
+
+
+
   openEducationDialog(Form,Level){
     this.dialogEducation = true;
     Form.Level = Level
@@ -274,7 +379,9 @@ methods: {
     
     localStorage.setItem('currentEducation', JSON.stringify(EducationArray.EducationCollection));
 
-  
+    formValues.reset();
+
+    this.dialogEducation = false;
   },
 
   addSkill(SkillAddedd,formValues,length){
@@ -418,22 +525,56 @@ methods: {
   },
 
   //NEXT BUTTONS and Back Buttons
-  FirstNextButton(Res){
-   
-    this.Step1=false;
+  FirstNextButton(ResumePFP){
+    
+    if(!ResumePFP.Image){
+      this.firstErrorStep = 'Please upload a Resume Picture';
+    }
+    else{
+      this.firstErrorStep = '';
+      this.Step1=false;
     this.Step2=true;
+    }
+
+
+   
   },
-  SecondNextButton(){
-    this.Step2=false;
+  SecondNextButton(PersonalInfo){
+   
+    if( !PersonalInfo.Gender || !PersonalInfo.CivilStatus || !PersonalInfo.LastName || !PersonalInfo.FirstName || !PersonalInfo.MiddleName || 
+     !PersonalInfo.Age || !PersonalInfo.Weight || !PersonalInfo.Height || !PersonalInfo.BirthDate || !PersonalInfo.BirthPlace ||
+    !PersonalInfo.BloodType || !PersonalInfo.CivilStatus ){
+        this.secondErrorStep = 'Please fill in all required fields'
+
+      }
+      else{
+        this.Step2=false;
     this.Step3=true;
+      }
+
   },
   SecondBackButton(){
     this.Step2=false;
     this.Step1=true;
   },
-  ThirdNextButton(){
-    this.Step3=false;
-    this.Step4=true;
+  ThirdNextButton(PersonalInfo,validateEmail,validatePhoneNumber){
+
+    if( !PersonalInfo.Address || !PersonalInfo.PhoneNumber || !PersonalInfo.Email || !PersonalInfo.Description){
+        this.thirdErrorStep = 'Please fill in all required fields!'
+      }
+      else if(!validateEmail(PersonalInfo.Email)){
+        this.thirdErrorStep = 'Please input a valid email address!'
+      }
+      else if(!validatePhoneNumber(PersonalInfo.PhoneNumber)){
+        this.thirdErrorStep = 'Please input a correct phone number in phillipine number format!'
+      }
+      else{
+      this.Step3=false;
+      this.Step4=true;
+      }
+
+
+   
   },
   ThirdBackButton(){
     this.Step2=true;
@@ -455,8 +596,31 @@ methods: {
     this.Step4=true;
     this.Step5=false;
   },
-  FinalNextButton(){
-   console.log('finish')
+  FinalNextButton(overallForm,ResumePFP,PersonalInfo,EducationArray,showSkillAddedd,ExperienceArray){
+    overallForm.Image = ResumePFP.Image;
+    overallForm.Gender = PersonalInfo.Gender;
+    overallForm.Citizenship = PersonalInfo.Citizenship;
+    overallForm.LastName = PersonalInfo.LastName;
+    overallForm.FirstName = PersonalInfo.FirstName;
+    overallForm.MiddleName = PersonalInfo.MiddleName;
+    overallForm.Suffix = PersonalInfo.Suffix;
+    overallForm.Age = PersonalInfo.Age;
+    overallForm.Weight = PersonalInfo.Weight;
+    overallForm.Height = PersonalInfo.Height;
+    overallForm.BirthDate = PersonalInfo.BirthDate;
+    overallForm.BirthPlace = PersonalInfo.Image;
+    overallForm.BloodType = PersonalInfo.BloodType;
+    overallForm.CivilStatus = PersonalInfo.CivilStatus;
+    overallForm.Address = PersonalInfo.Address;
+    overallForm.PhoneNumber = PersonalInfo.PhoneNumber;
+    overallForm.Email = PersonalInfo.Email;
+    overallForm.CareerObjective = PersonalInfo.CareerObjective;
+    
+    overallForm.Skill =  showSkillAddedd.SkillAddedd;
+    overallForm.Education = EducationArray.EducationCollection;
+    overallForm.Experience = ExperienceArray.ExperienceCollection;
+    
+    console.log(overallForm)
   },
   FinalBackButton(){
     this.Step5=true;
@@ -511,13 +675,17 @@ methods: {
    
 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-5" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
     <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
-    <div class="flex justify-between">
+   
 
-      <button @click="FirstNextButton()" type="button" 
+      <div class="flex justify-end">
+        <InputError class="mt-2" :message="firstErrorStep" />
+        <button @click="FirstNextButton(ResumePFP)" type="button" 
       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto ms-5 px-5 py-2.5 text-center 
       dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
-    </div>
+   
+      </div>
+ 
    
    </div>
 
@@ -531,7 +699,7 @@ methods: {
         <div class="flex-none items-center">
             <div class="flex-1 w-20 ">
                 <div class="flex items-center mb-4">
-                    <input id="default-radio-1" type="radio" value="" name="default-radio" 
+                    <input   v-model="PersonalInfo.Gender" id="default-radio-1" type="radio" value="Male" name="default-radio" 
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     
                     <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"> Male</label>
@@ -540,7 +708,7 @@ methods: {
         </div>
         <div class="flex-none w-32 ">
             <div class="flex ">
-                <input  id="default-radio-2" type="radio" value="" name="default-radio" 
+                <input v-model="PersonalInfo.Gender" id="default-radio-2" type="radio" value="Female" name="default-radio" 
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Female</label>
             </div>
@@ -548,7 +716,7 @@ methods: {
       </div>
 
       <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="floating_Citizenship" id="floating_Citizenship" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input  v-model="PersonalInfo.Citizenship" type="text" name="floating_Citizenship" id="floating_Citizenship" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_Citizenship" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
     </div>
     </div>
@@ -557,19 +725,19 @@ methods: {
     
     <div class="grid md:grid-cols-4 md:gap-6">
       <div class="relative z-0 w-full mb-6 group">
-          <input type="text" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <input  v-model="PersonalInfo.LastName" type="text" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
       </div>
       <div class="relative z-0 w-full mb-6 group">
-          <input type="text" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <input v-model="PersonalInfo.FirstName"  type="text" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
       </div>
       <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="floating_middle_name" id="floating_middle_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input v-model="PersonalInfo.MiddleName" type="text" name="floating_middle_name" id="floating_middle_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_middle_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle name</label>
     </div>
     <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="floating_suffix" id="floating_suffix" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input v-model="PersonalInfo.Suffix" type="text" name="floating_suffix" id="floating_suffix" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_suffix" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Suffix</label>
     </div>
     
@@ -581,29 +749,29 @@ methods: {
     <div class="grid md:grid-cols-5 md:gap-6">
         
     <div class="col-span-1">
-      <input type="number" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your Age">
+      <input v-model="PersonalInfo.Age" type="number" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your Age">
     </div>
       <div class="relative z-0 w-full mb-6 group">
-        <input type="number" id="helper-text" aria-describedby="helper-text-explanation" 
+        <input v-model="PersonalInfo.Weight" type="number" id="helper-text" aria-describedby="helper-text-explanation" 
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
         focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Weight">
       </div>
       <div class="relative z-0 w-full mb-6 group">
-        <input type="number" id="helper-text" aria-describedby="helper-text-explanation" 
+        <input v-model="PersonalInfo.Height" type="number" id="helper-text" aria-describedby="helper-text-explanation" 
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
         focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Height">
       </div>
    
       <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label for="floating_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date of Birth</label>
+        <input v-model="PersonalInfo.BirthDate" type="text" name="floating_BirthDate" id="floating_BirthDate" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="floating_BirthDate" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date of Birth</label>
     </div>
     
     <div class="relative z-0 w-full mb-6 group">
-      <input type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label for="floating_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Birth Place</label>
+      <input v-model="PersonalInfo.BirthPlace" type="text" name="floating_BirthPlace" id="floating_BirthPlace" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+      <label for="floating_BirthPlace" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Birth Place</label>
   </div>
     </div>
     
@@ -617,45 +785,45 @@ methods: {
           
           <div class="flex items-center">
         
-            <input id="blood-type-a" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-a" type="radio" value="A+" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-a" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type A+</label>
             
             
           </div>
           
           <div class="flex items-center">
-            <input id="blood-type-b" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-b" type="radio" value="B+" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-b" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type B+</label>
           </div>
     
           <!-- Add the third blood type radio button -->
           <div class="flex items-center">
-            <input id="blood-type-o" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-o" type="radio" value="O+" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type O+</label>
           </div>
           
           <div class="flex items-center">
-            <input id="blood-type-o" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-o" type="radio" value="AB" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type AB</label>
           </div>
           
           <div class="flex items-center">
-            <input id="blood-type-o" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-o" type="radio" value="A-" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type A-</label>
           </div>
 
           <div class="flex items-center">
-            <input id="blood-type-o" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-o" type="radio" value="B-" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type B-</label>
           </div>
 
           <div class="flex items-center">
-            <input id="blood-type-o" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-o" type="radio" value="O-" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type O-</label>
           </div>
 
           <div class="flex items-center">
-            <input id="blood-type-o" type="radio" value="" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.BloodType" id="blood-type-o" type="radio" value="AB-" name="blood-type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="blood-type-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Blood Type AB-</label>
           </div>
           
@@ -674,25 +842,25 @@ methods: {
           
           <div class="flex items-center">
         
-            <input id="Civil-status-a" type="radio" value="" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.CivilStatus" id="Civil-status-a" type="radio" value="Single" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="Civil-status-a" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Single</label>
             
             
           </div>
           
           <div class="flex items-center">
-            <input id="Civil-status-b" type="radio" value="" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.CivilStatus" id="Civil-status-b" type="radio" value="Married" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="Civil-status-b" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Married</label>
           </div>
     
           <!-- Add the third blood type radio button -->
           <div class="flex items-center">
-            <input id="Civil-status-o" type="radio" value="" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.CivilStatus" id="Civil-status-o" type="radio" value="Widowed" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="Civil-status-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Widowed</label>
           </div>
           
           <div class="flex items-center">
-            <input id="Civil-status-o" type="radio" value="" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <input v-model="PersonalInfo.CivilStatus" id="Civil-status-o" type="radio" value="Divorce" name="Civil-status" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
             <label for="Civil-status-o" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Divorce</label>
           </div>
           
@@ -708,11 +876,14 @@ methods: {
   
     <div class="flex justify-between">
 
-      <button @click="SecondBackButton()" type="button" 
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
-      <button @click="SecondNextButton()" type="button" 
+      <button @click="SecondBackButton(PersonalInfo)" type="button" 
+      class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none
+      focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Go back</button>
+
+      <InputError class="mt-2" :message="secondErrorStep" />
+
+      <button @click="SecondNextButton(PersonalInfo)" type="button" 
       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
       focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
       dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
@@ -724,17 +895,17 @@ methods: {
     <div v-show="Step3">
       <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 3</h5>
     <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input v-model="PersonalInfo.Address" type="text" name="floating_address" id="floating_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
     </div>
 
     <div class="grid md:grid-cols-2 md:gap-6">
       <div class="relative z-0 w-full mb-6 group">
-          <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <input v-model="PersonalInfo.PhoneNumber" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number (123-456-7890)</label>
       </div>
       <div class="relative z-0 w-full mb-6 group">
-          <input type="text" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <input  v-model="PersonalInfo.Email" type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
           <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
       </div>
     </div>
@@ -742,7 +913,7 @@ methods: {
 <div class="mb-5">
   
 <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Career Objective</label>
-<textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your career objectives here..."></textarea>
+<textarea  v-model="PersonalInfo.Description" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your career objectives here..."></textarea>
 
 </div>
 
@@ -750,10 +921,11 @@ methods: {
 
 <div class="flex justify-between">
   <button  @click="ThirdBackButton()"  type="button" 
-  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-  focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
-  <button @click="ThirdNextButton()" type="button" 
+  class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none
+      focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Go back</button>
+      <InputError class="mt-2" :message="thirdErrorStep" />
+  <button @click="ThirdNextButton(PersonalInfo,validateEmail, validatePhoneNumber)" type="button" 
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
     focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
     dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
@@ -762,8 +934,8 @@ methods: {
 </div>
 
 
-
-  <div  v-show="Step4" class="Education">
+<!--  v-show="Step4" -->
+  <div  class="Education">
     <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 4</h5>
     <div class="flex items-center">
       <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Education </label>
@@ -833,10 +1005,11 @@ methods: {
 
               </div>
               <div  
-                    v-for="(educationItem, index) in EducationArray.EducationCollection"
+                    v-for="(educationItem, index) in filteredTertiaryEducation(EducationArray)"
                     :key="index"
                     id="EducationCard" 
-                  class="block max-w-full p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                  class="block max-w-full p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                  >
                     
                     <div class="flex justify-end">
                     
@@ -886,8 +1059,9 @@ methods: {
 
               </div>
               <div  
-                    v-for="(educationItem, index) in EducationArray.EducationCollection"
+                    v-for="(educationItem, index) in filteredSecondaryEducation(EducationArray)"
                     :key="index"
+                    
                     id="EducationCard" 
                   class="block max-w-full p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     
@@ -939,7 +1113,7 @@ methods: {
 
               </div>
               <div  
-                    v-for="(educationItem, index) in EducationArray.EducationCollection"
+                    v-for="(educationItem, index) in filteredPrimaryEducation(EducationArray)"
                   
                     :key="index"
                     id="EducationCard" 
@@ -969,10 +1143,11 @@ methods: {
     <hr class="w-full h-1 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-sky-700">
     <div class="flex justify-between">
       <button  @click="FourthBackButton()"  type="button" 
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-      focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
-      <button  @click="FourthNextButton()"  type="button" 
+      class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none
+      focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Go back</button>
+      <InputError class="mt-2" :message="fourthErrorStep" />
+      <button  @click="FourthNextButton(PersonalInfo)"  type="button" 
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
         focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
         dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
@@ -981,7 +1156,7 @@ methods: {
   </div>
 
 
-    <!-- SKILLS SECTION -->
+    <!-- SKILLS SECTION  -->
     <div  v-show="Step5" class="Skills">
       <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 5</h5>
       <div class="flex items-center">
@@ -1048,10 +1223,11 @@ methods: {
 
       <div class="flex justify-between">
         <button  @click="FifthBackButton()"  type="button" 
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-        focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
-        <button   @click="FifthNextButton()"   type="button" 
+        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none
+      focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Go back</button>
+      <InputError class="mt-2" :message="fifthErrorStep" />
+        <button   @click="FifthNextButton(PersonalInfo)"   type="button" 
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
           focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
           dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
@@ -1136,10 +1312,11 @@ methods: {
   </div>
  <div class="flex justify-between">
         <button @click="FinalBackButton()"   type="button" 
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-        focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go back</button>
-        <button   @click="FinalNextButton()"   type="button" 
+        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none
+      focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
+      dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Go back</button>
+      <InputError class="mt-2" :message="finalErrorStep" />
+        <button   @click="FinalNextButton(overallForm,ResumePFP,PersonalInfo,EducationArray,showSkillAddedd,ExperienceArray)"  type="button" 
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
           focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
           dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Done</button>
