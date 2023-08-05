@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\ResumeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,12 +81,17 @@ Route::group([], function () {
         return Inertia::render('Dashboard/Jobseeker', getInertiaData());
     })->middleware(['auth', 'role:jobseeker'])->name('jobseeker');
 
-    Route::get('/dashboard/resume-profile', function () {
-        return Inertia::render('Dashboard/Jobseeker-Page/Resume-Profile', getInertiaData());
-    })->middleware(['auth', 'role:jobseeker'])->name('resume-profile');
+    Route::resource('resume-build',ResumeController::class, getInertiaData()) //Resume Building  ROUTE
+    ->only(['index','create', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'role:jobseeker']);
 
 
-    
+
+
+
+    // Route::get('/dashboard/resume-profile', function () {
+    //     return Inertia::render('Dashboard/Jobseeker-Page/Resume-Profile', getInertiaData());
+    // })->middleware(['auth', 'role:jobseeker'])->name('resume-profile');
 
   
 
