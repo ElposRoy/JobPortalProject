@@ -70,7 +70,7 @@ onMounted(() => {
 
 
          
-            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+            <div class="p-4  rounded-lg mt-14">
 
                <!-- Alert when no Resume found for jobseeker -->
                <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
