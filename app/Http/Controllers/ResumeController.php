@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\Resume;
+
+
 class ResumeController extends Controller
 {
     /**
@@ -33,7 +37,122 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->toArray());
+        // dd($request->toArray());
+        if ($request->hasFile('Image')) {
+            $validateImage=$request->validate(['Image'=>'Image']);
+            $image = $validateImage['Image']; // get the uploaded file
+            $image->storeAs('images',$image->getClientOriginalName()); // store the image in the storage public/images directory
+            $ImagePath = 'storage/images/'.$image->getClientOriginalName();
+        } 
+        
+        else {
+              //Problem is here, Even when the checkbox is clicked it will still upload the old image..... Now fixed 17/04/2023
+    
+            // if no image is uploaded, use the existing image path or set it to null
+            $noImage=$request->validate([
+                'image' => 'nullable|string', // add the nullable rule
+            ]);
+            $ImagePath = $noImage['image']; // use the existing image path or set it to null
+        }
+
+
+        try{
+            $validated = $request -> validate([
+                // 'user_id' => 'required|string|max:255',
+                'Image' => 'required|image',
+                'Gender' => 'required|string|max:255',
+                'Citizenship' => 'required|string|max:255',
+                'LastName' => 'required|string|max:255',
+                'FirstName' => 'required|string|max:255',
+                'MiddleName' => 'required|string|max:255',
+                'Suffix' => 'required|string|max:3',
+                'Age' => 'required|string|max:255',
+                'Weight' => 'required|integer|between:0,99',
+                'Height' => 'required|integer|between:0,99',
+
+                'BirthDate' => 'required|date_format:Y-m-d',
+
+                'BirthPlace' => 'required|string|max:144',
+                'BloodType' => 'required|string|max:2',
+                'CivilStatus' => 'required|string|max:255',
+                'Address' => 'required|string|max:255',
+
+                'PhoneNumber' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+
+                
+                'Email' => 'required|string|max:255',
+                'CareerObjective' => 'required|string|max:255',
+
+
+                "Skill"    => "nullable|array|",
+                "Skill.*"  => "nullable|distinct",
+
+                "Education"    => "nullable|array|",
+                "Education.*"  => "nullable|distinct",
+
+                "Experience"    => "nullable|array|",
+                "Experience.*"  => "nullable|distinct",
+       
+            ]);
+                
+            Resume::create([
+
+                // 'Gender',
+                // 'Citizenship',
+                // 'LastName',
+                // 'FirstName',
+                // 'MiddleName',
+                // 'Suffix',
+                // 'Age',
+                // 'BirthDate',
+                // 'BirthPlace',
+                // 'BloodType',
+                // 'CivilStatus',
+                // 'Address',
+                // 'PhoneNumber',
+                // 'Email',
+                // 'CareerObjective',
+                // 'Weight',
+                // 'Height',
+        
+                // 'Skill',
+                // 'Education',
+                // 'Experience',
+
+                'user_id' => '2',
+                
+                'Image' => $ImagePath,
+                'Gender' => $validated['Gender'],
+                'Citizenship' => $validated['Citizenship'],
+                'LastName' => $validated['LastName'],
+                'FirstName' => $validated['FirstName'],
+                'MiddleName' => $validated['MiddleName'],
+                'Suffix' => $validated['Suffix'],
+                'Age' => $validated['Age'],
+                'BirthDate' => $validated['BirthDate'],
+                'BirthPlace' => $validated['BirthPlace'],
+                'BloodType' => $validated['BloodType'],
+                'CivilStatus' => $validated['CivilStatus'],
+                'Address' => $validated['Address'],
+                'PhoneNumber' => $validated['PhoneNumber'],
+                'Email' => $validated['Email'],
+                'CareerObjective' => $validated['CareerObjective'],
+                'Weight' => $validated['Weight'],
+                'Height' => $validated['Height'],
+
+                //ARRAY VALUES
+                // 'user_id' => $validated['Image'],
+                // 'user_id' => $validated['Image'],
+                // 'user_id' => $validated['Image'],
+            ]);
+
+        }
+        catch (\Throwable $th) {
+            throw $th;
+          
+        }
+      
+   
     }
 
     /**
