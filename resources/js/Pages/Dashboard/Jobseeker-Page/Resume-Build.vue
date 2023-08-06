@@ -417,7 +417,8 @@ methods: {
     formValues.reset();
     
 
-},
+  },
+
 
   addExperience(formValues,ExperienceArray){
   
@@ -566,7 +567,7 @@ methods: {
   },
   ThirdNextButton(PersonalInfo,validateEmail,validatePhoneNumber){
 
-    if( !PersonalInfo.Address || !PersonalInfo.PhoneNumber || !PersonalInfo.Email || !PersonalInfo.Description){
+    if( !PersonalInfo.Address || !PersonalInfo.PhoneNumber || !PersonalInfo.Email || !PersonalInfo.CareerObjective){
         this.thirdErrorStep = 'Please fill in all required fields!'
       }
       else if(!validateEmail(PersonalInfo.Email)){
@@ -604,6 +605,7 @@ methods: {
     this.Step5=false;
   },
   FinalNextButton(overallForm,ResumePFP,PersonalInfo,EducationArray,showSkillAddedd,ExperienceArray){
+    overallForm.user_id = '';
     overallForm.Image = ResumePFP.Image;
     overallForm.Gender = PersonalInfo.Gender;
     overallForm.Citizenship = PersonalInfo.Citizenship;
@@ -631,7 +633,8 @@ methods: {
     overallForm.post(route('resume-build.store'), {
         onSuccess: () => {
           overallForm.reset()
-          window.location.href = '/jobs';
+          console.log('asd')
+          window.location.href = '/jobseekers';
           // text = 'Successfully saved!'
         },
         // onError: () => {
@@ -948,7 +951,7 @@ methods: {
 <div class="mb-5">
   
 <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Career Objective</label>
-<textarea  v-model="PersonalInfo.Description" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your career objectives here..."></textarea>
+<textarea  v-model="PersonalInfo.CareerObjective" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your career objectives here..."></textarea>
 
 </div>
 
