@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\ResumeController;
+use App\Http\Controllers\JobseekerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,10 +77,13 @@ Route::group([], function () {
     })->middleware(['auth', 'role:admin'])->name('admin');
 
         
-    // Jobseeker DASHBOARD  ↓
-    Route::get('/jobseeker', function () {
-        return Inertia::render('Dashboard/Jobseeker', getInertiaData());
-    })->middleware(['auth', 'role:jobseeker'])->name('jobseeker');
+    
+   
+
+    Route::resource('jobseeker',JobseekerController::class, getInertiaData()) // Jobseeker DASHBOARD  
+    ->only(['index'])
+    ->middleware(['auth', 'role:jobseeker']);
+
 
     Route::resource('resume-build',ResumeController::class, getInertiaData()) //Resume Building  ROUTE
     ->only(['index','create', 'store', 'update', 'destroy'])
