@@ -107,7 +107,7 @@ export default {
         
             <Link
                 v-if="$page.props.auth.userRoles.includes('jobseeker')"
-                :href="route('jobseeker')"
+                :href="route('jobseeker.index')"
                 class="font-semibold text-white-600 hover:text-white-900 dark:text-white-400"
             >Dashboard</Link>
         

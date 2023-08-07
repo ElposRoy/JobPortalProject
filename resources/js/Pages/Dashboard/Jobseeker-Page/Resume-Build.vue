@@ -633,15 +633,12 @@ methods: {
     overallForm.post(route('resume-build.store'), {
         onSuccess: () => {
           overallForm.reset()
-          console.log('asd')
-          window.location.href = '/jobseekers';
-          // text = 'Successfully saved!'
+          localStorage.removeItem('currentExperience');
+          localStorage.removeItem('addeddSkill');
+          localStorage.removeItem('currentEducation');
+          this.$inertia.visit(route('jobseeker.index'));
         },
-        // onError: () => {
-        //   dialog=true
-        //   text = 'Something went wrong!'
-        //   snackbar = true
-        // }
+     
       });
     
   },
