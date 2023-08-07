@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('resume_education', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rsm_id')->constrained('resumes');
-            $table->string('edu_level');
-            $table->string('edu_school');
-            $table->string('edu_major');
-            $table->string('edu_starting_year');
-            $table->string('edu_end_year')->nullable();;
+            $table->string('Level');
+            $table->string('School');
+            $table->string('Address');
+            $table->string('Degree')->nullable();
+
+            $table->string('StartDate');
+            $table->string('EndDate')->nullable();;
             
-            $table->string('edu_ongoing')->nullable();
+            $table->string('Description')->nullable();
 
            
             $table->timestamp('created_at')->useCurrent();
