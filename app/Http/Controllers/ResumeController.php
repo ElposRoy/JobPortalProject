@@ -1,22 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Resume;
-
+use App\Models\Education;
+use App\Models\Skill;
 
 class ResumeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+   
     public function index(): Response
     {
+        
         return Inertia::render('Dashboard/Jobseeker-Page/Resume-Build', [
+            
             // 'products' => Product::with(['category','unit_type','purchases'])->paginate(),
             // 'categories'=> Category::all(),
             // 'unit_types'=> UnitType::all(),
@@ -37,28 +42,15 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $userId = $user->id;
         // dd($request->toArray());
-        if ($request->hasFile('Image')) {
-            $validateImage=$request->validate(['Image'=>'Image']);
-            $image = $validateImage['Image']; // get the uploaded file
-            $image->storeAs('images',$image->getClientOriginalName()); // store the image in the storage public/images directory
-            $ImagePath = 'storage/images/'.$image->getClientOriginalName();
-        } 
-        
-        else {
-              //Problem is here, Even when the checkbox is clicked it will still upload the old image..... Now fixed 17/04/2023
-    
-            // if no image is uploaded, use the existing image path or set it to null
-            $noImage=$request->validate([
-                'image' => 'nullable|string', // add the nullable rule
-            ]);
-            $ImagePath = $noImage['image']; // use the existing image path or set it to null
-        }
+     
 
 
         try{
             $validated = $request -> validate([
-                // 'user_id' => 'required|string|max:255',
+                
                 'Image' => 'required|image',
                 'Gender' => 'required|string|max:255',
                 'Citizenship' => 'required|string|max:255',
@@ -94,32 +86,29 @@ class ResumeController extends Controller
                 "Experience.*"  => "nullable|distinct",
        
             ]);
-                
-            Resume::create([
 
-                // 'Gender',
-                // 'Citizenship',
-                // 'LastName',
-                // 'FirstName',
-                // 'MiddleName',
-                // 'Suffix',
-                // 'Age',
-                // 'BirthDate',
-                // 'BirthPlace',
-                // 'BloodType',
-                // 'CivilStatus',
-                // 'Address',
-                // 'PhoneNumber',
-                // 'Email',
-                // 'CareerObjective',
-                // 'Weight',
-                // 'Height',
+            if ($request->hasFile('Image')) {
+                $validateImage=$request->validate(['Image'=>'Image']);
+                $image = $validateImage['Image']; // get the uploaded file
+                $image->storeAs('images',$image->getClientOriginalName()); // store the image in the storage public/images directory
+                $ImagePath = 'storage/public/images/'.$image->getClientOriginalName();
+            } 
+            
+            else {
+                  //Problem is here, Even when the checkbox is clicked it will still upload the old image..... Now fixed 17/04/2023
         
-                // 'Skill',
-                // 'Education',
-                // 'Experience',
+                // if no image is uploaded, use the existing image path or set it to null
+                $noImage=$request->validate([
+                    'image' => 'nullable|string', // add the nullable rule
+                ]);
+                $ImagePath = $noImage['image']; // use the existing image path or set it to null
+            }
+    
+          
+           $resume = Resume::create([
 
-                'user_id' => '2',
+         
+                'user_id' => $userId,
                 
                 'Image' => $ImagePath,
                 'Gender' => $validated['Gender'],
@@ -140,12 +129,42 @@ class ResumeController extends Controller
                 'Weight' => $validated['Weight'],
                 'Height' => $validated['Height'],
 
-                //ARRAY VALUES
-                // 'user_id' => $validated['Image'],
-                // 'user_id' => $validated['Image'],
-                // 'user_id' => $validated['Image'],
+              
+               
             ]);
+                
+                        // Whenever life gets you down
+                        // Get the ID of the created Resume record
+                        
+                        $resumeId = $resume->id;
 
+                        foreach ($validated['Skill'] as $skillArray) {
+                            foreach ($skillArray as $value) {
+                                Skill::create([
+                                    'rsm_id' => $resumeId,
+                                    'Skill' => $value, 
+                                ]);
+                            }
+                        }
+
+                        foreach ($validated['Education'] as $EducationArray) {
+                            $degree = isset($EducationArray['Degree']) ? $EducationArray['Degree'] : null;
+                            $description = isset($EducationArray['Description']) ? $EducationArray['Description'] : null;
+                                Education::create([
+                                    'rsm_id' => $resumeId,
+                                    'Level' => $EducationArray['Level'], 
+                                    'StartDate' => $EducationArray['StartDate'], 
+                                    'EndDate' => $EducationArray['EndDate'], 
+                                    'School' => $EducationArray['School'], 
+                                    'Address' => $EducationArray['Address'], 
+                                    'Degree' => $degree, 
+                                'Description' => $description, 
+                                ]);
+                        }
+
+
+
+          
         }
         catch (\Throwable $th) {
             throw $th;
