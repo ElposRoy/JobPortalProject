@@ -12,6 +12,10 @@ class Resume extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $table = 'resumes'; // For checking if the user has a resume created 
+
+
+
     protected $fillable=[
         'user_id',
         'Image',
@@ -41,8 +45,16 @@ class Resume extends Model
     public function user(): BelongsTo
 
     {
-
         return $this->belongsTo(User::class);
 
     }
+
+    public function education()
+
+    {
+        return $this->hasMany(Education::class);
+
+    }
+
+
 }
