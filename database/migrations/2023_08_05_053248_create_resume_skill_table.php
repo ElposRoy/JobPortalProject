@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('resume_skill', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rsm_id')->constrained('resumes');
-            $table->string('skill_desc');
-           
+            $table->string('Skill');
            
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
