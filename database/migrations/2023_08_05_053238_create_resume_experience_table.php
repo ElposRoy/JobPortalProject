@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('resume_experience', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rsm_id')->constrained('resumes');
-            $table->string('exp_job_title');
-            $table->string('exp_company');
-            $table->string('exp_start_date');
-            $table->string('exp_end_date')->nullable();
-            $table->string('exp_job_address');
+            $table->string('JobStarted');
+            $table->string('JobEnded')->nullable();
+            $table->string('StillEmployed')->nullable();
+            $table->string('Company')->nullable();
+            $table->string('Position');
             
-            $table->string('exp_location_type');
-            $table->string('exp_employment_type');
-            $table->string('exp_job_desc');
+            $table->string('Location');
+            $table->string('LocationType');
+            $table->string('EmploymentType');
 
-            $table->string('exp_still_employed')->nullable();
+            $table->string('Description')->nullable();
 
           
             $table->timestamp('created_at')->useCurrent();

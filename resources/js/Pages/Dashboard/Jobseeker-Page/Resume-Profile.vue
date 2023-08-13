@@ -2,15 +2,25 @@
 
 import { router } from '@inertiajs/vue3'
 import { useForm, Head } from '@inertiajs/vue3';
-
+import { reactive, onMounted, ref } from 'vue';
 
 // Components
 
 import Footer from '@/Layouts/Footer.vue';
 import Sidebar from '@/Layouts/Sidebar.vue';
 
+defineProps(['resume','education','experience','skills']);
+
+const baseurl = ref('');
+onMounted(() => {
+  baseurl.value = location.origin;
+
+});
+
 
 </script>
+
+
 
 
 <template>
@@ -19,53 +29,237 @@ import Sidebar from '@/Layouts/Sidebar.vue';
     <Sidebar>
 
         <div class="p-4 sm:ml-64">
+            <div class="p-2 border-2 border-gray-200  dark:bg-gray-400 rounded-lg dark:border-gray-700 mt-14">
 
+                 <div class="flex items-center justify-center  mb-4 rounded bg-gray-50 dark:bg-gray-800">
+                
+                  
+                  <div class="grid md:grid-cols-5">
+            <!-- Left Column -->
+  <div  class="col-span-1 block max-w-full p-6 bg-white border bg-gray-200 border-gray-200  shadow  dark:bg-gray-800 dark:border-gray-700 ">
+    <div class="flex flex-col items-center pb-10">
+      <img class="object-fill rounded-full h-52 w-52" :src="baseurl+'/storage/images/Pfp.jpeg'" alt="Bonnie image"/>
+      <!-- <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Bonnie Green</h5>
+      <span class="text-sm text-gray-500 dark:text-gray-400">Visual Designer</span> -->
+  </div>
 
-         
-            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    <div>
+      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Contact</h5>
+      <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
-                <div class="relative isolate overflow-hidden bg-gray-900 py-18 sm:py-20 rounded-md mb-4">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center" />
-                    <div class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl" aria-hidden="true">
-                      <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
-                    </div>
-                    <div class="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu" aria-hidden="true">
-                      <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
-                    </div>
-                    <!-- max-auto removed here -->
-                    <div class=" max-w-7xl px-6 lg:px-8">
-                          <!-- max-auto removed here -->
-                      <div class=" max-w-1xl lg:mx-0">
-                        <h2 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">ANNOUNCEMENTS</h2>
-                        <p class="mt-3 text-md leading-8 text-gray-300 justify-normal">Stay informed with our News Page! Get the latest updates on current events, 
-                            breaking news, and trending stories from around the world. Stay ahead of the curve and be in the know. Visit our News Page now!</p>
-                      </div>
-        
-        
-        
-                    </div>
-        
-                    
-                  </div>
-             
+      <div class="mb-5">
+        <p class="font-normal tracking-tight text-gray-900 dark:text-white">Phone</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">09917320776</p>
+      </div>
 
+      <div class="mb-5">
+        <p class="font-normal tracking-tight text-gray-900 dark:text-white">Email</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">youremail@gmail.com</p>
+      </div>
+
+      <div class="mb-5">
+        <p class="font-normal tracking-tight text-gray-900 dark:text-white">Address</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Seabreeze Homes Cabid-an Sorsogon City</p>
+      </div>
+    </div>
+
+    
+    <div>
+      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Education</h5>
+      <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
+
+      <div class="mb-5">
+        <p class="text-sm text-gray-500 dark:text-gray-400">2012-2017</p>
+        <p class="font-normal tracking-tight text-gray-900 dark:text-white">BSIT</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Sorsogon National High School</p>
+      </div>
+
+      <div class="mb-5">
+        <p class="text-sm text-gray-500 dark:text-gray-400">2012-2017</p>
+        <p class="font-normal tracking-tight text-gray-900 dark:text-white">Agriculture</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Sorsogon National High School</p>
+      </div>
+
+      <div class="mb-5">
+        <p class="text-sm text-gray-500 dark:text-gray-400">2012-2017</p>
+        <p class="font-normal tracking-tight text-gray-900 dark:text-white">Agriculture</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Sorsogon National High School</p>
+      </div>
+
+    </div>
+  
+    
+    <div>
+      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Skills</h5>
+      <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
+
+      <div class="mb-5">
+      
+
+      <ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+          <li class="flex items-center">
+              <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+              </svg>
+              Skill 1
+          </li>
+          <li class="flex items-center">
+              <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+              </svg>
+              Skill 2
+          </li>
+
+          <li class="flex items-center">
+            <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+            </svg>
+            Skill 3
+        </li>
+        
+      </ul>
+
+      </div>
+
+     
+    </div>
+
+    
+    <div>
+      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Languages</h5>
+      <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
+
+      <div class="mb-5">
+      
+
+      <ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+          <li class="flex items-center">
+            <svg class="flex-shrink-0 mr-2 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+           </svg>
           
+            English
+          </li>
+       
+          <li class="flex items-center">
+            <svg class="flex-shrink-0 mr-2 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+           </svg>
+            Bicol
+        </li>
+        
+      </ul>
 
-                 <!-- 5 row  -->
-                 <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                  <p class="text-2xl text-gray-400 dark:text-gray-500">
-                     News / Announcement  Cards
-                  </p>
+      </div>
+
+     
+    </div>
+
+  
+
+  
+  </div>
+
+
+<!-- RIGHT MAIN -->
+
+<div class="col-span-4 block max-w-full p-6 bg-white border border-gray-100  shadow  dark:bg-gray-100 dark:border-gray-700 ">
+
+  <div class="mt-5 mb-9">
+    <h5 class="mb-2 text-5xl font-bold tracking-tight text-black font-mono tracking-widest">Jobseeker L. Elruano</h5>
+    <h5 class="mb-2 text-2xl font-normal text-gray-800 dark:text-gray-700">Web Developer</h5>
+
+    <p class="text-md text-gray-800 dark:text-gray-700 text-justify">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+      into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
+      passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </p>
+    <!-- <hr class="h-1 mb-3 mt-3 bg-gray-200 border-0 dark:bg-gray-700"> -->
+
+  </div>
+ 
+  <div>
+
+    <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">Experience</h5>
+    <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
+
+    <div class="flex items-center mb-3 bg-gray-600">
+      <div
+          class="my-4 ms-3 rounded-full h-10 w-10 flex items-center bg-indigo-300 ring-4 ring-indigo-400 ring-opacity-30">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" 
+          viewBox="0 0 24 24"><path 
+          fill="currentColor" d="M10 2h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8c0-1.11.89-2 
+          2-2h4V4c0-1.11.89-2 2-2m4 4V4h-4v2h4Z"/></svg>
+      </div>
+  
+      <div class="max-w-full w-full ms-5 p-6 bg-white  shadow dark:border-gray-700">
+       
+        <div class="flex justify-between items-center">
+          <h5 class=" text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-900">Computer Communication Development Institute</h5>
+          <h5 class=" text-2sm font-semibold tracking-tight text-gray-900  dark:text-gray-900">2012 - Still Employed</h5>
+        </div>
+        <p class=" font-bold text-indigo-500 dark:text-indigo-900">Web Developer / Instructor - (Employment Type)</p>
+        <p class="mb-2 font-bold text-indigo-500 dark:text-indigo-900">Rizal St. Sorsogon City - (Remote Type) </p>
+      
+        
+          <p class="mb-3 font-normal text-gray-500 dark:text-gray-600 text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it 
+            to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting..</p>
+       
+      </div>
+  </div>
+
+
+
+
+  
+
+  </div>
+
+  <!-- References -->
+  <div class="mb-10">
+
+    <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">References</h5>
+    <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
+
+    <div class="grid md:grid-cols-3 gap-5 mt-7 ">
+   
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-300 dark:border-gray-700">
+  <div class="flex justify-end px-4 pt-4">
+    
+    
+  </div>
+  <div class="flex flex-col items-center pb-5">
+   
+      <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-black">Refreree D. Call</h5>
+      <span class="text-sm text-gray-500 dark:text-black">MIT Instructor</span>
+      <span class="text-sm text-gray-500 dark:text-black">09917320847</span>
+  
+  </div>
+</div>
+
+
+
+      </div>
+  </div>
+
+  <div class="text-center ">
+    <span class="text-md text-gray-500 dark:text-black">I hereby certify that all the above information are true and correct according to my own knowledge and belief.</span>
+
+  </div>
+
+</div>
+
+
+
+                  </div>
+            
+
+
+
                </div>
-               <!-- 5 row  -->
-               
-                <!-- 5 row  -->
-                <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                    <p class="text-2xl text-gray-400 dark:text-gray-500">
-                      Announcement Preview here
-                    </p>
-                 </div>
-                 <!-- 5 row  -->
+         
             </div>
          </div>
     </Sidebar>

@@ -45,7 +45,7 @@ class Resume extends Model
     public function user(): BelongsTo
 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
 
     }
 
@@ -53,6 +53,18 @@ class Resume extends Model
 
     {
         return $this->hasMany(Education::class);
+
+    }
+    public function skill()
+
+    {
+        return $this->hasMany(Experience::class);
+
+    }
+    public function experience()
+
+    {
+        return $this->hasMany(Skill::class);
 
     }
 

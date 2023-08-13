@@ -78,14 +78,20 @@ Route::group([], function () {
 
         
     
-   
 
-    Route::resource('jobseeker',JobseekerController::class, getInertiaData()) // Jobseeker DASHBOARD  
-    ->only(['index'])
+    
+
+    Route::resource('jobseeker',JobseekerController::class) // Jobseeker DASHBOARD  
+    ->only(['index','show'])
     ->middleware(['auth', 'role:jobseeker']);
 
 
-    Route::resource('resume-build',ResumeController::class, getInertiaData()) //Resume Building  ROUTE
+    Route::resource('resume-profile', ResumeController::class)
+    ->only(['show']) // Use 'show'
+    ->middleware(['auth', 'role:jobseeker']);
+    
+
+    Route::resource('resume-build',ResumeController::class) //Resume Building  ROUTE
     ->only(['index','create', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'role:jobseeker']);
 

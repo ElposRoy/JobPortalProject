@@ -9,7 +9,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
-
+defineProps(['hasResume']);
 const baseurl = ref('');
 const currentPath = ref(window.location.pathname);
 
@@ -118,7 +118,7 @@ export default {
                 <button  id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white" type="button">
                    
                     <img class="w-8 h-8 mr-2 rounded-full" :src="baseurl+'/storage/images/Pfp.jpeg'" alt="user photo">
-                    Bonnie Green
+                    ELPOS ROY
                 
                   </button>
          
@@ -142,7 +142,7 @@ export default {
        <ul class="space-y-2 font-medium">
           <li>
            <Link 
-           :href="route('jobseeke.index')"
+           :href="route('jobseeker.index')"
            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
            >
            <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -238,7 +238,7 @@ export default {
             <ul id="dropdown-example" class=" py-2 space-y-2"  v-if="resultDropdownValue === 'show'">
               <li>
                 <Link
-                :href="route('EMPTY')"
+                :href="route('resume-profile.show', 'Resume-' + $page.props.auth.resumeID )"
                 class="flex items-center w-full p-2 text-gray-900 transition 
                 duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >

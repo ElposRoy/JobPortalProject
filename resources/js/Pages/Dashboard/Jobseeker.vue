@@ -66,7 +66,8 @@ onMounted(() => {
 <template>
     <Head title="Jobseeker Dashboard" />
 
-    <Sidebar>
+    <Sidebar 
+    >
       
         <div class="p-4 sm:ml-64">
 
