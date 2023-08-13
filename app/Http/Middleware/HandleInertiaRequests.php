@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
-
+use Inertia\Inertia;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -33,7 +33,9 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
-                'userRoles' => $request->user() ? $request -> user() -> roles -> pluck('name'): [], // Use this to create a new Object in the Vue developer tool 
+                'resumeID' => $request->user() && $request->user()->resumes ? $request->user()->resumes->id : null,
+                'userRoles' => $request->user() ? $request->user()->roles->pluck('name') : [],
+                // Use this to create a new Object in the Vue developer tool
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
