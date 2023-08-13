@@ -9,14 +9,15 @@ use Illuminate\Http\Request;
 use App\Models\Resume;
 use App\Models\Education;
 use App\Models\Skill;
-
+use App\Models\Experience;
 class ResumeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
 
-   
+ 
+
     public function index(): Response
     {
         
@@ -45,7 +46,6 @@ class ResumeController extends Controller
         $user = Auth::user();
         $userId = $user->id;
         // dd($request->toArray());
-     
 
 
         try{
@@ -57,7 +57,7 @@ class ResumeController extends Controller
                 'LastName' => 'required|string|max:255',
                 'FirstName' => 'required|string|max:255',
                 'MiddleName' => 'required|string|max:255',
-                'Suffix' => 'required|string|max:3',
+                'Suffix' => 'nullable|string|max:3',
                 'Age' => 'required|string|max:255',
                 'Weight' => 'required|integer|between:0,99',
                 'Height' => 'required|integer|between:0,99',
@@ -87,12 +87,16 @@ class ResumeController extends Controller
        
             ]);
 
+
+
             if ($request->hasFile('Image')) {
                 $validateImage=$request->validate(['Image'=>'Image']);
                 $image = $validateImage['Image']; // get the uploaded file
                 $image->storeAs('images',$image->getClientOriginalName()); // store the image in the storage public/images directory
                 $ImagePath = 'storage/public/images/'.$image->getClientOriginalName();
             } 
+
+          
             
             else {
                   //Problem is here, Even when the checkbox is clicked it will still upload the old image..... Now fixed 17/04/2023
@@ -104,6 +108,20 @@ class ResumeController extends Controller
                 $ImagePath = $noImage['image']; // use the existing image path or set it to null
             }
     
+            
+            try{
+
+                if(empty($validated['Suffix'])){
+                    $Suffix = null;
+                }
+                else{
+                    $Suffix= $validated['Suffix'];
+                }
+            }
+            catch(\throwable $th){
+                throw $th;
+
+            }
           
            $resume = Resume::create([
 
@@ -116,7 +134,8 @@ class ResumeController extends Controller
                 'LastName' => $validated['LastName'],
                 'FirstName' => $validated['FirstName'],
                 'MiddleName' => $validated['MiddleName'],
-                'Suffix' => $validated['Suffix'],
+                'Suffix' => $Suffix,
+                
                 'Age' => $validated['Age'],
                 'BirthDate' => $validated['BirthDate'],
                 'BirthPlace' => $validated['BirthPlace'],
@@ -138,30 +157,59 @@ class ResumeController extends Controller
                         
                         $resumeId = $resume->id;
 
-                        foreach ($validated['Skill'] as $skillArray) {
-                            foreach ($skillArray as $value) {
-                                Skill::create([
-                                    'rsm_id' => $resumeId,
-                                    'Skill' => $value, 
-                                ]);
-                            }
+                if (!empty($validated['Skill'])) {
+                    foreach ($validated['Skill'] as $skillArray) {
+                        foreach ($skillArray as $value) {
+                            Skill::create([
+                                'rsm_id' => $resumeId,
+                                'Skill' => $value, 
+                            ]);
                         }
+                    }
+                }
+                        
+                if(!empty ($validated['Education'])){
 
-                        foreach ($validated['Education'] as $EducationArray) {
-                            $degree = isset($EducationArray['Degree']) ? $EducationArray['Degree'] : null;
-                            $description = isset($EducationArray['Description']) ? $EducationArray['Description'] : null;
-                                Education::create([
-                                    'rsm_id' => $resumeId,
-                                    'Level' => $EducationArray['Level'], 
-                                    'StartDate' => $EducationArray['StartDate'], 
-                                    'EndDate' => $EducationArray['EndDate'], 
-                                    'School' => $EducationArray['School'], 
-                                    'Address' => $EducationArray['Address'], 
-                                    'Degree' => $degree, 
-                                'Description' => $description, 
-                                ]);
-                        }
+                    foreach ($validated['Education'] as $EducationArray) {
+                        $degree = isset($EducationArray['Degree']) ? $EducationArray['Degree'] : null;
+                        $description = isset($EducationArray['Description']) ? $EducationArray['Description'] : null;
+                            Education::create([
+                                'rsm_id' => $resumeId,
+                                'Level' => $EducationArray['Level'], 
+                                'StartDate' => $EducationArray['StartDate'], 
+                                'EndDate' => $EducationArray['EndDate'], 
+                                'School' => $EducationArray['School'], 
+                                'Address' => $EducationArray['Address'], 
+                                'Degree' => $degree, 
+                            'Description' => $description, 
+                            ]);
+                    }
+                }
 
+                if(!empty($validated['Experience'])) {
+
+                    foreach ($validated['Experience'] as $ExperienceArray) {
+                        $Description = isset($ExperienceArray['Description']) ? $ExperienceArray['Description'] : null;
+                   
+                            Experience::create([
+                                'rsm_id' => $resumeId,
+                                'JobStarted' => $ExperienceArray['JobStarted'], 
+                                'JobEnded' => $ExperienceArray['JobEnded'], 
+                                'StillEmployed' => $ExperienceArray['StillEmployed'], 
+                                'Company' => $ExperienceArray['Company'], 
+                                'Position' => $ExperienceArray['Position'], 
+                                'Location' => $ExperienceArray['Location'], 
+                                'LocationType' => $ExperienceArray['LocationType'], 
+                                'EmploymentType' => $ExperienceArray['EmploymentType'], 
+                                'Description' => $Description, 
+                            ]);
+                    }
+
+
+                }
+                                
+
+                    
 
 
           
@@ -177,9 +225,28 @@ class ResumeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
+     $user = Auth::user();
+    $resume = Resume::where('user_id', $user->id)->first();
+
+    if (!$resume) {
+        return Inertia::render('Dashboard/Jobseeker-Page/Resume-Build', [
+            // Include any other data needed
+        ]);
+    }
+    // Load related data (education, skills, experiences) for the resume
+    $education = Education::where('rsm_id', $resume->id)->get();
+    $skills = Skill::where('rsm_id', $resume->id)->get();
+    $experiences = Experience::where('rsm_id', $resume->id)->get();
+
+    return Inertia::render('Dashboard/Jobseeker-Page/Resume-Profile', [
+        'resume' => $resume,
+        'education' => $education,
+        'skills' => $skills,
+        'experiences' => $experiences,
+    ]);
     }
 
     /**
