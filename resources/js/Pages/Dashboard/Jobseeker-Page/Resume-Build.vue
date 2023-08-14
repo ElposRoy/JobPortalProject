@@ -636,7 +636,7 @@ methods: {
           localStorage.removeItem('currentExperience');
           localStorage.removeItem('addeddSkill');
           localStorage.removeItem('currentEducation');
-          this.$inertia.visit(route('jobseeker.index'));
+          this.$inertia.visit(route('resume-profile.show'));
         },
      
       });

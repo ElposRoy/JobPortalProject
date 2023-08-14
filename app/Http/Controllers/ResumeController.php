@@ -45,7 +45,7 @@ class ResumeController extends Controller
     {
         $user = Auth::user();
         $userId = $user->id;
-        // dd($request->toArray());
+      
 
 
         try{
@@ -59,8 +59,8 @@ class ResumeController extends Controller
                 'MiddleName' => 'required|string|max:255',
                 'Suffix' => 'nullable|string|max:3',
                 'Age' => 'required|string|max:255',
-                'Weight' => 'required|integer|between:0,99',
-                'Height' => 'required|integer|between:0,99',
+                'Weight' => 'required|numeric|between:0,99.99',
+                'Height' => 'required|numeric|between:0,99.99',
 
                 'BirthDate' => 'required|date_format:Y-m-d',
 
@@ -87,7 +87,7 @@ class ResumeController extends Controller
        
             ]);
 
-
+         
 
             if ($request->hasFile('Image')) {
                 $validateImage=$request->validate(['Image'=>'Image']);
@@ -122,7 +122,7 @@ class ResumeController extends Controller
                 throw $th;
 
             }
-          
+       
            $resume = Resume::create([
 
          
