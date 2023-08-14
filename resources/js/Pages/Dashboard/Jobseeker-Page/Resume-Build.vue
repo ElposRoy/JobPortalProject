@@ -14,11 +14,12 @@ import SkillInput from '@/Pages/Dashboard/Components/SkillInput.vue';
 import ExperienceInput from '@/Pages/Dashboard/Components/ExperienceInput.vue';
 
 
+defineProps(['hasResume']);
 
 const baseurl = ref('');
 onMounted(() => {
   baseurl.value = location.origin;
-
+  
 });
 
 const validateEmail = (email) => {
@@ -168,7 +169,9 @@ const filteredTertiaryEducation = () => {
 
 <script>
 export default {
-  
+
+
+
   data: () => ({
     Step1: true,
     Step2: false,
@@ -238,15 +241,22 @@ watch: {
 },
 
 created () {
-  this.initialize()
+ 
+  if (this.$page.props.auth.resumeID !== null) {
+     this.$inertia.visit(route('resume-profile.show',this.$page.props.auth.resumeID));
+    } else {
+      this.initialize()
   this.checkEducation() //Check if there is an exisitng education addedd then show it 
   this.checkSkill()   //Check if a skill was added when refreshing page
+    }
+ 
 },
 
 methods: {
  
  
   initialize () {
+  
     localStorage.removeItem('currentExperience');
     localStorage.removeItem('addeddSkill');
     localStorage.removeItem('currentEducation');

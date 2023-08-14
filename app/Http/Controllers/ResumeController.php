@@ -20,9 +20,10 @@ class ResumeController extends Controller
 
     public function index(): Response
     {
-        
+        $user_id = Auth::id();
+        $hasResume = Resume::where('user_id', $user_id)->exists();
         return Inertia::render('Dashboard/Jobseeker-Page/Resume-Build', [
-            
+            'hasResume' => $hasResume,
             // 'products' => Product::with(['category','unit_type','purchases'])->paginate(),
             // 'categories'=> Category::all(),
             // 'unit_types'=> UnitType::all(),
@@ -46,7 +47,8 @@ class ResumeController extends Controller
         $user = Auth::user();
         $userId = $user->id;
       
-
+        // dd($request->toArray());
+         
 
         try{
             $validated = $request -> validate([
@@ -74,7 +76,7 @@ class ResumeController extends Controller
 
                 
                 'Email' => 'required|string|max:255',
-                'CareerObjective' => 'required|string|max:255',
+                'CareerObjective' => 'required|string|max:500',
 
 
                 "Skill"    => "nullable|array|",
@@ -87,8 +89,8 @@ class ResumeController extends Controller
                 "Experience.*"  => "nullable|distinct",
        
             ]);
-
-         
+               
+            // dd($validated);
 
             if ($request->hasFile('Image')) {
                 $validateImage=$request->validate(['Image'=>'Image']);

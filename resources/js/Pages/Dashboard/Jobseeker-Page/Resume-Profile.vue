@@ -91,7 +91,7 @@ function formatYear(dateString) {
 
           <p class="text-sm text-gray-500 dark:text-gray-400">Secondary( {{formatYear(educationItem.StartDate)}} to {{formatYear(educationItem.EndDate)}} )</p>
           <p class="font-normal tracking-tight text-gray-900 dark:text-white">{{educationItem.School}}</p>
-          <p class="font-normal tracking-tight text-gray-900 dark:text-white">{{educationItem.Degree}}</p>
+          <p class="text-sm text-indigo-500 dark:text-indigo-400">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
         
@@ -204,7 +204,7 @@ function formatYear(dateString) {
           <h5 class=" text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-900">{{experienceItem.Company}}</h5>
           <h5 class=" text-2sm font-semibold tracking-tight text-gray-900  dark:text-gray-900">{{formatYear(experienceItem.JobStarted) }} to {{formatYear( experienceItem.JobEnded)}}</h5>
         </div>
-        <p class=" font-bold text-indigo-500 dark:text-indigo-900">{{ experienceItem.Position }}  - ( experienceItem.EmploymentType)</p>
+        <p class=" font-bold text-indigo-500 dark:text-indigo-900">{{ experienceItem.Position }}  - ( {{ experienceItem.EmploymentType }})</p>
         <p class="mb-2 font-bold text-indigo-500 dark:text-indigo-900">{{  experienceItem.Location }} - ({{experienceItem.LocationType }}) </p>
       
         
