@@ -54,6 +54,7 @@ class ResumeController extends Controller
                 'Image' => 'required|image',
                 'Gender' => 'required|string|max:255',
                 'Citizenship' => 'required|string|max:255',
+                'DesiredPosition' => 'required|string|max:255',
                 'LastName' => 'required|string|max:255',
                 'FirstName' => 'required|string|max:255',
                 'MiddleName' => 'required|string|max:255',
@@ -131,6 +132,7 @@ class ResumeController extends Controller
                 'Image' => $ImagePath,
                 'Gender' => $validated['Gender'],
                 'Citizenship' => $validated['Citizenship'],
+                'DesiredPosition' => $validated['DesiredPosition'],
                 'LastName' => $validated['LastName'],
                 'FirstName' => $validated['FirstName'],
                 'MiddleName' => $validated['MiddleName'],
@@ -207,7 +209,16 @@ class ResumeController extends Controller
 
 
                 }
-                                
+                $education = Education::where('rsm_id', $resume->id)->get();
+                $skills = Skill::where('rsm_id', $resume->id)->get();
+                $experiences = Experience::where('rsm_id', $resume->id)->get();
+            
+                return Inertia::render('Dashboard/Jobseeker-Page/Resume-Profile', [
+                    'resume' => $resume,
+                    'education' => $education,
+                    'skills' => $skills,
+                    'experiences' => $experiences,
+                ]);         
 
                     
 

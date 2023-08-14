@@ -21,6 +21,7 @@ class Resume extends Model
         'Image',
         'Gender',
         'Citizenship',
+        'DesiredPosition',
         'LastName',
         'FirstName',
         'MiddleName',

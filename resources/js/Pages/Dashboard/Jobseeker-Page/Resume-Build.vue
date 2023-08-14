@@ -48,6 +48,7 @@ const overallForm = useForm ({
   Image: '',
   Gender: '',
   Citizenship: '',
+  DesiredPosition: '',
   LastName: '',
   FirstName: '',
   MiddleName: '',
@@ -79,6 +80,7 @@ const ResumePFP = useForm ({
 const PersonalInfo = useForm ({
   Gender: '',
   Citizenship: '',
+  DesiredPosition: '',
   LastName: '',
   FirstName: '',
   MiddleName: '',
@@ -609,6 +611,7 @@ methods: {
     overallForm.Image = ResumePFP.Image;
     overallForm.Gender = PersonalInfo.Gender;
     overallForm.Citizenship = PersonalInfo.Citizenship;
+    overallForm.DesiredPosition = PersonalInfo.DesiredPosition;
     overallForm.LastName = PersonalInfo.LastName;
     overallForm.FirstName = PersonalInfo.FirstName;
     overallForm.MiddleName = PersonalInfo.MiddleName;
@@ -636,7 +639,7 @@ methods: {
           localStorage.removeItem('currentExperience');
           localStorage.removeItem('addeddSkill');
           localStorage.removeItem('currentEducation');
-          this.$inertia.visit(route('resume-profile.show'));
+          // this.$inertia.visit(route('jobseeker.index'));
         },
      
       });
@@ -739,6 +742,10 @@ methods: {
         <input  v-model="PersonalInfo.Citizenship" type="text" name="floating_Citizenship" id="floating_Citizenship" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label for="floating_Citizenship" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Citizenship</label>
     </div>
+    <div class="relative z-0 w-full mb-6 group">
+      <input  v-model="PersonalInfo.DesiredPosition" type="text" name="floating_DesiredPosition" id="floating_DesiredPosition" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+      <label for="floating_DesiredPosition" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Desired Job Position</label>
+  </div>
     </div>
    
    

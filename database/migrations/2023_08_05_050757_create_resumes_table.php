@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('BirthPlace');
             $table->string('CivilStatus');
             $table->string('Citizenship');
+            $table->string('DesiredPosition');
             $table->string('Address');
             $table->string('PhoneNumber');
             $table->string('CareerObjective');
