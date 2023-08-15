@@ -5,9 +5,15 @@ import { useForm, Head } from '@inertiajs/vue3';
 import { reactive, onMounted, ref } from 'vue';
 
 // Components
-
+import InputError from '@/Components/InputError.vue';
 import Footer from '@/Layouts/Footer.vue';
 import Sidebar from '@/Layouts/Sidebar.vue';
+import EducationInput from '@/Pages/Dashboard/Components/EducationInput.vue';
+import SkillInput from '@/Pages/Dashboard/Components/SkillInput.vue';
+import ExperienceInput from '@/Pages/Dashboard/Components/ExperienceInput.vue';
+import UpdateForm from '@/Pages/Dashboard/Components/UpdateForm.vue';
+
+import UpdateDialog from '@/Pages/Dashboard/Components/UpdateDialog.vue';
 
 defineProps(['resume','education','experiences','skills']);
 
@@ -23,9 +29,306 @@ function formatYear(dateString) {
   return date.toLocaleDateString(undefined, options);
 }
 
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+const validatePhoneNumber = (phoneNumber) => {
+  return String(phoneNumber).match(/^(\+?63|0)9\d{9}$/);
+};
+
+
+// Function to format the date in a readable format (e.g., "July 6, 2023")
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString(undefined, options);
+}
+
+
+const ResumePFP = useForm ({
+  Image: '',
+
+});
+
+
+const PersonalInfo = useForm ({
+
+  DesiredPosition: '',
+  LastName: '',
+  FirstName: '',
+  MiddleName: '',
+  Address: '',
+  PhoneNumber: '',
+  Email: '',
+  CareerObjective: '',
+ 
+
+});
+
+
+const EducationValuesForm = useForm ({
+  Level: '',
+  StartDate: null,
+  EndDate: null,
+  School: '',
+  Address: '',
+  Degree: '',
+  Description: '',
+
+});
+
+const SkillValuesForm = useForm ({
+  Skill: '',
+
+});
+
+const ExperienceValuesForm = useForm ({
+  JobStarted: '',
+  JobEnded: '',
+  StillEmployed: '',
+  Company: '',
+  Position: '',
+  Location: '',
+  LocationType: '',
+  EmploymentType: '',
+  Description: '',
+});
+
+
+
+const ReferenceForm= useForm ({
+  Name: '',
+  Company: '',
+  Position: '',
+  Phone: '',
+  Email: '',
+});
+
 
 </script>
 
+
+<script>
+export default {
+
+
+
+  data: () => ({
+   
+    imageURL: null,
+    hideJobEnded: false,
+    skillErrorMessage: '',
+
+    dialogResumeHead: false,
+    dialogContact: false,
+
+    dialogEducation: false,
+    dialogSkill: false,
+    dialogEducation: false,
+    dialogExperience: false,
+
+    errorMessage: '',
+
+  
+
+    
+    AddeddSkillCard: false,
+
+    dialogEducation: false,
+    dialogSkill: false,
+    dialogEducation: false,
+    dialogExperience: false,
+
+    TertiaryCard: false,
+    SecondaryCard: false,
+    PrimaryCard: false,
+   
+  
+    // prod:{}
+  }
+  ),
+  computed: {
+  
+},
+
+watch: {
+  dialogEducation (val) {
+    val || this.closeEducationDialog()
+  },
+  dialogSkill (val) {
+    val || this.closeSkillsDialog()
+  },
+  dialogExperience(val){
+    val || this.closeExperienceDialog()
+  },
+  dialogResumeHead(val){
+    val || this.closeUpdateForm()
+  },
+  dialogContact(val){
+    val || this.closeUpdateForm()
+  },
+
+  TertiaryCard (val) {
+    val || this.closeTertiaryCard()
+  },
+  SecondaryCard (val) {
+    val || this.closeSecondaryCard()
+  },
+  PrimaryCard (val) {
+    val || this.closePrimaryCard()
+  },
+  AddeddSkillCard(val){
+    val || this.hideSkillAddeddCard()
+  },
+
+},
+
+created () {
+ 
+ 
+    },
+
+methods: {
+ // if the this.inertia post is undefined, use async and await 
+ async UpdateHead() {
+
+    try {
+      await this.$inertia.post(route('resume-profile.addEducation', resume,), {
+        onSuccess: () => {
+       
+      },
+      });
+      
+      // Handle success
+    } catch (error) {
+      // Handle error
+    }
+  },
+
+
+
+  async addEducation() {
+    try {
+      await this.$inertia.post(route('resume-profile.addEducation', resume,), {
+        onSuccess: () => {
+       
+      },
+      });
+      
+      // Handle success
+    } catch (error) {
+      // Handle error
+    }
+  },
+
+  async addExperience() {
+    try {
+      await this.$inertia.post(route('resume-profile.addExperience', '1'), {
+        onSuccess: () => {
+       
+      },
+      });
+      
+      // Handle success
+    } catch (error) {
+      // Handle error
+    }
+  },
+
+  async addSkill() {
+    try {
+      await this.$inertia.post(route('resume-profile.addSkill', '1'),  {
+        onSuccess: () => {
+       
+        },
+     
+      });
+      
+      // Handle success
+    } catch (error) {
+      // Handle error
+    }
+  },
+  async addLanguage() {
+    try {
+      await this.$inertia.post(route('resume-profile.addLanguage', '1'), {
+        onSuccess: () => {
+       
+      },
+      });
+      
+      // Handle success
+    } catch (error) {
+      // Handle error
+    }
+  },
+  async addReference() {
+    try {
+      await this.$inertia.post(route('resume-profile.addReference', '1'), {
+        onSuccess: () => {
+       
+      },
+      });
+      
+      // Handle success
+    } catch (error) {
+      // Handle error
+    }
+  },
+
+  openResumeHead(PersonalInfo,Fname,Mname,Lname,Position,CareerObjective){
+    
+    PersonalInfo.DesiredPosition = Position ;
+    PersonalInfo.CareerObjective = CareerObjective
+    PersonalInfo.FirstName  = Fname;
+    PersonalInfo.MiddleName  = Mname;
+    PersonalInfo.LastName  = Lname;
+
+
+    this.dialogResumeHead = true;
+    
+  },
+  openContact(PersonalInfo,Phone, Email, Address){
+    
+    PersonalInfo.PhoneNumber = Phone ;
+    PersonalInfo.Email = Email
+    PersonalInfo.Address = Address;
+   
+
+
+    this.dialogContact = true;
+    
+  },
+
+
+  closeUpdateForm(){
+ 
+  this.dialogResumeHead = false;
+  this.dialogContact = false;
+ },
+
+
+  closeEducationDialog(){
+    this.dialogEducation = false;
+
+  },
+  closeSkillsDialog(){
+    this.dialogSkill=false;
+  },
+ closeExperienceDialog(){
+ 
+    this.dialogExperience = false;
+  },
+ 
+
+},
+}
+</script>
 
 
 
@@ -33,6 +336,31 @@ function formatYear(dateString) {
     <Head title="Dashboard-Announcements" />
   
     <Sidebar>
+      
+      <UpdateDialog
+      :dialogResumeHead="dialogResumeHead"
+      :dialogContact="dialogContact">
+
+      <UpdateForm
+      :dialogResumeHead="dialogResumeHead"
+      :dialogContact="dialogContact"
+      :PersonalInfo="PersonalInfo"
+      @closeUpdateForm="closeUpdateForm">
+
+      </UpdateForm>
+        <!-- <SkillInput>
+
+        </SkillInput>
+
+        <ExperienceInput>
+
+        </ExperienceInput>
+
+        <EducationInput>
+
+        </EducationInput> -->
+
+      </UpdateDialog>
 
         <div class="p-4 sm:ml-64">
             <div class="p-2 border-2 border-gray-200  dark:bg-gray-400 rounded-lg dark:border-gray-700 mt-14">
@@ -43,14 +371,36 @@ function formatYear(dateString) {
                   <div class="grid md:grid-cols-5">
             <!-- Left Column -->
   <div  class="col-span-1 block max-w-full p-6 bg-white border bg-gray-200 border-gray-200  shadow  dark:bg-gray-800 dark:border-gray-700 ">
-    <div class="flex flex-col items-center pb-10">
-      <img class="object-fill rounded-full h-52 w-52" :src="baseurl+'/storage/images/Pfp.jpeg'" alt="Bonnie image"/>
-      <!-- <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Bonnie Green</h5>
-      <span class="text-sm text-gray-500 dark:text-gray-400">Visual Designer</span> -->
-  </div>
+
+
+    
+    <div
+  class="relative max-w-xs overflow-hidden bg-cover bg-no-repeat mb-5"
+  data-te-ripple-init
+  data-te-ripple-color="light">
+  <img
+  :src="baseurl+'/storage/images/Pfp.jpeg'"
+  class="object-fill h-52 w-52"
+    alt="Louvre" />
+  <a class="cursor-pointer">
+    <div
+      class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsl(0,0%,98.4%,0.2)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+  </a>
+</div>
+  
 
     <div>
-      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Contact</h5>
+      <div class="flex justify-between relative">
+        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Contact</h5>
+        <button @click="openContact(PersonalInfo, resume.PhoneNumber, resume.Email, resume.Address)" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+       
+        </button>
+
+        
+      </div>
+      
+     
       <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
       <div class="mb-5">
@@ -71,7 +421,16 @@ function formatYear(dateString) {
 
     
     <div >
-      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Education</h5>
+      <div class="flex justify-between relative">
+        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Education</h5>
+        <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+       
+        </button>
+
+        
+      </div>
+      
       <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
       <div class="mb-5" v-for="(educationItem, index) in education" :key="index">
@@ -83,9 +442,9 @@ function formatYear(dateString) {
           <p class="text-sm text-indigo-500 dark:text-indigo-400">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
-        
+        <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
       </div>
-      <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
+    
       <div class="mb-5" v-for="(educationItem, index) in education" :key="index">
         <template v-if="educationItem.Level === 'Secondary'">
 
@@ -94,9 +453,9 @@ function formatYear(dateString) {
           <p class="text-sm text-indigo-500 dark:text-indigo-400">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
-        
+        <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
       </div>
-      <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
+  
       <div class="mb-5" v-for="(educationItem, index) in education" :key="index">
         <template v-if="educationItem.Level === 'Primary'">
 
@@ -105,14 +464,23 @@ function formatYear(dateString) {
           <p class="font-normal tracking-tight text-gray-900 dark:text-white">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
-        
+        <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
       </div>
-      <hr class="h-px  mb-5 bg-gray-200 border-0 dark:bg-gray-700">
+     
     </div>
   
     
     <div>
-      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Skills</h5>
+      <div class="flex justify-between relative">
+        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Skills</h5>
+        <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+       
+        </button>
+
+        
+      </div>
+      
       <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
       <div class="mb-5">
@@ -135,7 +503,16 @@ function formatYear(dateString) {
     </div>
 
     <div>
-      <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Languages</h5>
+      <div class="flex justify-between relative">
+        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Languages</h5>
+        <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+       
+        </button>
+
+        
+      </div>
+      
       <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
       <div class="mb-5">
@@ -174,8 +551,17 @@ function formatYear(dateString) {
 <div class="col-span-4 block max-w-full p-6 bg-white border border-gray-100  shadow  dark:bg-gray-100 dark:border-gray-700 ">
 
   <div class="mt-5 mb-9">
-    <h5 class="mb-2 text-5xl font-bold tracking-tight text-black font-mono tracking-widest">{{resume.FirstName}} {{resume.MiddleName[0]}}. {{ resume.LastName }}</h5>
-    <h5 class="mb-2 text-2xl font-normal text-gray-800 dark:text-gray-700">Web Developer Note: Add to Fillup Forms</h5>
+    <div class="relative">
+      <h5 class="mb-2 text-5xl font-bold tracking-tight text-black font-mono tracking-widest">{{resume.FirstName}} {{resume.MiddleName[0]}}. {{ resume.LastName }}</h5>
+      <button @click="openResumeHead(PersonalInfo,resume.FirstName,resume.MiddleName,resume.LastName,resume.DesiredPosition,resume.CareerObjective)" type="button" class="absolute top-0 right-0 mt-[-0.5rem] mr-[-0.5rem] px-2 py-2  text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white " viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+      Edit
+      </button>
+   
+  </div>
+  
+  
+    <h5 class="mb-2 text-2xl font-normal text-gray-800 dark:text-gray-700">{{resume.DesiredPosition}}</h5>
 
     <p class="text-md text-gray-800 dark:text-gray-700 text-justify">
     {{ resume.CareerObjective }}
@@ -185,8 +571,13 @@ function formatYear(dateString) {
   </div>
  
   <div>
-
-    <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">Experience</h5>
+    <div class="flex justify-between relative">
+      <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">Experience</h5>
+      <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+      </button>
+    </div>
+    
     <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
     <div class="flex items-center mb-3 bg-gray-600" v-for="(experienceItem, index) in experiences" :key="index">
@@ -224,8 +615,13 @@ function formatYear(dateString) {
 
   <!-- References -->
   <div class="mb-10">
-
-    <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">References</h5>
+    <div class="flex justify-between relative">
+      <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">References</h5>
+      <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+      </button>
+    </div>
+   
     <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
     <div class="grid md:grid-cols-3 gap-5 mt-7 ">
