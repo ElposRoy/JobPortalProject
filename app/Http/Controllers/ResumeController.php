@@ -39,6 +39,11 @@ class ResumeController extends Controller
         //
     }
 
+    public function addEducation(Request $request, $id)
+    {
+        dd('asd');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
