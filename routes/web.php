@@ -90,8 +90,12 @@ Route::group([], function () {
     ->only(['show']) // Use 'show'
     ->middleware(['auth', 'role:jobseeker']);
     
-    Route::post('resume-profile/{id}/add-education', [ResumeController::class, 'addEducation']) // Adding Education
+    Route::post('resume-profile/{id}/add-education', [ResumeController::class, 'addEducation']) // Adding Education Route
     ->name('resume-profile.addEducation')
+    ->middleware(['auth', 'role:jobseeker']);
+
+    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'deleteSkill']) // Adding Skill Route
+    ->name('resume-profile.deleteSkill')
     ->middleware(['auth', 'role:jobseeker']);
 
     Route::resource('resume-build',ResumeController::class) //Resume Building  ROUTE
