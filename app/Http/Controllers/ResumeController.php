@@ -43,6 +43,19 @@ class ResumeController extends Controller
     {
         dd('asd');
     }
+    public function deleteSkill(Request $request, $id)
+    {
+        try {
+            $skill = Skill::findOrFail($id); // Assuming 'Skill' is the correct model name
+            
+            $skill->delete();
+    
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    
+
 
     /**
      * Store a newly created resource in storage.
@@ -248,7 +261,6 @@ class ResumeController extends Controller
         //
      $user = Auth::user();
     $resume = Resume::where('user_id', $user->id)->first();
-
     if (!$resume) {
         return Inertia::render('Dashboard/Jobseeker-Page/Resume-Build', [
             // Include any other data needed
