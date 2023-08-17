@@ -13,6 +13,7 @@ import SkillInput from '@/Pages/Dashboard/Components/SkillInput.vue';
 import ExperienceInput from '@/Pages/Dashboard/Components/ExperienceInput.vue';
 import UpdateForm from '@/Pages/Dashboard/Components/UpdateForm.vue';
 
+
 import UpdateDialog from '@/Pages/Dashboard/Components/UpdateDialog.vue';
 
 defineProps(['resume','education','experiences','skills']);
@@ -83,6 +84,7 @@ const EducationValuesForm = useForm ({
 });
 
 const SkillValuesForm = useForm ({
+  ID: '',
   Skill: '',
 
 });
@@ -109,6 +111,10 @@ const ReferenceForm= useForm ({
   Email: '',
 });
 
+const showSkillAddedd  = useForm ({
+  SkillAddedd: JSON.parse(localStorage.getItem('addeddSkill')) || [],
+});
+
 
 </script>
 
@@ -131,12 +137,12 @@ export default {
     dialogSkill: false,
     dialogEducation: false,
     dialogExperience: false,
-
+    SkillEdit: false,
     errorMessage: '',
 
   
 
-    
+    getSkillArrayLength: null,
     AddeddSkillCard: false,
 
     dialogEducation: false,
@@ -158,7 +164,7 @@ export default {
 
 watch: {
   dialogEducation (val) {
-    val || this.closeEducationDialog()
+    val || this.closeUpdateForm()
   },
   dialogSkill (val) {
     val || this.closeSkillsDialog()
@@ -172,7 +178,6 @@ watch: {
   dialogContact(val){
     val || this.closeUpdateForm()
   },
-
   TertiaryCard (val) {
     val || this.closeTertiaryCard()
   },
@@ -209,9 +214,6 @@ methods: {
       // Handle error
     }
   },
-
-
-
   async addEducation() {
     try {
       await this.$inertia.post(route('resume-profile.addEducation', resume,), {
@@ -225,7 +227,6 @@ methods: {
       // Handle error
     }
   },
-
   async addExperience() {
     try {
       await this.$inertia.post(route('resume-profile.addExperience', '1'), {
@@ -239,7 +240,6 @@ methods: {
       // Handle error
     }
   },
-
   async addSkill() {
     try {
       await this.$inertia.post(route('resume-profile.addSkill', '1'),  {
@@ -294,15 +294,20 @@ methods: {
     
   },
   openContact(PersonalInfo,Phone, Email, Address){
-    
     PersonalInfo.PhoneNumber = Phone ;
     PersonalInfo.Email = Email
     PersonalInfo.Address = Address;
-   
-
-
     this.dialogContact = true;
-    
+  },
+
+  openEducation(EducationData){
+    this.dialogEducation = true;
+  },
+  openAddEducation( ){
+  
+  },
+  openEditEducation( ){
+   
   },
 
 
@@ -310,13 +315,60 @@ methods: {
  
   this.dialogResumeHead = false;
   this.dialogContact = false;
+  this.dialogEducation = false;
  },
 
-
-  closeEducationDialog(){
-    this.dialogEducation = false;
+ openSkillsDialog(skill,length){
+  this.dialogSkill = true;
+  this.SkillEdit=true;
+ 
+  length = skill.length;
+  if(length > 0){
+    localStorage.setItem('addeddSkill', JSON.stringify(this.skills));
+  }
 
   },
+
+  removeSkillData(Form, showSkillAddedd, getSkill,skillID){
+
+    if (!getSkill || !skillID) {
+    // Return an error message when either input is empty
+    console.error("There is nothing to delete!");
+    return;
+    }
+    else {
+    Form.ID = skillID;
+    Form.Skill = getSkill;
+    }
+
+    Form.post(route('resume-profile.deleteSkill',Form.ID), {
+       onSuccess: () => {
+            // Remove the skill from the array
+            const skillToRemove = showSkillAddedd.SkillAddedd.findIndex(skillItem => skillItem.id === skillID);
+            if (skillToRemove !== -1) {
+                showSkillAddedd.SkillAddedd.splice(skillToRemove, 1);
+            }
+            
+            // Reset the form and update localStorage
+            Form.reset();
+            localStorage.setItem('addeddSkill', JSON.stringify(showSkillAddedd.SkillAddedd));
+        },
+      });
+
+
+    },
+
+    //Not needed but it's just here
+  clearSkills(skillAddedd){
+    localStorage.removeItem('addeddSkill');
+    skillAddedd.SkillAddedd=[];
+    this.AddeddSkillCard=false;
+  },
+  
+  closeSkillsDialog(){
+  this.dialogSkill=false;
+  },
+
   closeSkillsDialog(){
     this.dialogSkill=false;
   },
@@ -339,26 +391,35 @@ methods: {
       
       <UpdateDialog
       :dialogResumeHead="dialogResumeHead"
-      :dialogContact="dialogContact">
+      :dialogContact="dialogContact"
+      :dialogEducation="dialogEducation"
+      :dialogSkill="dialogSkill">
 
       <UpdateForm
       :dialogResumeHead="dialogResumeHead"
       :dialogContact="dialogContact"
+      :dialogEducation="dialogEducation"
       :PersonalInfo="PersonalInfo"
       @closeUpdateForm="closeUpdateForm">
 
       </UpdateForm>
-        <!-- <SkillInput>
+     
+      <SkillInput
+      :AddeddSkillCard="AddeddSkillCard"
+      :SkillValuesForm="SkillValuesForm"
+      :showSkillAddedd="showSkillAddedd"
+      :skills="skills"
+      :getSkillArrayLength="getSkillArrayLength"
+      :skillErrorMessage="skillErrorMessage"
+      :SkillEdit="SkillEdit"
+      @addSkill="addSkill"
+      @closeSkillsDialog="closeSkillsDialog"
+      @clearSkills="clearSkills"
+      @removeSkillData="removeSkillData"
+      >
 
-        </SkillInput>
-
-        <ExperienceInput>
-
-        </ExperienceInput>
-
-        <EducationInput>
-
-        </EducationInput> -->
+      </SkillInput>
+  
 
       </UpdateDialog>
 
@@ -423,7 +484,7 @@ methods: {
     <div >
       <div class="flex justify-between relative">
         <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Education</h5>
-        <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button @click="openEducation(education)" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
        
         </button>
@@ -433,7 +494,8 @@ methods: {
       
       <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
-      <div class="mb-5" v-for="(educationItem, index) in education" :key="index">
+      <div class="mb-5" v-for="(educationItem) in education" :key="educationItem.id">
+       
         <template v-if="educationItem.Level === 'Tertiary'">
 
 
@@ -445,7 +507,7 @@ methods: {
         <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
       </div>
     
-      <div class="mb-5" v-for="(educationItem, index) in education" :key="index">
+      <div class="mb-5" v-for="(educationItem) in education" :key="educationItem.id">
         <template v-if="educationItem.Level === 'Secondary'">
 
           <p class="text-sm text-gray-500 dark:text-gray-400">Secondary( {{formatYear(educationItem.StartDate)}} to {{formatYear(educationItem.EndDate)}} )</p>
@@ -456,7 +518,7 @@ methods: {
         <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
       </div>
   
-      <div class="mb-5" v-for="(educationItem, index) in education" :key="index">
+      <div class="mb-5" v-for="(educationItem) in education" :key="educationItem.id">
         <template v-if="educationItem.Level === 'Primary'">
 
           <p class="text-sm text-gray-500 dark:text-gray-400">Primary ( {{formatYear(educationItem.StartDate)}} to {{formatYear(educationItem.EndDate)}} )</p>
@@ -473,7 +535,7 @@ methods: {
     <div>
       <div class="flex justify-between relative">
         <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Skills</h5>
-        <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button @click="openSkillsDialog(skills,getSkillArrayLength)" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
        
         </button>
@@ -487,7 +549,7 @@ methods: {
       
 
       <ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-          <li class="flex items-center" v-for="(skillItem, index) in skills" :key="index">
+          <li class="flex items-center" v-for="(skillItem) in skills" :key="skillItem.id">
               <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
               </svg>
@@ -580,7 +642,7 @@ methods: {
     
     <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
 
-    <div class="flex items-center mb-3 bg-gray-600" v-for="(experienceItem, index) in experiences" :key="index">
+    <div class="flex items-center mb-3 bg-gray-600" v-for="(experienceItem) in experiences" :key="experienceItem.id">
       <div
           class="my-4 ms-3 rounded-full h-10 w-10 flex items-center bg-indigo-300 ring-4 ring-indigo-400 ring-opacity-30">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" 

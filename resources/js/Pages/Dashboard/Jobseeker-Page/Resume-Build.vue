@@ -142,9 +142,6 @@ const ExperienceArray = useForm ({
 
 const showSkillAddedd  = useForm ({
   SkillAddedd: JSON.parse(localStorage.getItem('addeddSkill')) || [],
-
-
-  
 });
 
 
@@ -195,7 +192,8 @@ export default {
     finalErrorStep: '',
 
 
-    getSkillArrayLength: null,
+   
+    
     AddeddSkillCard: false,
 
     dialogEducation: false,

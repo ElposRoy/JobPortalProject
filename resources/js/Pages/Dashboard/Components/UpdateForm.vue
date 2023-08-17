@@ -9,7 +9,7 @@ onMounted(() => {
 });
 
 
-defineProps(['dialogResumeHead','PersonalInfo','dialogContact']);
+defineProps(['dialogResumeHead','PersonalInfo','dialogContact','dialogEducation']);
 defineEmits(['closeUpdateForm']);
 
 
@@ -18,6 +18,9 @@ defineEmits(['closeUpdateForm']);
 
 
 </script>
+
+
+
 <template>
 
     <div class="dialog-content">
@@ -233,6 +236,177 @@ defineEmits(['closeUpdateForm']);
        <InputError class="mt-2"  />
       </div>
 </div>
+
+<div v-show="dialogEducation">
+ <!-- Modal header -->
+ <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+   Update Education
+  </h3>
+  <button  @click="$emit('closeUpdateForm')"   type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 
+  rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="staticModal">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>
+      <span class="sr-only">Close modal</span>
+  </button>
+</div>
+<!-- Modal body -->
+<div class="p-6 space-y-3">
+  <div class="flex items-center">
+    <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Add Education : </label>
+    <button type="button" @click="openEducationDialog(EducationValuesForm,'Tertiary')" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+    dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Tertiary</button>
+
+    <button type="button" @click="openEducationDialog(EducationValuesForm,'Secondary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+    dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Secondary</button>
+
+    <button type="button" @click="openEducationDialog(EducationValuesForm,'Primary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
+    dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Primary</button>
+    
+
+  </div>
+
+  <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
+  
+  <div class="grid gap-6 mb-6 md:grid-cols-3">
+    <div class="w-full max-w-sm bg-white  shadow dark:bg-gray-800 dark:border-gray-700 pe-4 border-r-4 ">
+      <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">TERTIARY</h5>
+
+      <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+        <div class="flex justify-between px-4 pt-4">
+
+          <div>
+            <span class="text-sm text-gray-500 dark:text-gray-400">2023-2023</span>
+          </div>
+    <div>
+      <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-sky-500 hover:bg-blue-800 rounded-full dark:bg-blue-700 dark:text-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white"
+         viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 
+         0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+         
+        <span class="sr-only">Edit</span>
+      </span>
+      
+      <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-red-500 hover:bg-red-800 rounded-full dark:bg-red-700 dark:text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12Z"/></svg>
+       
+        <span class="sr-only">Delete </span>
+      </span>
+    </div>
+      
+      
+        </div>
+        <div class="flex flex-col items-center text-center pb-10 p-5 ">
+            
+            <h5 class="mb-1 text-md text-gray-900  dark:text-white">Computer Communicaiton Development Institute</h5>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Bachelor of Science in Information Technology</span>
+         
+        </div>
+      </div>
+
+    </div>
+   
+<!-- Secondary -->
+<div class="w-full max-w-sm bg-white shadow dark:bg-gray-800 dark:border-gray-700 pe-4 border-r-4">
+  <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">Secondary</h5>
+
+  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+    <div class="flex justify-between px-4 pt-4">
+
+      <div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">2023-2023</span>
+      </div>
+<div>
+  <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-sky-500 hover:bg-blue-800 rounded-full dark:bg-blue-700 dark:text-gray-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white"
+     viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 
+     0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+     
+    <span class="sr-only">Edit</span>
+  </span>
+  
+  <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-red-500 hover:bg-red-800 rounded-full dark:bg-red-700 dark:text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12Z"/></svg>
+   
+    <span class="sr-only">Delete </span>
+  </span>
+</div>
+  
+  
+    </div>
+    <div class="flex flex-col items-center text-center pb-10 p-5 ">
+        
+        <h5 class="mb-1 text-md text-gray-900  dark:text-white">Computer Communicaiton Development Institute</h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Bachelor of Science in Information Technology</span>
+     
+    </div>
+  </div>
+
+</div>
+
+<!-- Primary -->
+<div class="w-full max-w-sm bg-white  shadow dark:bg-gray-800 dark:border-gray-700 pe-4 ">
+  <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">Primary</h5>
+
+  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+    <div class="flex justify-between px-4 pt-4">
+
+      <div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">2023-2023</span>
+      </div>
+<div>
+  <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-sky-500 hover:bg-blue-800 rounded-full dark:bg-blue-700 dark:text-gray-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white"
+     viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 
+     0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+     
+    <span class="sr-only">Edit</span>
+  </span>
+  
+  <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-red-500 hover:bg-red-800 rounded-full dark:bg-red-700 dark:text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12Z"/></svg>
+   
+    <span class="sr-only">Delete </span>
+  </span>
+</div>
+  
+  
+    </div>
+    <div class="flex flex-col items-center text-center pb-10 p-5 ">
+        
+        <h5 class="mb-1 text-md text-gray-900  dark:text-white">Computer Communicaiton Development Institute</h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Bachelor of Science in Information Technology</span>
+     
+    </div>
+  </div>
+
+</div>
+  </div>
+ 
+
+
+
+</div>
+
+
+
+
+<!-- Modal footer -->
+<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+  <button 
+
+  data-modal-hide="staticModal" 
+  type="button"
+   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+   font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save Changes</button>
+   <InputError class="mt-2"  />
+  </div>
+    
+    </div>
 </div>
 
   <slot/>
