@@ -67,6 +67,7 @@ const PersonalInfo = useForm ({
   PhoneNumber: '',
   Email: '',
   CareerObjective: '',
+  Language: '',
  
 
 });
@@ -137,6 +138,7 @@ export default {
     dialogSkill: false,
     dialogEducation: false,
     dialogExperience: false,
+    dialogLanguage: false,
     SkillEdit: false,
     errorMessage: '',
 
@@ -171,6 +173,9 @@ watch: {
   },
   dialogExperience(val){
     val || this.closeExperienceDialog()
+  },
+  dialogLanguage(val){
+    val || this.closeLanguageDialog()
   },
   dialogResumeHead(val){
     val || this.closeUpdateForm()
@@ -267,12 +272,14 @@ methods: {
       // Handle error
     }
   },
-  async addReference() {
+
+  async addSkill() {
     try {
-      await this.$inertia.post(route('resume-profile.addReference', '1'), {
+      await this.$inertia.post(route('resume-profile.addSkill', '1'),  {
         onSuccess: () => {
        
-      },
+        },
+     
       });
       
       // Handle success
@@ -280,6 +287,40 @@ methods: {
       // Handle error
     }
   },
+
+  async  removeSkillData(Form, showSkillAddedd, getSkill,skillID){
+    
+    try {
+      if (!getSkill || !skillID) {
+    // Return an error message when either input is empty
+    console.error("There is nothing to delete!");
+    return;
+    }
+    else {
+    Form.ID = skillID;
+    Form.Skill = getSkill;
+    }
+
+    Form.post(route('resume-profile.deleteSkill',Form.ID), {
+       onSuccess: () => {
+            // Remove the skill from the array
+            const skillToRemove = showSkillAddedd.SkillAddedd.findIndex(skillItem => skillItem.id === skillID);
+            if (skillToRemove !== -1) {
+                showSkillAddedd.SkillAddedd.splice(skillToRemove, 1);
+            }
+            
+            // Reset the form and update localStorage
+            Form.reset();
+            localStorage.setItem('addeddSkill', JSON.stringify(showSkillAddedd.SkillAddedd));
+        },
+      });
+
+   
+    } catch (error) {
+      // Handle error
+    }
+  },
+
 
   openResumeHead(PersonalInfo,Fname,Mname,Lname,Position,CareerObjective){
     
@@ -309,16 +350,7 @@ methods: {
   openEditEducation( ){
    
   },
-
-
-  closeUpdateForm(){
- 
-  this.dialogResumeHead = false;
-  this.dialogContact = false;
-  this.dialogEducation = false;
- },
-
- openSkillsDialog(skill,length){
+  openSkillsDialog(skill,length){
   this.dialogSkill = true;
   this.SkillEdit=true;
  
@@ -328,35 +360,19 @@ methods: {
   }
 
   },
-
-  removeSkillData(Form, showSkillAddedd, getSkill,skillID){
-
-    if (!getSkill || !skillID) {
-    // Return an error message when either input is empty
-    console.error("There is nothing to delete!");
-    return;
-    }
-    else {
-    Form.ID = skillID;
-    Form.Skill = getSkill;
-    }
-
-    Form.post(route('resume-profile.deleteSkill',Form.ID), {
-       onSuccess: () => {
-            // Remove the skill from the array
-            const skillToRemove = showSkillAddedd.SkillAddedd.findIndex(skillItem => skillItem.id === skillID);
-            if (skillToRemove !== -1) {
-                showSkillAddedd.SkillAddedd.splice(skillToRemove, 1);
-            }
-            
-            // Reset the form and update localStorage
-            Form.reset();
-            localStorage.setItem('addeddSkill', JSON.stringify(showSkillAddedd.SkillAddedd));
-        },
-      });
+  openEditLanguage( ){
+    this.dialogLanguage = true;
+   
+  },
 
 
-    },
+  closeUpdateForm(){
+ 
+  this.dialogResumeHead = false;
+  this.dialogContact = false;
+  this.dialogEducation = false;
+  this.dialogLanguage = false;
+ },
 
     //Not needed but it's just here
   clearSkills(skillAddedd){
@@ -369,14 +385,16 @@ methods: {
   this.dialogSkill=false;
   },
 
-  closeSkillsDialog(){
-    this.dialogSkill=false;
-  },
+
  closeExperienceDialog(){
  
     this.dialogExperience = false;
   },
  
+  closeLanguageDialog(){
+ 
+ this.dialogLanguage = false;
+},
 
 },
 }
@@ -393,18 +411,20 @@ methods: {
       :dialogResumeHead="dialogResumeHead"
       :dialogContact="dialogContact"
       :dialogEducation="dialogEducation"
+      :dialogLanguage="dialogLanguage"
       :dialogSkill="dialogSkill">
 
       <UpdateForm
       :dialogResumeHead="dialogResumeHead"
       :dialogContact="dialogContact"
       :dialogEducation="dialogEducation"
+      :dialogLanguage="dialogLanguage"
       :PersonalInfo="PersonalInfo"
       @closeUpdateForm="closeUpdateForm">
 
       </UpdateForm>
      
-      <SkillInput
+      <SkillInput v-show="dialogSkill"     
       :AddeddSkillCard="AddeddSkillCard"
       :SkillValuesForm="SkillValuesForm"
       :showSkillAddedd="showSkillAddedd"
@@ -567,7 +587,7 @@ methods: {
     <div>
       <div class="flex justify-between relative">
         <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Languages</h5>
-        <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button @click="openEditLanguage()" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
        
         </button>

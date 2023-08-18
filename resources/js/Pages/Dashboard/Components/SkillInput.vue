@@ -7,7 +7,8 @@ import InputError from '@/Components/InputError.vue';
 
 
 
-defineProps(['SkillValuesForm','showSkillAddedd','errorMessage','getSkillArrayLength','AddeddSkillCard','skillErrorMessage','SkillEdit','skills']);
+defineProps(['SkillValuesForm','showSkillAddedd','errorMessage','getSkillArrayLength',
+'AddeddSkillCard','skillErrorMessage','SkillEdit','skills','dialogSkill']);
 defineEmits(['closeSkillsDialog','addSkill','clearSkills','removeSkill','removeSkillData']);
 
 
