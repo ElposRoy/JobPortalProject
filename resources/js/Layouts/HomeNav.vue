@@ -54,8 +54,9 @@ export default {
 
 <template>
 
+  
 
-    <nav class="flex items-center justify-between flex-wrap bg-slate-100 p-6 border-b-2 border-red-400">
+    <nav  class="flex items-center justify-between flex-wrap bg-slate-100 bg-opacity-10 p-6 sticky top-0 z-10 bg-white backdrop-filter backdrop-blur-lg bg-opacity-20">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
             
            <img class="fill-current h-8 w-8 mr-2" :src="baseurl+'/images/Logo.png'">
