@@ -223,6 +223,11 @@ export default {
              
                 </div>
                 
+                <!-- Announcement Carousel here -->
+
+                <!-- Announcement Carousel here -->
+
+
             <div class="mt-10 px-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
            
@@ -268,7 +273,7 @@ export default {
                      <div>
                         <dl class="grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-4 lg:grid-cols-4 text-center">
                         
-                    <div class="m-1 shadow-2xl">
+                   
 
                                
                         <div class="max-w-full shadow shadow-xl bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
@@ -280,12 +285,12 @@ export default {
                                 <a href="#">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 text-center dark:text-white">Create a Resume</h5>
                                 </a>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                    Creating a resume on a job portal is vital for presenting your skills and experience to potential employers efficiently. </p>
                             
                             </div>
                         </div>
 
-                    </div>
         
                         <div class="max-w-full shadow shadow-xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="#">
@@ -296,7 +301,7 @@ export default {
                                 <a href="#">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 text-center dark:text-white">Build Profile</h5>
                                 </a>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Showcases your skills, experience, and qualifications to potential employers or collaborators.</p>
                                
                             </div>
                         </div>
@@ -309,7 +314,7 @@ export default {
                                 <a href="#">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 text-center dark:text-white">Find your job</h5>
                                 </a>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> It encourages users to utilize the platform's resources to search and apply for job opportunities that match their skills and preferences. </p>
                                
                             </div>
                         </div>
@@ -322,7 +327,7 @@ export default {
                                 <a href="#">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 text-center dark:text-white">Submit your application</h5>
                                 </a>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Submitting your application increases visibility, and enables efficient communication with  employers.</p>
                                
                             </div>
                         </div>
@@ -371,7 +376,7 @@ export default {
                                 <div class="m-1 shadow-2xl">
                                     <div class="max-w-full shadow shadow-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                                         <a href="#">
-                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  transition duration-300 ease-in-out hover:scale-110" />
+                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  " />
                                     
                                         </a>
                                         <div class="p-5 ">
@@ -391,7 +396,7 @@ export default {
                                 <div class="m-1 shadow-2xl">
                                     <div class="max-w-full shadow shadow-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                                         <a href="#">
-                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  transition duration-300 ease-in-out hover:scale-110" />
+                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  " />
                                     
                                         </a>
                                         <div class="p-5 ">
@@ -411,7 +416,7 @@ export default {
                                 <div class="m-1 shadow-2xl">
                                     <div class="max-w-full shadow shadow-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                                         <a href="#">
-                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  transition duration-300 ease-in-out hover:scale-110" />
+                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  " />
                                     
                                         </a>
                                         <div class="p-5 ">
@@ -430,7 +435,7 @@ export default {
                                 <div class="m-1 shadow-2xl">
                                     <div class="max-w-full shadow shadow-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                                         <a href="#">
-                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  transition duration-300 ease-in-out hover:scale-110" />
+                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  " />
                                     
                                         </a>
                                         <div class="p-5 ">
@@ -449,7 +454,7 @@ export default {
                                 <div class="m-1 shadow-2xl">
                                     <div class="max-w-full shadow shadow-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                                         <a href="#">
-                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  transition duration-300 ease-in-out hover:scale-110" />
+                                            <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  " />
                                     
                                         </a>
                                         <div class="p-5 ">
