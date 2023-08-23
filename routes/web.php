@@ -32,6 +32,7 @@ function getInertiaData()
 }
 
 Route::group([], function () {
+
     // HOME ↓
     Route::get('/', function () {
         return Inertia::render('Welcome', getInertiaData());

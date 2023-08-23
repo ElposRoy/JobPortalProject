@@ -8,15 +8,32 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 
 import { ref } from 'vue';
 
+const roleText = ref('Please Select Role');
+const roleName = ref('Name');
+const urlParams = new URLSearchParams(window.location.search);
+const Clickedrole = urlParams.get('role');
+
+
+if (Clickedrole  === 'Jobseeker') {
+    roleText.value = 'JOBSEEKER ';
+    roleName.value = 'Jobseeker Name';
+  } else if (Clickedrole  === 'Employer') {
+    roleText.value = 'EMPLOYER';
+    roleName.value = 'Employer Name';
+  }
+
 
 
 const form = useForm({
-    role : '',
+    role : Clickedrole ? Clickedrole : '',
     name: '',
     email: '',
     password: '',
     password_confirmation: '',
 });
+
+
+
 
 const submit = () => {
     form.post(route('register'), {
@@ -24,8 +41,7 @@ const submit = () => {
     });
 };
 
-const roleText = ref('Please Select Role');
-const roleName = ref('Name');
+
 
 
 const selectJobseeker = (role) => {
@@ -150,7 +166,7 @@ const selectJobseeker = (role) => {
                 <InputError class="mt-2 text-white" :message="form.errors.password_confirmation" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4">
                 <Link
                     :href="route('login')"
                     class="underline text-sm text-gray-400 hover:text-sky-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
