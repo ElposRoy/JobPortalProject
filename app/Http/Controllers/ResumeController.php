@@ -10,6 +10,7 @@ use App\Models\Resume;
 use App\Models\Education;
 use App\Models\Skill;
 use App\Models\Experience;
+use Illuminate\Support\Facades\Validator;
 class ResumeController extends Controller
 {
     /**
@@ -41,8 +42,46 @@ class ResumeController extends Controller
 
     public function addEducation(Request $request, $id)
     {
-        dd('asd');
+        dd('aEDUCATION');
     }
+
+    public function updateHead(Request $request, $id)
+    {
+        
+        // dd($request->all(), $id);
+      // Define validation rules for the $id parameter
+      $validationRules = [
+        'id' => 'required|numeric', // Define more rules as needed
+    ];
+
+    // Create a Validator instance and validate the $id parameter using the defined rules
+    $validator = Validator::make(['id' => $id], $validationRules);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        // Handle validation failure
+        return response()->json(['error' => 'Invalid ID value'], 400);
+    }
+
+    // If the validation passes, you can proceed with your update logic
+    // $id is valid and can be used
+
+    dd($id); // Debugging purposes
+        
+    $validated = $request->validate([
+        'product_name' => 'required|string|max:255',
+        //'image' => 'nullable|image',  //ensure the uploaded file is an image
+        'stock_level' => 'required|numeric|max:999.99',
+        'unit'=>'required|numeric|max:255',
+        'unit_type_id' => 'required|integer|min:1|max:255',
+        'category_id' => 'required|integer|min:1|max:255',
+    ]);
+
+
+   
+    }
+
+
     public function deleteSkill(Request $request, $id)
     {
         try {

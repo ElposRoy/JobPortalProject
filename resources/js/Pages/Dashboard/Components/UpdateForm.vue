@@ -10,7 +10,7 @@ onMounted(() => {
 
 
 defineProps(['dialogResumeHead','PersonalInfo','dialogContact','dialogEducation','dialogLanguage']);
-defineEmits(['closeUpdateForm']);
+defineEmits(['closeUpdateForm','UpdateHead']);
 
 
 
@@ -139,7 +139,7 @@ defineEmits(['closeUpdateForm']);
     <!-- Modal footer -->
     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
         <button 
-      
+        @click="$emit('UpdateHead', PersonalInfo,  $page.props.auth.resumeID)" 
         data-modal-hide="staticModal" 
         type="button"
          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
@@ -228,7 +228,7 @@ defineEmits(['closeUpdateForm']);
   <!-- Modal footer -->
   <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
       <button 
-    
+     
       data-modal-hide="staticModal" 
       type="button"
        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 

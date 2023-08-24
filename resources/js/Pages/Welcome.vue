@@ -3,22 +3,6 @@ import { Head, Link } from '@inertiajs/vue3';
 import HomeNav from '@/Layouts/HomeNav.vue';
 import Footer from '@/Layouts/Footer.vue';
 
-const links = [
-
-
-  { name: 'Open roles', href: '#' },
-  { name: 'Internship program', href: '#' },
-  { name: 'Our values', href: '#' },
-  { name: 'Meet our leadership', href: '#' },
-]
-const stats = [
-
-
-  { name: 'Offices worldwide', value: '12' },
-  { name: 'Full-time colleagues', value: '300+' },
-  { name: 'Hours per week', value: '40' },
-  { name: 'Paid time off', value: 'Unlimited' },
-]
 
 defineProps({
     canLogin: {
@@ -286,9 +270,7 @@ export default {
                      <div>
                         <dl class="grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-4 lg:grid-cols-4 text-center">
                         
-                   
-
-                               
+                    
                         <div class="max-w-full shadow shadow-xl bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                             <a href="#">
                                 <img :src="baseurl+'/images/CreateResumeCard.jpg'" alt=""  class="rounded-t-lg  transition duration-300 ease-in-out hover:scale-110" />

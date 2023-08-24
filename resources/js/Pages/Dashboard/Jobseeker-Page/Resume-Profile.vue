@@ -205,20 +205,35 @@ created () {
 
 methods: {
  // if the this.inertia post is undefined, use async and await 
- async UpdateHead() {
-
-    try {
-      await this.$inertia.post(route('resume-profile.addEducation', resume,), {
-        onSuccess: () => {
-       
+ async UpdateHead(PersonalInfo, ID) {
+  try {
+    await this.$inertia.post(route('resume-profile.updateHead', ID), PersonalInfo, {
+      onSuccess: () => {
+        // Handle success
       },
-      });
-      
-      // Handle success
-    } catch (error) {
-      // Handle error
-    }
+    });
+  } catch (error) {
+    // Handle error
+  }
+},
+
+
+  async UpdateContact() {
+console.log('asd')
+try {
+  await this.$inertia.post(route('resume-profile.addEducation', resume), {
+    onSuccess: () => {
+   
   },
+  });
+  
+  // Handle success
+} catch (error) {
+  // Handle error
+}
+},
+
+
   async addEducation() {
     try {
       await this.$inertia.post(route('resume-profile.addEducation', resume,), {
@@ -367,7 +382,7 @@ methods: {
 
 
   closeUpdateForm(){
- 
+
   this.dialogResumeHead = false;
   this.dialogContact = false;
   this.dialogEducation = false;
@@ -420,7 +435,8 @@ methods: {
       :dialogEducation="dialogEducation"
       :dialogLanguage="dialogLanguage"
       :PersonalInfo="PersonalInfo"
-      @closeUpdateForm="closeUpdateForm">
+      @closeUpdateForm="closeUpdateForm"
+      @UpdateHead="UpdateHead">
 
       </UpdateForm>
      
@@ -456,7 +472,7 @@ methods: {
 
     
     <div
-  class="relative max-w-xs overflow-hidden bg-cover bg-no-repeat mb-5"
+  class="relative max-w-sm overflow-hidden bg-cover bg-no-repeat mx-5 mb-5"
   data-te-ripple-init
   data-te-ripple-color="light">
   <img
