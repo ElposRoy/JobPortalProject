@@ -206,8 +206,15 @@ created () {
 methods: {
  // if the this.inertia post is undefined, use async and await 
  async UpdateHead(PersonalInfo, ID) {
+  const newForm = {};
+
+  newForm.FirstName = PersonalInfo.FirstName;
+  newForm.MiddleName = PersonalInfo.MiddleName;
+  newForm.LastName = PersonalInfo.LastName;
+  newForm.DesiredPosition = PersonalInfo.DesiredPosition;
+  newForm.CareerObjective = PersonalInfo.CareerObjective;
   try {
-    await this.$inertia.post(route('resume-profile.updateHead', ID), PersonalInfo, {
+    await this.$inertia.post(route('resume-profile.updateHead', ID), newForm, {
       onSuccess: () => {
         // Handle success
       },
