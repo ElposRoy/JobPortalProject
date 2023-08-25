@@ -31,6 +31,7 @@ function getInertiaData()
     ];
 }
 
+// Welcome Routes
 Route::group([], function () {
 
     // HOME ↓
@@ -46,9 +47,6 @@ Route::group([], function () {
       Route::get('/dashboard/announcement', function () {
         return Inertia::render('Dashboard/Jobseeker-Page/Announcement', getInertiaData());
     })->name('dashboard-announcement');
-
-
-
 
 
     // JOBS SEARCH ↓
@@ -77,10 +75,6 @@ Route::group([], function () {
         return Inertia::render('Dashboard/Admin', getInertiaData());
     })->middleware(['auth', 'role:admin'])->name('admin');
 
-        
-    
-
-    
 
     Route::resource('jobseeker',JobseekerController::class) // Jobseeker DASHBOARD  
     ->only(['index','show'])
@@ -91,41 +85,41 @@ Route::group([], function () {
     ->only(['show']) // Use 'show'
     ->middleware(['auth', 'role:jobseeker']);
     
-    Route::post('resume-profile/{id}/add-education', [ResumeController::class, 'addEducation']) // Adding Education Route
-    ->name('resume-profile.addEducation')
-    ->middleware(['auth', 'role:jobseeker']);
-
-    Route::post('resume-profile/{id}/update-head', [ResumeController::class, 'updateHead']) // Update Head Route
-    ->name('resume-profile.updateHead')
-    ->middleware(['auth', 'role:jobseeker']);
-
-
-    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'deleteSkill']) // Adding Skill Route
-    ->name('resume-profile.deleteSkill')
-    ->middleware(['auth', 'role:jobseeker']);
+  
 
     Route::resource('resume-build',ResumeController::class) //Resume Building  ROUTE
     ->only(['index','create', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'role:jobseeker']);
 
-
-
-
-
-    // Route::get('/dashboard/resume-profile', function () {
-    //     return Inertia::render('Dashboard/Jobseeker-Page/Resume-Profile', getInertiaData());
-    // })->middleware(['auth', 'role:jobseeker'])->name('resume-profile');
-
-  
-
 });
 
+// Resume Routes
+Route::group([], function () {
+
+    Route::post('resume-profile/{id}/add-education', [ResumeController::class, 'addEducation']) // Adding Education Route
+    ->name('resume-profile.addEducation')
+    ->middleware(['auth', 'role:jobseeker']);
+
+    Route::post('resume-profile/{id}/update-pfp', [ResumeController::class, 'updatePFP']) // Update Contact Route
+    ->name('resume-profile.updatePFP')
+    ->middleware(['auth', 'role:jobseeker']);
+
+
+    Route::post('resume-profile/{id}/update-head', [ResumeController::class, 'updateHead']) // Update Head Route
+    ->name('resume-profile.updateHead')
+    ->middleware(['auth', 'role:jobseeker']);
+
+    Route::post('resume-profile/{id}/update-contact', [ResumeController::class, 'updateContact']) // Update Contact Route
+    ->name('resume-profile.updateContact')
+    ->middleware(['auth', 'role:jobseeker']);
 
 
 
-// Route::resource('announcements', ProductController::class) //Product ROUTE
-//     ->only(['index','create', 'store', 'update', 'destroy'])
-//     ->middleware(['auth', 'verified']);
+    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'deleteSkill']) // Adding Skill Route
+    ->name('resume-profile.deleteSkill')
+    ->middleware(['auth', 'role:jobseeker']);
+});
+
 
 
 Route::middleware('auth')->group(function () {
