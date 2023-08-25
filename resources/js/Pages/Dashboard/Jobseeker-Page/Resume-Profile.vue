@@ -117,6 +117,7 @@ const showSkillAddedd  = useForm ({
 });
 
 
+
 </script>
 
 
@@ -131,6 +132,8 @@ export default {
     hideJobEnded: false,
     skillErrorMessage: '',
 
+    imageURL: null,
+    dialogResumePFP: false,
     dialogResumeHead: false,
     dialogContact: false,
 
@@ -165,6 +168,10 @@ export default {
 },
 
 watch: {
+  dialogResumePFP(val) {
+    val || this.closeUpdatePFP()
+  },
+
   dialogEducation (val) {
     val || this.closeUpdateForm()
   },
@@ -204,17 +211,20 @@ created () {
     },
 
 methods: {
- // if the this.inertia post is undefined, use async and await 
- async UpdateHead(PersonalInfo, ID) {
-  const newForm = {};
+  preview_image(Form) {
+        this.imageURL= URL.createObjectURL(Form.Image)
+      
+    },
 
-  newForm.FirstName = PersonalInfo.FirstName;
-  newForm.MiddleName = PersonalInfo.MiddleName;
-  newForm.LastName = PersonalInfo.LastName;
-  newForm.DesiredPosition = PersonalInfo.DesiredPosition;
-  newForm.CareerObjective = PersonalInfo.CareerObjective;
+
+    async UpdateResumePFP(PfpImage, ID) {
+  const newPFPForm= {};
+
+  newPFPForm.Image = PfpImage;
+ 
+ 
   try {
-    await this.$inertia.post(route('resume-profile.updateHead', ID), newForm, {
+    await this.$inertia.post(route('resume-profile.updatePFP', ID), newPFPForm, {
       onSuccess: () => {
         // Handle success
       },
@@ -225,20 +235,46 @@ methods: {
 },
 
 
-  async UpdateContact() {
-console.log('asd')
+ // if the this.inertia post is undefined, use async and await 
+ async UpdateHead(PersonalInfo, ID) {
+  const newHeadForm = {};
+
+  newHeadForm.FirstName = PersonalInfo.FirstName;
+  newHeadForm.MiddleName = PersonalInfo.MiddleName;
+  newHeadForm.LastName = PersonalInfo.LastName;
+  newHeadForm.DesiredPosition = PersonalInfo.DesiredPosition;
+  newHeadForm.CareerObjective = PersonalInfo.CareerObjective;
+  try {
+    await this.$inertia.post(route('resume-profile.updateHead', ID), newHeadForm, {
+      onSuccess: () => {
+        // Handle success
+      },
+    });
+  } catch (error) {
+    // Handle error
+  }
+},
+
+
+  async UpdateContact(PersonalInfo, ID) {
+    const newContactForm = {};
+
+newContactForm.PhoneNumber = PersonalInfo.PhoneNumber;
+newContactForm.Email = PersonalInfo.Email;
+newContactForm.Address = PersonalInfo.Address;
+
 try {
-  await this.$inertia.post(route('resume-profile.addEducation', resume), {
+  await this.$inertia.post(route('resume-profile.updateContact', ID), newContactForm, {
     onSuccess: () => {
-   
-  },
+      // Handle success
+    },
   });
-  
-  // Handle success
 } catch (error) {
   // Handle error
 }
 },
+
+
 
 
   async addEducation() {
@@ -343,6 +379,13 @@ try {
     }
   },
 
+  openresumePFP(PersonalInfo,Image){
+
+
+    this.dialogResumePFP = true;
+    
+  },
+
 
   openResumeHead(PersonalInfo,Fname,Mname,Lname,Position,CareerObjective){
     
@@ -387,9 +430,13 @@ try {
    
   },
 
+  closeUpdatePFP(){
+ 
+ this.dialogResumePFP = false;
+},
 
   closeUpdateForm(){
-
+    this.dialogResumePFP = false;
   this.dialogResumeHead = false;
   this.dialogContact = false;
   this.dialogEducation = false;
@@ -430,6 +477,7 @@ try {
     <Sidebar>
       
       <UpdateDialog
+      :dialogResumePFP="dialogResumePFP"
       :dialogResumeHead="dialogResumeHead"
       :dialogContact="dialogContact"
       :dialogEducation="dialogEducation"
@@ -437,13 +485,20 @@ try {
       :dialogSkill="dialogSkill">
 
       <UpdateForm
+      :baseurl="baseurl"
       :dialogResumeHead="dialogResumeHead"
+      :dialogResumePFP="dialogResumePFP"
       :dialogContact="dialogContact"
       :dialogEducation="dialogEducation"
       :dialogLanguage="dialogLanguage"
       :PersonalInfo="PersonalInfo"
+      :ResumePFP="ResumePFP"
+      :imageURL="imageURL"
+      @UpdateResumePFP="UpdateResumePFP"
+      @preview_image="preview_image"
       @closeUpdateForm="closeUpdateForm"
-      @UpdateHead="UpdateHead">
+      @UpdateHead="UpdateHead"
+      @UpdateContact="UpdateContact">
 
       </UpdateForm>
      
@@ -483,11 +538,12 @@ try {
   data-te-ripple-init
   data-te-ripple-color="light">
   <img
-  :src="baseurl+'/storage/images/Pfp.jpeg'"
+  :src="baseurl+'/'+resume.Image"
   class="object-fill h-52 w-52"
     alt="Louvre" />
   <a class="cursor-pointer">
     <div
+    @click="openresumePFP()"
       class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsl(0,0%,98.4%,0.2)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
   </a>
 </div>
