@@ -1,7 +1,7 @@
 <script setup>
 
 
-defineProps(['dialogEducation','dialogSkill','dialogExperience','dialogResumeHead','dialogContact','dialogLanguage']);
+defineProps(['dialogEducation','dialogSkill','dialogExperience','dialogResumeHead','dialogContact','dialogLanguage','dialogResumePFP']);
 
 </script>
 <template>
@@ -17,8 +17,8 @@ defineProps(['dialogEducation','dialogSkill','dialogExperience','dialogResumeHea
   tabindex="-1"
   class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex"
   :class="{
-    'hidden': !(dialogEducation || dialogSkill || dialogExperience || dialogResumeHead || dialogContact || dialogEducation || dialogLanguage),
-  'modal-open': dialogEducation || dialogSkill || dialogExperience || dialogResumeHead || dialogContact || dialogEducation || dialogLanguage,
+    'hidden': !(dialogEducation || dialogSkill || dialogExperience || dialogResumeHead || dialogContact || dialogEducation || dialogLanguage || dialogResumePFP),
+  'modal-open': dialogEducation || dialogSkill || dialogExperience || dialogResumeHead || dialogContact || dialogEducation || dialogLanguage || dialogResumePFP,
 }"
   aria-modal="true"
   role="dialog"
