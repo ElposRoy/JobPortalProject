@@ -10,6 +10,7 @@ use App\Models\Resume;
 use App\Models\Education;
 use App\Models\Skill;
 use App\Models\Experience;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 class ResumeController extends Controller
 {
@@ -45,6 +46,41 @@ class ResumeController extends Controller
         dd('aEDUCATION');
     }
 
+    public function updatePFP(Request $request, Resume $id)
+    {
+        // Retrieve the old image path
+        $oldImagePath = $id->Image;
+    
+        if ($request->hasFile('Image')) {
+            $validateImage = $request->validate(['Image' => 'image']); // 'image' rule for image validation
+    
+            $image = $validateImage['Image'];
+            $image->storeAs('images', $image->getClientOriginalName());
+            $path = 'storage/images/' . $image->getClientOriginalName();
+    
+            // Delete the old image if it exists
+            if ($oldImagePath && file_exists(public_path($oldImagePath))) {
+                unlink(public_path($oldImagePath));
+            }
+        } else {
+            $noImage = $request->validate([
+                'image' => 'required|string',
+            ]);
+    
+            // You might want to set the path to null or handle it differently
+            $path = null;
+    
+            // Delete the old image if it exists
+            if ($oldImagePath && file_exists(public_path($oldImagePath))) {
+                unlink(public_path($oldImagePath));
+            }
+        }
+    
+        $id->update([
+            'Image' => $path,
+        ]);
+    }
+    
     public function updateHead(Request $request, Resume $id)
     {
         
@@ -87,6 +123,49 @@ class ResumeController extends Controller
 
    
     }
+
+    public function updateContact(Request $request, Resume $id)
+    {
+        
+       
+        // dd($request->all(), $id);
+      // Define validation rules for the $id parameter
+      $validationRules = [
+        'id' => 'required|numeric', // Define more rules as needed
+    ];
+
+    // Create a Validator instance and validate the $id parameter 
+    $validator = Validator::make(['id' => $id->id], $validationRules);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        // Handle validation failure
+        return response()->json(['error' => 'Invalid ID value'], 400);
+    }
+
+    // If the validation passes, you can proceed with your update logic
+    // $id is valid and can be used
+   
+    $validated = $request->validate([
+        'PhoneNumber' => 'required|string|max:255',
+        'Email' => 'required|string|max:255',
+        'Address' => 'required|string|max:255',
+        
+    ]);
+
+    $id->update([
+        'PhoneNumber' => $validated['PhoneNumber'],
+        'Email' => $validated['Email'],
+        'Address' => $validated['Address'],
+    ]);
+        
+
+
+   
+    }
+
+
+
 
 
     public function deleteSkill(Request $request,  $id)
