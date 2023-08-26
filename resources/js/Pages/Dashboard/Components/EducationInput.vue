@@ -30,7 +30,7 @@ onMounted(() => {
 });
 
 
-defineProps(['dialogEducation','EducationValuesForm','errorMessage','EducationArray']);
+defineProps(['dialogEducation','EducationValuesForm','errorMessage','EducationArray','dialogAddEducation']);
 defineEmits(['closeEducationDialog','addEducation','handleSubmit']);
 
 
@@ -49,7 +49,7 @@ defineEmits(['closeEducationDialog','addEducation','handleSubmit']);
   <!-- Modal content -->
   <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
     <!-- Modal header -->
-    <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+    <div v-show="!dialogAddEducation" class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
            {{ EducationValuesForm.Level }} Education
         </h3>

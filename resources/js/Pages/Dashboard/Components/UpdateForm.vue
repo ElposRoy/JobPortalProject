@@ -343,7 +343,7 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
 
   <hr class="w-full h-0.5 mx-auto my-4 bg-sky-100 border-0 rounded md:my-5 dark:bg-gray-700">
   
-  <div class="grid gap-6 mb-6 md:grid-cols-3">
+  <div class="grid gap-6 mb-6 md:grid-cols-3" v-show="!dialogAddEducation">
     <div class="w-full max-w-sm bg-white  shadow dark:bg-gray-800 dark:border-gray-700 pe-4 border-r-4 ">
       <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">TERTIARY</h5>
 
@@ -456,9 +456,9 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
   </div>
 
 </div>
-  </div>
+  </div>  
  
-
+  <EducationInput class="border-2 border-red-800 rounded" v-show="dialogAddEducation" :EducationValuesForm="EducationValuesForm" :dialogAddEducation="dialogAddEducation"></EducationInput>
 
 
 </div>
@@ -476,58 +476,12 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
    font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save Changes</button>
    <InputError class="mt-2"  />
   </div>
-    
-
-  <div
-  id="secondModal"
-  data-modal-backdrop="static"
-  tabindex="-1"
-  class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex"
-  :class="{
-    'hidden': !(dialogSecondModal),
-    'modal-open': dialogSecondModal,
-  }"
-  aria-modal="true"
-  role="dialog"
->
-  <!-- Content of your second modal goes here -->
-  <!-- ...
-       Add your second modal content here
-       ... -->
-  <div class="modal-overlay"></div> <!-- The modal overlay element -->
-</div>
-
-
-
-  <div class="EducationAdddialog">
-    <!-- Main modal -->
-    <div
-      id="staticModal"
-      data-modal-backdrop="static"
-      tabindex="-1"
-      class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex"
-      :class="{
-        'hidden': !(dialogAddEducation),
-        'modal-open': dialogAddEducation,
-      }"
-      aria-modal="true"
-      role="dialog"
-    >
-      <EducationInput :EducationValuesForm="EducationValuesForm"></EducationInput>
-      <div class="modal-overlay"></div> <!-- The modal overlay element -->
-      <div class="relative w-full lg:max-w-4xl max-h-full">
-        <slot/>
-      </div>
-    </div>
-    
   
-  </div>
-  
-
 
 
     </div>
 
+  
     <div v-show="dialogLanguage">
       <!-- Modal header -->
       <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
