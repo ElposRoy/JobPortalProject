@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import InputError from '@/Components/InputError.vue';
-
+import EducationInput from '@/Pages/Dashboard/Components/EducationInput.vue';
 
 
 onMounted(() => {
@@ -10,10 +10,10 @@ onMounted(() => {
 
 
 defineProps([
-  'dialogResumeHead','PersonalInfo','dialogContact','dialogEducation','dialogLanguage', 'dialogResumePFP',
- 'ResumePFP','imageURL','baseurl'
+  'dialogResumeHead','PersonalInfo','dialogContact','dialogEducation','dialogLanguage', 'dialogResumePFP','dialogAddEducation',
+ 'ResumePFP','imageURL','baseurl', 'EducationValuesForm'
 ]);
-defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','UpdateResumePFP']);
+defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','UpdateResumePFP','openEducationDialog']);
 
 
 
@@ -326,7 +326,7 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
 <div class="p-6 space-y-3">
   <div class="flex items-center">
     <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Add Education : </label>
-    <button type="button" @click="openEducationDialog(EducationValuesForm,'Tertiary')" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    <button type="button" @click="$emit('openEducationDialog',EducationValuesForm,'Tertiary')" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
     focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
     dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Tertiary</button>
 
@@ -477,6 +477,55 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
    <InputError class="mt-2"  />
   </div>
     
+
+  <div
+  id="secondModal"
+  data-modal-backdrop="static"
+  tabindex="-1"
+  class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex"
+  :class="{
+    'hidden': !(dialogSecondModal),
+    'modal-open': dialogSecondModal,
+  }"
+  aria-modal="true"
+  role="dialog"
+>
+  <!-- Content of your second modal goes here -->
+  <!-- ...
+       Add your second modal content here
+       ... -->
+  <div class="modal-overlay"></div> <!-- The modal overlay element -->
+</div>
+
+
+
+  <div class="EducationAdddialog">
+    <!-- Main modal -->
+    <div
+      id="staticModal"
+      data-modal-backdrop="static"
+      tabindex="-1"
+      class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full justify-center items-center flex"
+      :class="{
+        'hidden': !(dialogAddEducation),
+        'modal-open': dialogAddEducation,
+      }"
+      aria-modal="true"
+      role="dialog"
+    >
+      <EducationInput :EducationValuesForm="EducationValuesForm"></EducationInput>
+      <div class="modal-overlay"></div> <!-- The modal overlay element -->
+      <div class="relative w-full lg:max-w-4xl max-h-full">
+        <slot/>
+      </div>
+    </div>
+    
+  
+  </div>
+  
+
+
+
     </div>
 
     <div v-show="dialogLanguage">

@@ -8,7 +8,7 @@ import { reactive, onMounted, ref } from 'vue';
 import InputError from '@/Components/InputError.vue';
 import Footer from '@/Layouts/Footer.vue';
 import Sidebar from '@/Layouts/Sidebar.vue';
-import EducationInput from '@/Pages/Dashboard/Components/EducationInput.vue';
+
 import SkillInput from '@/Pages/Dashboard/Components/SkillInput.vue';
 import ExperienceInput from '@/Pages/Dashboard/Components/ExperienceInput.vue';
 import UpdateForm from '@/Pages/Dashboard/Components/UpdateForm.vue';
@@ -81,7 +81,6 @@ const EducationValuesForm = useForm ({
   Address: '',
   Degree: '',
   Description: '',
-
 });
 
 const SkillValuesForm = useForm ({
@@ -137,6 +136,7 @@ export default {
     dialogResumeHead: false,
     dialogContact: false,
 
+    dialogAddEducation: false,
     dialogEducation: false,
     dialogSkill: false,
     dialogEducation: false,
@@ -170,6 +170,10 @@ export default {
 watch: {
   dialogResumePFP(val) {
     val || this.closeUpdatePFP()
+  },
+ 
+  dialogAddEducation (val) {
+    val || this.closeAddEducationForm()
   },
 
   dialogEducation (val) {
@@ -409,8 +413,10 @@ try {
   openEducation(EducationData){
     this.dialogEducation = true;
   },
-  openAddEducation( ){
-  
+
+  openEducationDialog( ){
+    this.dialogAddEducation = true;
+    
   },
   openEditEducation( ){
    
@@ -442,7 +448,11 @@ try {
   this.dialogEducation = false;
   this.dialogLanguage = false;
  },
-
+ closeAddEducationForm(){
+    this.dialogAddEducation = false;
+ 
+ },
+ 
     //Not needed but it's just here
   clearSkills(skillAddedd){
     localStorage.removeItem('addeddSkill');
@@ -489,16 +499,19 @@ try {
       :dialogResumeHead="dialogResumeHead"
       :dialogResumePFP="dialogResumePFP"
       :dialogContact="dialogContact"
+      :dialogAddEducation="dialogAddEducation"
       :dialogEducation="dialogEducation"
       :dialogLanguage="dialogLanguage"
       :PersonalInfo="PersonalInfo"
       :ResumePFP="ResumePFP"
       :imageURL="imageURL"
+      :EducationValuesForm="EducationValuesForm"
       @UpdateResumePFP="UpdateResumePFP"
       @preview_image="preview_image"
       @closeUpdateForm="closeUpdateForm"
       @UpdateHead="UpdateHead"
-      @UpdateContact="UpdateContact">
+      @UpdateContact="UpdateContact"
+      @openEducationDialog="openEducationDialog">
 
       </UpdateForm>
      
