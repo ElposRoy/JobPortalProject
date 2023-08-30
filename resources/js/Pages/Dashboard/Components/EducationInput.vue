@@ -39,6 +39,8 @@ defineEmits(['closeEducationDialog','addEducation','handleSubmit']);
 
 
 </script>
+
+
 <template>
 
     <div class="dialog-content">
@@ -163,8 +165,10 @@ defineEmits(['closeEducationDialog','addEducation','handleSubmit']);
         </form>
     </div>
     <!-- Modal footer -->
-    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-        <button 
+    
+    <div  class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+
+        <button   v-show="!dialogAddEducation"
         @click="$emit('handleSubmit',EducationArray,EducationValuesForm)"
         data-modal-hide="staticModal" 
         type="button"

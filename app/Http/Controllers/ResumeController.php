@@ -41,13 +41,44 @@ class ResumeController extends Controller
         //
     }
 
-    public function addEducation(Request $request, $id)
+    public function addEducation(Request $request, Resume $id)
     {
-        dd('aEDUCATION');
+        $validationRules = [
+            'id' => 'required|numeric', 
+        ];
+              
+    $validator = Validator::make(['id' => $id->id], $validationRules);
+
+  
+    if ($validator->fails()) {
+       
+        return response()->json(['error' => 'Invalid ID value'], 400);
+    }
+    $validated = $request->validate([
+        'Level' => 'required|string|max:255',
+        'StartDate' => 'required|string|max:255',
+        'EndDate' => 'required|string|max:255',
+        'School' => 'required|string|max:255',
+        'Address' => 'required|string|max:255',
+        'Degree' => 'nullable|string|max:255', // Adjusted 'nullable' and 'max' rules
+        'Description' => 'nullable|string|max:255', // Adjusted 'nullable' and 'max' rules
+    ]);
+    dd($validated);
     }
 
     public function updatePFP(Request $request, Resume $id)
     {
+        $validationRules = [
+            'id' => 'required|numeric', // Define more rules as needed
+        ];
+          // Create a Validator instance and validate the $id parameter 
+    $validator = Validator::make(['id' => $id->id], $validationRules);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        // Handle validation failure
+        return response()->json(['error' => 'Invalid ID value'], 400);
+    }
         // Retrieve the old image path
         $oldImagePath = $id->Image;
     
@@ -118,9 +149,6 @@ class ResumeController extends Controller
         'MiddleName' => $validated['MiddleName'],
         'CareerObjective' => $validated['CareerObjective'],  
     ]);
-        
-
-
    
     }
 

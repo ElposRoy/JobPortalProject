@@ -13,11 +13,7 @@ defineProps([
   'dialogResumeHead','PersonalInfo','dialogContact','dialogEducation','dialogLanguage', 'dialogResumePFP','dialogAddEducation',
  'ResumePFP','imageURL','baseurl', 'EducationValuesForm'
 ]);
-defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','UpdateResumePFP','openEducationDialog']);
-
-
-
-
+defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','UpdateResumePFP','openEducationDialog','addEducation','backButton']);
 
 
 </script>
@@ -330,11 +326,11 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
     focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
     dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Tertiary</button>
 
-    <button type="button" @click="openEducationDialog(EducationValuesForm,'Secondary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    <button type="button" @click="$emit('openEducationDialog',EducationValuesForm,'Secondary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
     focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
     dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Secondary</button>
 
-    <button type="button" @click="openEducationDialog(EducationValuesForm,'Primary')"  class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+    <button type="button" @click="$emit('openEducationDialog',EducationValuesForm,'Primary')" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
     focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
     dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Primary</button>
     
@@ -458,7 +454,9 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
 </div>
   </div>  
  
-  <EducationInput class="border-2 border-red-800 rounded" v-show="dialogAddEducation" :EducationValuesForm="EducationValuesForm" :dialogAddEducation="dialogAddEducation"></EducationInput>
+  <EducationInput 
+  class="border-2 border-gray-600 rounded" 
+  v-show="dialogAddEducation" :EducationValuesForm="EducationValuesForm" :dialogAddEducation="dialogAddEducation"></EducationInput>
 
 
 </div>
@@ -467,13 +465,27 @@ defineEmits(['closeUpdateForm','UpdateHead','UpdateContact','preview_image','Upd
 
 
 <!-- Modal footer -->
-<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-  <button 
-
+<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600 justify-between">
+  <button   v-show="dialogAddEducation"
+  @click="$emit('addEducation',EducationValuesForm, $page.props.auth.resumeID)"
   data-modal-hide="staticModal" 
   type="button"
    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
-   font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save Changes</button>
+   font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+
+   <button   v-show="dialogAddEducation"
+  @click="$emit('backButton')"
+  data-modal-hide="staticModal" 
+  type="button"
+   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+   font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Back</button>
+
+  <button 
+  v-show="!dialogAddEducation"
+  data-modal-hide="staticModal" 
+  type="button"
+   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+   font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Close</button>
    <InputError class="mt-2"  />
   </div>
   

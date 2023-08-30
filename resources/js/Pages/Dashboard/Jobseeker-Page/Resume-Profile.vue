@@ -280,14 +280,15 @@ try {
 
 
 
-
-  async addEducation() {
+//Education Add Submit Button
+  async addEducation(EducationForm, ID) {
+    console.log(EducationForm)
     try {
-      await this.$inertia.post(route('resume-profile.addEducation', resume,), {
+      await this.$inertia.post(route('resume-profile.addEducation',ID),EducationForm), {
         onSuccess: () => {
        
       },
-      });
+      };
       
       // Handle success
     } catch (error) {
@@ -414,7 +415,19 @@ try {
     this.dialogEducation = true;
   },
 
-  openEducationDialog( ){
+  openEducationDialog(EducationValuesForm,Level ){
+
+    if(Level === 'Tertiary'){
+      EducationValuesForm.Level= 'Tertiary';
+    }
+    else if(Level === 'Secondary'){
+       EducationValuesForm.Level= 'Secondary';
+    }
+    else if(Level === 'Primary'){
+        EducationValuesForm.Level= 'Primary';
+    }
+
+
     this.dialogAddEducation = true;
     
   },
@@ -436,6 +449,11 @@ try {
    
   },
 
+
+  backButton(){
+    this.dialogAddEducation = false;
+  },
+
   closeUpdatePFP(){
  
  this.dialogResumePFP = false;
@@ -447,6 +465,7 @@ try {
   this.dialogContact = false;
   this.dialogEducation = false;
   this.dialogLanguage = false;
+  this.dialogAddEducation  = false;
  },
  closeAddEducationForm(){
     this.dialogAddEducation = false;
@@ -511,8 +530,10 @@ try {
       @closeUpdateForm="closeUpdateForm"
       @UpdateHead="UpdateHead"
       @UpdateContact="UpdateContact"
-      @openEducationDialog="openEducationDialog">
-
+      @openEducationDialog="openEducationDialog"
+      @addEducation="addEducation"
+      @backButton="backButton">
+      
       </UpdateForm>
      
       <SkillInput v-show="dialogSkill"     
