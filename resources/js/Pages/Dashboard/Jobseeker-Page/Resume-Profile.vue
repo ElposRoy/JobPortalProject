@@ -637,9 +637,9 @@ try {
           <p class="text-sm text-indigo-500 dark:text-indigo-400">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
-        <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
+     
       </div>
-    
+   
       <div class="mb-5" v-for="(educationItem) in education" :key="educationItem.id">
         <template v-if="educationItem.Level === 'Secondary'">
 
@@ -648,7 +648,7 @@ try {
           <p class="text-sm text-indigo-500 dark:text-indigo-400">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
-        <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
+      
       </div>
   
       <div class="mb-5" v-for="(educationItem) in education" :key="educationItem.id">
@@ -659,7 +659,7 @@ try {
           <p class="font-normal tracking-tight text-gray-900 dark:text-white">{{educationItem.Degree}}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{educationItem.Address}}</p>
         </template>
-        <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
+      
       </div>
      
     </div>

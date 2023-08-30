@@ -43,27 +43,24 @@ class ResumeController extends Controller
 
     public function addEducation(Request $request, Resume $id)
     {
-        $validationRules = [
-            'id' => 'required|numeric', 
-        ];
-              
-    $validator = Validator::make(['id' => $id->id], $validationRules);
 
-  
-    if ($validator->fails()) {
-       
-        return response()->json(['error' => 'Invalid ID value'], 400);
-    }
-    $validated = $request->validate([
-        'Level' => 'required|string|max:255',
-        'StartDate' => 'required|string|max:255',
-        'EndDate' => 'required|string|max:255',
-        'School' => 'required|string|max:255',
-        'Address' => 'required|string|max:255',
-        'Degree' => 'nullable|string|max:255', // Adjusted 'nullable' and 'max' rules
-        'Description' => 'nullable|string|max:255', // Adjusted 'nullable' and 'max' rules
-    ]);
-    dd($validated);
+        
+        $validated = $request->validate([
+            'Level' => 'required|string|max:255',
+            'StartDate' => 'required|string|max:255',
+            'EndDate' => 'required|string|max:255',
+            'School' => 'required|string|max:255',
+            'Address' => 'required|string|max:255',
+            'Degree' => 'nullable|string|max:255',
+            'Description' => 'nullable|string|max:255',
+        ]);
+    
+        $education = $id->education()->create($validated);
+    
+        
+        return response()->json(['message' => 'Education added successfully']);
+   
+
     }
 
     public function updatePFP(Request $request, Resume $id)
@@ -267,7 +264,7 @@ class ResumeController extends Controller
                 $validateImage=$request->validate(['Image'=>'Image']);
                 $image = $validateImage['Image']; // get the uploaded file
                 $image->storeAs('images',$image->getClientOriginalName()); // store the image in the storage public/images directory
-                $ImagePath = 'storage/public/images/'.$image->getClientOriginalName();
+                $ImagePath = 'storage/images/'.$image->getClientOriginalName();
             } 
 
           
