@@ -57,8 +57,7 @@ class ResumeController extends Controller
     
         $education = $id->education()->create($validated);
     
-        
-        return response()->json(['message' => 'Education added successfully']);
+    
    
 
     }

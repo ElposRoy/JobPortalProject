@@ -115,6 +115,21 @@ const showSkillAddedd  = useForm ({
   SkillAddedd: JSON.parse(localStorage.getItem('addeddSkill')) || [],
 });
 
+const filteredTertiaryEducation = (education) => {
+    const educationCollection = education || [];
+    return educationCollection.filter((educationItem) => educationItem.Level === 'Tertiary');
+     
+  };
+  const filteredSecondaryEducation = (education) => {
+    const educationCollection = education || [];
+    return educationCollection.filter((educationItem) => educationItem.Level === 'Secondary');
+     
+  };
+  const filteredPrimaryEducation = (education) => {
+    const educationCollection = education || [];
+    return educationCollection.filter((educationItem) => educationItem.Level === 'Primary');
+     
+  };
 
 
 </script>
@@ -210,11 +225,18 @@ watch: {
 },
 
 created () {
- 
- 
-    },
+  this.initialize()
 
+
+},
 methods: {
+
+  
+  initialize () {
+ 
+},
+
+
   preview_image(Form) {
         this.imageURL= URL.createObjectURL(Form.Image)
       
@@ -413,6 +435,7 @@ try {
 
   openEducation(EducationData){
     this.dialogEducation = true;
+  
   },
 
   openEducationDialog(EducationValuesForm,Level ){
@@ -523,7 +546,9 @@ try {
       :dialogLanguage="dialogLanguage"
       :PersonalInfo="PersonalInfo"
       :ResumePFP="ResumePFP"
+      :education="education"
       :imageURL="imageURL"
+      :filteredTertiaryEducation="filteredTertiaryEducation"
       :EducationValuesForm="EducationValuesForm"
       @UpdateResumePFP="UpdateResumePFP"
       @preview_image="preview_image"
@@ -617,7 +642,7 @@ try {
     <div >
       <div class="flex justify-between relative">
         <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Education</h5>
-        <button @click="openEducation(education)" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button @click="openEducation(education,filteredTertiaryEducation,filteredSecondaryEducation,filteredPrimaryEducation)" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
        
         </button>
