@@ -270,12 +270,16 @@ methods: {
   newHeadForm.LastName = PersonalInfo.LastName;
   newHeadForm.DesiredPosition = PersonalInfo.DesiredPosition;
   newHeadForm.CareerObjective = PersonalInfo.CareerObjective;
+
   try {
+
     await this.$inertia.post(route('resume-profile.updateHead', ID), newHeadForm, {
-      onSuccess: () => {
-        // Handle success
-      },
-    });
+  onSuccess: () => {
+    PersonalInfo.reset();
+   this.dialogResumeHead = false;
+  },
+});
+
   } catch (error) {
     // Handle error
   }
@@ -304,26 +308,27 @@ try {
 
 //Education Add Submit Button
   async addEducation(EducationForm, ID) {
-    console.log(EducationForm)
+  
     try {
-      await this.$inertia.post(route('resume-profile.addEducation',ID),EducationForm), {
-        onSuccess: () => {
-       
-      },
-      };
+      await this.$inertia.post(route('resume-profile.addEducation', ID), EducationForm, {
+  onSuccess: () => {
+    EducationForm.reset();
+    this.dialogAddEducation = false;
+  },
+});
       
       // Handle success
     } catch (error) {
       // Handle error
     }
   },
-  async addExperience() {
+  async addExperience(ExperienceForm, ID) {
     try {
-      await this.$inertia.post(route('resume-profile.addExperience', '1'), {
-        onSuccess: () => {
-       
-      },
-      });
+      await this.$inertia.post(route('resume-profile.addExperience', ID), ExperienceForm, {
+  onSuccess: () => {
+//  Add something here
+  },
+});
       
       // Handle success
     } catch (error) {
@@ -549,6 +554,8 @@ try {
       :education="education"
       :imageURL="imageURL"
       :filteredTertiaryEducation="filteredTertiaryEducation"
+      :filteredSecondaryEducation="filteredSecondaryEducation"
+      :filteredPrimaryEducation="filteredPrimaryEducation"
       :EducationValuesForm="EducationValuesForm"
       @UpdateResumePFP="UpdateResumePFP"
       @preview_image="preview_image"
