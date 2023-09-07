@@ -41,6 +41,7 @@ class ResumeController extends Controller
         //
     }
 
+
     public function addEducation(Request $request, Resume $id)
     {
 
@@ -61,6 +62,29 @@ class ResumeController extends Controller
    
 
     }
+
+
+  public function addSkill(Request $request, Resume $id)
+    {
+    
+        
+        $validated = $request->validate([
+            'Skill' => 'required|string|max:255',
+        ]);
+    
+        $skill= $id->skill()->create($validated);
+    
+    
+   
+
+    }
+
+
+
+
+
+
+
 
     public function updatePFP(Request $request, Resume $id)
     {

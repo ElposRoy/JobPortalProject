@@ -111,6 +111,7 @@ const ReferenceForm= useForm ({
   Email: '',
 });
 
+//Error if removed
 const showSkillAddedd  = useForm ({
   SkillAddedd: JSON.parse(localStorage.getItem('addeddSkill')) || [],
 });
@@ -243,7 +244,7 @@ methods: {
     },
 
 
-    async UpdateResumePFP(PfpImage, ID) {
+ async UpdateResumePFP(PfpImage, ID) {
   const newPFPForm= {};
 
   newPFPForm.Image = PfpImage;
@@ -259,7 +260,6 @@ methods: {
     // Handle error
   }
 },
-
 
  // if the this.inertia post is undefined, use async and await 
  async UpdateHead(PersonalInfo, ID) {
@@ -304,8 +304,6 @@ try {
 }
 },
 
-
-
 //Education Add Submit Button
   async addEducation(EducationForm, ID) {
   
@@ -322,6 +320,7 @@ try {
       // Handle error
     }
   },
+
   async addExperience(ExperienceForm, ID) {
     try {
       await this.$inertia.post(route('resume-profile.addExperience', ID), ExperienceForm, {
@@ -335,14 +334,17 @@ try {
       // Handle error
     }
   },
-  async addSkill() {
+  async addNewSkill(SkillForm, ID , length) {
+
     try {
-      await this.$inertia.post(route('resume-profile.addSkill', '1'),  {
-        onSuccess: () => {
-       
-        },
-     
-      });
+      await this.$inertia.post(route('resume-profile.addSkill', ID), SkillForm, {
+  onSuccess: () => {
+
+
+    // EducationForm.reset();
+    // this.dialogAddEducation = false;
+  },
+});
       
       // Handle success
     } catch (error) {
@@ -363,20 +365,7 @@ try {
     }
   },
 
-  async addSkill() {
-    try {
-      await this.$inertia.post(route('resume-profile.addSkill', '1'),  {
-        onSuccess: () => {
-       
-        },
-     
-      });
-      
-      // Handle success
-    } catch (error) {
-      // Handle error
-    }
-  },
+
 
   async  removeSkillData(Form, showSkillAddedd, getSkill,skillID){
     
@@ -393,15 +382,9 @@ try {
 
     Form.post(route('resume-profile.deleteSkill',Form.ID), {
        onSuccess: () => {
-            // Remove the skill from the array
-            const skillToRemove = showSkillAddedd.SkillAddedd.findIndex(skillItem => skillItem.id === skillID);
-            if (skillToRemove !== -1) {
-                showSkillAddedd.SkillAddedd.splice(skillToRemove, 1);
-            }
-            
-            // Reset the form and update localStorage
+     
             Form.reset();
-            localStorage.setItem('addeddSkill', JSON.stringify(showSkillAddedd.SkillAddedd));
+    
         },
       });
 
@@ -465,10 +448,10 @@ try {
   openSkillsDialog(skill,length){
   this.dialogSkill = true;
   this.SkillEdit=true;
- 
+
   length = skill.length;
   if(length > 0){
-    localStorage.setItem('addeddSkill', JSON.stringify(this.skills));
+    localStorage.setItem('addeddSkill', JSON.stringify(skill));
   }
 
   },
@@ -576,7 +559,7 @@ try {
       :getSkillArrayLength="getSkillArrayLength"
       :skillErrorMessage="skillErrorMessage"
       :SkillEdit="SkillEdit"
-      @addSkill="addSkill"
+      @addNewSkill="addNewSkill"
       @closeSkillsDialog="closeSkillsDialog"
       @clearSkills="clearSkills"
       @removeSkillData="removeSkillData"

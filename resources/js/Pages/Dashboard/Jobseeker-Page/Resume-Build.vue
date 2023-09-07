@@ -1211,7 +1211,7 @@ methods: {
       <h5 class="text-2xl font-bold tracking-tight text-white sm:text-2xl mb-4">STEP 5</h5>
       <div class="flex items-center">
         <label for="message" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Skills</label>
-        <button type="button"  @click="openSkillsDialog(showSkillAddedd,getSkillArrayLength)" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
+        <button type="button"  @click="openSkillsDialog(showSkillAddedd)" class="text-gray-900 bg-white border ms-3 border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 
         focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 
         dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Add Skill</button>
 
@@ -1227,7 +1227,7 @@ methods: {
           :AddeddSkillCard="AddeddSkillCard"
           :SkillValuesForm="SkillValuesForm"
           :showSkillAddedd="showSkillAddedd"
-          :getSkillArrayLength="getSkillArrayLength "
+      
           :skillErrorMessage="skillErrorMessage"
           @addSkill="addSkill"
           @closeSkillsDialog="closeSkillsDialog"

@@ -100,6 +100,9 @@ Route::group([], function () {
     ->name('resume-profile.addEducation')
     ->middleware(['auth', 'role:jobseeker']);
 
+  
+
+
     Route::post('resume-profile/{id}/update-pfp', [ResumeController::class, 'updatePFP']) // Update Contact Route
     ->name('resume-profile.updatePFP')
     ->middleware(['auth', 'role:jobseeker']);
@@ -115,8 +118,8 @@ Route::group([], function () {
 
 
 
-    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'deleteSkill']) // Adding Skill Route
-    ->name('resume-profile.deleteSkill')
+    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'addSkill']) // Adding Skill Route
+    ->name('resume-profile.addSkill')
     ->middleware(['auth', 'role:jobseeker']);
 });
 

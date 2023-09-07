@@ -58,13 +58,13 @@ class Resume extends Model
     public function skill()
 
     {
-        return $this->hasMany(Experience::class);
+        return $this->hasMany(Skill::class, 'rsm_id');
 
     }
     public function experience()
 
     {
-        return $this->hasMany(Skill::class);
+        return $this->hasMany(Experience::class, 'rsm_id');
 
     }
 
