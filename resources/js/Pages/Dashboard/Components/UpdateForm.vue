@@ -350,11 +350,11 @@ function formatDate(dateString) {
   
   <div class="grid gap-6 mb-6 md:grid-cols-3" v-show="!dialogAddEducation">
     <!-- Tertiary -->
-    <div   v-for="(educationItem, index) in filteredTertiaryEducation(education)"
-    :key="index"  class="w-full max-w-sm bg-white  shadow dark:bg-gray-800 dark:border-gray-700 pe-4 border-r-4 ">
+    <div  class="w-full max-w-sm bg-white  shadow dark:bg-gray-800 dark:border-gray-700 pe-4 border-r-4 ">
       <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">TERTIARY</h5>
 
-      <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+      <div  v-for="(educationItem, index) in filteredTertiaryEducation(education)"
+      :key="index"  class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
         <div class="flex justify-between px-4 pt-4">
 
           <div>
@@ -392,11 +392,12 @@ function formatDate(dateString) {
 <div class="w-full max-w-sm bg-white shadow dark:bg-gray-800 dark:border-gray-700 pe-4 border-r-4">
   <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">Secondary</h5>
 
-  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+  <div  v-for="(educationItem, index) in filteredSecondaryEducation(education)"
+  :key="index" class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
     <div class="flex justify-between px-4 pt-4">
 
       <div>
-        <span class="text-sm text-gray-500 dark:text-gray-400">2023-2023</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</span>
       </div>
 <div>
   <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-sky-500 hover:bg-blue-800 rounded-full dark:bg-blue-700 dark:text-gray-300">
@@ -418,8 +419,9 @@ function formatDate(dateString) {
     </div>
     <div class="flex flex-col items-center text-center pb-10 p-5 ">
         
-        <h5 class="mb-1 text-md text-gray-900  dark:text-white">Computer Communicaiton Development Institute</h5>
-        <span class="text-sm text-gray-500 dark:text-gray-400">Bachelor of Science in Information Technology</span>
+      <h5 class="mb-1 text-md text-gray-900  dark:text-white">{{ educationItem.School }}</h5>
+      <span class="text-sm text-gray-500 dark:text-gray-400">{{ educationItem.Degree }}</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400">{{ educationItem.Address }}</span>
      
     </div>
   </div>
@@ -430,11 +432,12 @@ function formatDate(dateString) {
 <div class="w-full max-w-sm bg-white  shadow dark:bg-gray-800 dark:border-gray-700 pe-4 ">
   <h5 class="mb-1 text-md text-gray-900 dark:text-white text-center ">Primary</h5>
 
-  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+  <div  v-for="(educationItem, index) in filteredPrimaryEducation(education)"
+  :key="index" class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
     <div class="flex justify-between px-4 pt-4">
 
       <div>
-        <span class="text-sm text-gray-500 dark:text-gray-400">2023-2023</span>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(educationItem.StartDate)  }} - {{ formatDate(educationItem.EndDate) }}</span>
       </div>
 <div>
   <span class="cursor-pointer inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-gray-800 bg-sky-500 hover:bg-blue-800 rounded-full dark:bg-blue-700 dark:text-gray-300">
@@ -456,8 +459,9 @@ function formatDate(dateString) {
     </div>
     <div class="flex flex-col items-center text-center pb-10 p-5 ">
         
-        <h5 class="mb-1 text-md text-gray-900  dark:text-white">Computer Communicaiton Development Institute</h5>
-        <span class="text-sm text-gray-500 dark:text-gray-400">Bachelor of Science in Information Technology</span>
+      <h5 class="mb-1 text-md text-gray-900  dark:text-white">{{ educationItem.School }}</h5>
+
+      <span class="text-sm text-gray-500 dark:text-gray-400">{{ educationItem.Address }}</span>
      
     </div>
   </div>
