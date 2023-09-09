@@ -100,7 +100,9 @@ Route::group([], function () {
     ->name('resume-profile.addEducation')
     ->middleware(['auth', 'role:jobseeker']);
 
-  
+    Route::post('resume-profile/{id}/add-experience', [ResumeController::class, 'addExperience']) // Adding Experience Route
+    ->name('resume-profile.addExperience')
+    ->middleware(['auth', 'role:jobseeker']);
 
 
     Route::post('resume-profile/{id}/update-pfp', [ResumeController::class, 'updatePFP']) // Update Contact Route
