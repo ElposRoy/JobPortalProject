@@ -171,6 +171,7 @@ export default {
     dialogEducation: false,
     dialogExperience: false,
 
+      hideJobEnded:false,
     TertiaryCard: false,
     SecondaryCard: false,
     PrimaryCard: false,
@@ -191,7 +192,9 @@ watch: {
   dialogAddEducation (val) {
     val || this.closeAddEducationForm()
   },
-
+  dialogExperience(val) {
+    val || this.closeUpdateForm()
+  },
   dialogEducation (val) {
     val || this.closeUpdateForm()
   },
@@ -322,10 +325,12 @@ try {
   },
 
   async addExperience(ExperienceForm, ID) {
+    
     try {
       await this.$inertia.post(route('resume-profile.addExperience', ID), ExperienceForm, {
   onSuccess: () => {
-//  Add something here
+    ExperienceForm.reset();
+    this.dialogExperience = false;
   },
 });
       
@@ -394,6 +399,22 @@ try {
     }
   },
 
+
+  StillEmployed(formValues){
+
+if(!formValues.StillEmployed){
+  this.hideJobEnded = true;
+  formValues.JobEnded = null;
+  return
+}
+else{
+  this.hideJobEnded = false;
+ 
+  return
+}
+},
+
+
   openresumePFP(PersonalInfo,Image){
 
 
@@ -421,10 +442,15 @@ try {
     this.dialogContact = true;
   },
 
-  openEducation(EducationData){
+  openEducation(){
     this.dialogEducation = true;
   
   },
+  openExperience(){
+    this.dialogExperience = true;
+    
+  },
+
 
   openEducationDialog(EducationValuesForm,Level ){
 
@@ -477,6 +503,7 @@ try {
   this.dialogEducation = false;
   this.dialogLanguage = false;
   this.dialogAddEducation  = false;
+  this.dialogExperience  = false;
  },
  closeAddEducationForm(){
     this.dialogAddEducation = false;
@@ -522,7 +549,9 @@ try {
       :dialogContact="dialogContact"
       :dialogEducation="dialogEducation"
       :dialogLanguage="dialogLanguage"
-      :dialogSkill="dialogSkill">
+      :dialogSkill="dialogSkill"
+      :dialogExperience="dialogExperience"
+      >
 
       <UpdateForm
       :baseurl="baseurl"
@@ -532,6 +561,7 @@ try {
       :dialogAddEducation="dialogAddEducation"
       :dialogEducation="dialogEducation"
       :dialogLanguage="dialogLanguage"
+      :dialogExperience="dialogExperience"
       :PersonalInfo="PersonalInfo"
       :ResumePFP="ResumePFP"
       :education="education"
@@ -540,6 +570,9 @@ try {
       :filteredSecondaryEducation="filteredSecondaryEducation"
       :filteredPrimaryEducation="filteredPrimaryEducation"
       :EducationValuesForm="EducationValuesForm"
+      :ExperienceValuesForm="ExperienceValuesForm"
+      :hideJobEnded="hideJobEnded"
+      @StillEmployed="StillEmployed"
       @UpdateResumePFP="UpdateResumePFP"
       @preview_image="preview_image"
       @closeUpdateForm="closeUpdateForm"
@@ -547,6 +580,7 @@ try {
       @UpdateContact="UpdateContact"
       @openEducationDialog="openEducationDialog"
       @addEducation="addEducation"
+      @addExperience="addExperience"
       @backButton="backButton">
       
       </UpdateForm>
@@ -783,9 +817,8 @@ try {
   <div>
     <div class="flex justify-between relative">
       <h5 class="mb-1 text-2xl font-bold tracking-tight text-black">Experience</h5>
-      <button type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-      </button>
+      <button @click="openExperience()" type="button" class="absolute top-1/2 transform -translate-y-1/2 right-0 px-2 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+       Add Experience </button>
     </div>
     
     <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
@@ -800,11 +833,12 @@ try {
       </div>
   
       <div class="max-w-full w-full ms-5 p-6 bg-white  shadow dark:border-gray-700">
-       
+      
         <div class="flex justify-between items-center">
           <h5 class=" text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-900">{{experienceItem.Company}}</h5>
-          <h5 class=" text-2sm font-semibold tracking-tight text-gray-900  dark:text-gray-900">{{formatYear(experienceItem.JobStarted) }} to {{formatYear( experienceItem.JobEnded)}}</h5>
-        </div>
+          <p class="font-normal text-black-700 dark:text-black-300"> {{ formatYear(experienceItem.JobStarted)  }} - 
+       <span v-if="experienceItem.StillEmployed">Still Employed</span>
+      <span v-else>{{ formatYear(experienceItem.JobEnded) }}</span></p>    </div>
         <p class=" font-bold text-indigo-500 dark:text-indigo-900">{{ experienceItem.Position }}  - ( {{ experienceItem.EmploymentType }})</p>
         <p class="mb-2 font-bold text-indigo-500 dark:text-indigo-900">{{  experienceItem.Location }} - ({{experienceItem.LocationType }}) </p>
       
@@ -812,7 +846,16 @@ try {
           <p class="mb-3 font-normal text-gray-500 dark:text-gray-600 text-justify">
             {{  experienceItem.Description}}
           </p>
-       
+          <hr class="h-1 mb-3 bg-gray-200 border-0 dark:bg-gray-700">
+          <div class="flex justify-between items-center">
+            <button type="button" class="px-3 py-1 me-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg 
+            hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+            <button type="button" class="px-3 py-1 text-xs font-medium text-center text-white bg-red-700 rounded-lg 
+            hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete</button>
+            
+           
+          </div>
+
       </div>
   </div>
 
