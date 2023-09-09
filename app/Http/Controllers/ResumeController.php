@@ -73,15 +73,36 @@ class ResumeController extends Controller
         ]);
     
         $skill= $id->skill()->create($validated);
-    
-    
    
 
     }
 
 
 
+    public function addExperience(Request $request, Resume $id)
+    {
 
+  
+        $validated = $request->validate([
+         
+            'JobStarted' =>'required|date', 
+            'JobEnded' =>'nullable|date', 
+            'StillEmployed' => 'nullable|boolean',
+            'Company' =>'required|string|max:255', 
+            'Position' => 'required|string|max:255', 
+            'Location' => 'required|string|max:255', 
+            'LocationType' => 'required|string|max:255', 
+            'EmploymentType' => 'required|string|max:255', 
+            'Description' => 'required|string|max:255', 
+        ]);
+    
+
+        $experience = $id->experience()->create($validated);
+    
+    
+   
+
+    }
 
 
 
