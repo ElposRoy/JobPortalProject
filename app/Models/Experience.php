@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Experience extends Model
 {
 
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'resume_experience';
-
+    protected $dates = ['deleted_at'];
 
     protected $fillable=[
         'rsm_id',
