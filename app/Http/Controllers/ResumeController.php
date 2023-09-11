@@ -105,6 +105,21 @@ class ResumeController extends Controller
     }
 
 
+   public function deleteExperience(Request $request, $id)
+{
+    try {
+        $experience = Experience::findOrFail($id); // Find the experience by ID
+        $experience->delete();
+        
+        return redirect()->route('resume-profile.show'); // Redirect to the appropriate route after deletion
+    } catch (\Throwable $th) {
+        // Handle the exception
+        return back()->with('error', 'Unable to delete the experience.');
+    }
+}
+    
+    
+
 
 
     public function updatePFP(Request $request, Resume $id)
