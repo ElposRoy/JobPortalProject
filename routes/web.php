@@ -94,35 +94,28 @@ Route::group([], function () {
 });
 
 // Resume Routes
-Route::group([], function () {
+Route::group(['middleware' => ['auth', 'role:jobseeker']], function () {
+    Route::post('resume-profile/{id}/add-education', [ResumeController::class, 'addEducation'])
+        ->name('resume-profile.addEducation');
 
-    Route::post('resume-profile/{id}/add-education', [ResumeController::class, 'addEducation']) // Adding Education Route
-    ->name('resume-profile.addEducation')
-    ->middleware(['auth', 'role:jobseeker']);
+    Route::post('resume-profile/{id}/add-experience', [ResumeController::class, 'addExperience'])
+        ->name('resume-profile.addExperience');
 
-    Route::post('resume-profile/{id}/add-experience', [ResumeController::class, 'addExperience']) // Adding Experience Route
-    ->name('resume-profile.addExperience')
-    ->middleware(['auth', 'role:jobseeker']);
+    Route::post('resume-profile/{id}/update-pfp', [ResumeController::class, 'updatePFP'])
+        ->name('resume-profile.updatePFP');
 
+    Route::post('resume-profile/{id}/update-head', [ResumeController::class, 'updateHead'])
+        ->name('resume-profile.updateHead');
 
-    Route::post('resume-profile/{id}/update-pfp', [ResumeController::class, 'updatePFP']) // Update Contact Route
-    ->name('resume-profile.updatePFP')
-    ->middleware(['auth', 'role:jobseeker']);
+    Route::post('resume-profile/{id}/update-contact', [ResumeController::class, 'updateContact'])
+        ->name('resume-profile.updateContact');
 
+    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'addSkill'])
+        ->name('resume-profile.addSkill');
 
-    Route::post('resume-profile/{id}/update-head', [ResumeController::class, 'updateHead']) // Update Head Route
-    ->name('resume-profile.updateHead')
-    ->middleware(['auth', 'role:jobseeker']);
-
-    Route::post('resume-profile/{id}/update-contact', [ResumeController::class, 'updateContact']) // Update Contact Route
-    ->name('resume-profile.updateContact')
-    ->middleware(['auth', 'role:jobseeker']);
-
-
-
-    Route::post('resume-profile/{id}/add-skill', [ResumeController::class, 'addSkill']) // Adding Skill Route
-    ->name('resume-profile.addSkill')
-    ->middleware(['auth', 'role:jobseeker']);
+        Route::post('resume-profile/{id}/delete-experience', [ResumeController::class, 'deleteExperience'])
+        ->name('resume-profile.deleteExperience');
+    
 });
 
 
