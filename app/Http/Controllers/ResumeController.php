@@ -323,6 +323,7 @@ class ResumeController extends Controller
             if ($request->hasFile('Image')) {
                 $validateImage=$request->validate(['Image'=>'Image']);
                 $image = $validateImage['Image']; // get the uploaded file
+
                 $image->storeAs('public/images',$image->getClientOriginalName()); // store the image in the storage public/images directory
                 $ImagePath = 'storage/images/'.$image->getClientOriginalName();
             } 

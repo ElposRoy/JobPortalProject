@@ -117,7 +117,7 @@ export default {
               
                 <button  id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white" type="button">
                    
-                    <img class="w-8 h-8 mr-2 rounded-full" :src="baseurl+'/storage/images/Pfp.jpeg'" alt="user photo">
+                    <img class="w-8 h-8 mr-2 rounded-full" :src="baseurl+'/storage/images/Pfp.png'" alt="user photo">
                     ELPOS ROY
                 
                   </button>
