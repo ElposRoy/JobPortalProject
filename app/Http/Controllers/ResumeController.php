@@ -137,12 +137,13 @@ class ResumeController extends Controller
     }
         // Retrieve the old image path
         $oldImagePath = $id->Image;
+     
     
         if ($request->hasFile('Image')) {
             $validateImage = $request->validate(['Image' => 'image']); // 'image' rule for image validation
     
             $image = $validateImage['Image'];
-            $image->storeAs('images', $image->getClientOriginalName());
+            $image->storeAs('public/images', $image->getClientOriginalName());
             $path = 'storage/images/' . $image->getClientOriginalName();
     
             // Delete the old image if it exists
@@ -322,7 +323,7 @@ class ResumeController extends Controller
             if ($request->hasFile('Image')) {
                 $validateImage=$request->validate(['Image'=>'Image']);
                 $image = $validateImage['Image']; // get the uploaded file
-                $image->storeAs('images',$image->getClientOriginalName()); // store the image in the storage public/images directory
+                $image->storeAs('public/images',$image->getClientOriginalName()); // store the image in the storage public/images directory
                 $ImagePath = 'storage/images/'.$image->getClientOriginalName();
             } 
 
